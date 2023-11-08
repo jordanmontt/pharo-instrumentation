@@ -6,8 +6,9 @@ Class {
 		'executedMethods',
 		'metaLink'
 	],
-	#category : 'NewProfiler',
-	#package : 'NewProfiler'
+	#category : 'InstrumentationTechniques-MetaLink',
+	#package : 'InstrumentationTechniques',
+	#tag : 'MetaLink'
 }
 
 { #category : 'adding' }

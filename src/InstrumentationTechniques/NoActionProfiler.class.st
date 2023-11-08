@@ -1,8 +1,9 @@
 Class {
 	#name : 'NoActionProfiler',
 	#superclass : 'Object',
-	#category : 'NewProfiler',
-	#package : 'NewProfiler'
+	#category : 'InstrumentationTechniques-MethodProxies',
+	#package : 'InstrumentationTechniques',
+	#tag : 'MethodProxies'
 }
 
 { #category : 'initialization' }
