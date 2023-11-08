@@ -5,6 +5,6 @@ Instrumentation profilers built with different instrumentation techniques for Ph
 EpMonitor disableDuring: [
 	Metacello new
 		baseline: 'InstrumentationProfilers';
-		repository: 'github://jordanmontt/InstrumentationProfilers:main';
+		repository: 'github://jordanmontt/pharo-instrumentation:main';
 		load ].
 ```
