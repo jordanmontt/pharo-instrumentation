@@ -19,7 +19,7 @@ BaselineOfInstrumentationProfilers >> baseline: spec [
 			with: [ spec repository: 'github://pharo-contributions/MethodProxies/src' ].
 		spec
 			baseline: 'MethodProfiler'
-			with: [ spec repository: 'github://jordanmontt/MethodProfiler/src' ].
+			with: [ spec repository: 'github://jordanmontt/MethodProfiler:main' ].
 
 		spec
 			group: 'default' with: #( 'core' );
