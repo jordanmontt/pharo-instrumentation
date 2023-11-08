@@ -52,5 +52,7 @@ MetaLinksProfiler >> startProfiling [
 { #category : 'adding' }
 MetaLinksProfiler >> stopProfiling [
 
-	instrumentedMethods do: [ :method | method ast removeLink: metaLink ]
+	instrumentedMethods do: [ :method |
+		method ast removeLink: metaLink.
+		metaLink uninstall ]
 ]

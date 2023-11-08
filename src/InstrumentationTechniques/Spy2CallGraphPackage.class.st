@@ -1,12 +1,12 @@
 Class {
-	#name : 'MPClass',
-	#superclass : 'S2Class',
+	#name : 'Spy2CallGraphPackage',
+	#superclass : 'S2Package',
 	#category : 'InstrumentationTechniques-Spy2',
 	#package : 'InstrumentationTechniques',
 	#tag : 'Spy2'
 }
 
 { #category : 'hooks' }
-MPClass class >> spyClassForMethod [
-	 ^ MPMethod 
+Spy2CallGraphPackage class >> spyClassForClass [
+	 ^ Spy2CallGraphClass 
 ]
