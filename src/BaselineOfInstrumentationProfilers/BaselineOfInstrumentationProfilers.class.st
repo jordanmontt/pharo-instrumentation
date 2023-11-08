@@ -12,8 +12,7 @@ BaselineOfInstrumentationProfilers >> baseline: spec [
 	spec for: #common do: [
 		spec
 			package: 'MethodProxiesRunWithIn';
-			package: 'InstrumentationProfilers' with: [ spec requires: #( 'MethodProxies' 'MethodProxiesRunWithIn' ) ];
-			package: 'MethodProfiler' with: [ spec requires: #( 'MethodProxies' 'MethodProxiesRunWithIn' ) ].
+			package: 'InstrumentationProfilers' with: [ spec requires: #( 'MethodProxies' 'MethodProxiesRunWithIn' ) ].
 
 		spec
 			baseline: 'MethodProxies'
