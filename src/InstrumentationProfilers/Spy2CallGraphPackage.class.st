@@ -1,8 +1,8 @@
 Class {
 	#name : 'Spy2CallGraphPackage',
 	#superclass : 'S2Package',
-	#category : 'InstrumentationTechniques-Spy2',
-	#package : 'InstrumentationTechniques',
+	#category : 'InstrumentationProfilers-Spy2',
+	#package : 'InstrumentationProfilers',
 	#tag : 'Spy2'
 }
 

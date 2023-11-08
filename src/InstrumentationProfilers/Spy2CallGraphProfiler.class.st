@@ -19,8 +19,8 @@ Class {
 	#instVars : [
 		'callStack'
 	],
-	#category : 'InstrumentationTechniques-Spy2',
-	#package : 'InstrumentationTechniques',
+	#category : 'InstrumentationProfilers-Spy2',
+	#package : 'InstrumentationProfilers',
 	#tag : 'Spy2'
 }
 

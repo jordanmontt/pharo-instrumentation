@@ -6,8 +6,8 @@ Class {
 		'executedMethods',
 		'beforeMetaLink'
 	],
-	#category : 'InstrumentationTechniques-MetaLink',
-	#package : 'InstrumentationTechniques',
+	#category : 'InstrumentationProfilers-MetaLink',
+	#package : 'InstrumentationProfilers',
 	#tag : 'MetaLink'
 }
 
