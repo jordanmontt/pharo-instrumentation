@@ -61,20 +61,25 @@ MetaLinksProfiler >> initialize [
 		selector: #enterMethod:;
 		arguments: #(method);
 		control: #before;
+		optionCompileOnLinkInstallation: true;
 		yourself.
 	afterMetaLink := MetaLink new
 		metaObject: self;
 		selector: #exitMethod:;
 		arguments: #(method);
 		control: #after;
+		optionCompileOnLinkInstallation: true;
 		yourself.
 ]
 
 { #category : 'adding' }
 MetaLinksProfiler >> profile: aBlock [
 
+	result mainProcess: thisProcess.
 	self startProfiling.
-	aBlock ensure: [ self stopProfiling ]
+	aBlock ensure: [ self stopProfiling ].
+	result buildCallGraph.
+	^ result 
 ]
 
 { #category : 'adding' }
