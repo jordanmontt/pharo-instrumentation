@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'instrumentedMethods',
 		'executedMethods',
-		'metaLink'
+		'beforeMetaLink'
 	],
 	#category : 'InstrumentationTechniques-MetaLink',
 	#package : 'InstrumentationTechniques',
@@ -29,10 +29,11 @@ MetaLinksProfiler >> initialize [
 	super initialize.
 	instrumentedMethods := Set new.
 	executedMethods := Set new.
-	metaLink := MetaLink new
+	beforeMetaLink := MetaLink new
 		metaObject: executedMethods;
 		selector: #add:;
 		arguments: #(method);
+		control: #before;
 		yourself.
 ]
 
@@ -46,13 +47,13 @@ MetaLinksProfiler >> profile: aBlock [
 { #category : 'adding' }
 MetaLinksProfiler >> startProfiling [
 
-	instrumentedMethods do: [ :method | method ast link: metaLink ]
+	instrumentedMethods do: [ :method | method ast link: beforeMetaLink ]
 ]
 
 { #category : 'adding' }
 MetaLinksProfiler >> stopProfiling [
 
 	instrumentedMethods do: [ :method |
-		method ast removeLink: metaLink.
-		metaLink uninstall ]
+		method ast removeLink: beforeMetaLink.
+		beforeMetaLink uninstall ]
 ]
