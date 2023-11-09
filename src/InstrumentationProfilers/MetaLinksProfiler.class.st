@@ -2,7 +2,6 @@ Class {
 	#name : 'MetaLinksProfiler',
 	#superclass : 'Object',
 	#instVars : [
-		'executedMethods',
 		'beforeMetaLink',
 		'afterMetaLink',
 		'result',
@@ -52,7 +51,6 @@ MetaLinksProfiler >> initialize [
 
 	super initialize.
 	originalMethods := Set new.
-	executedMethods := Set new.
 	result := PrfMethodProfilerResult new.
 	callStack := PrfProcessCallStack newWithRunner: self.
 
