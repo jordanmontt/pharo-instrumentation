@@ -24,7 +24,6 @@ MetaLinksProfiler >> addMethods: methodsCollection [
 MetaLinksProfiler >> enterMethod: aMethod [
 
 	| node precedingNode |
-	('enterMethod:' , aMethod name) traceCr.
 	callStack ensureStackIsInitialized.
 	precedingNode := callStack top.
 	node := result nodeForMethod: aMethod withPrecedingNode: precedingNode.
@@ -37,7 +36,6 @@ MetaLinksProfiler >> enterMethod: aMethod [
 { #category : 'initialization' }
 MetaLinksProfiler >> exitMethod: aMethod [
 
-	('exitMethod:' , aMethod name) traceCr.
 	callStack pop exitingNode
 ]
 

@@ -4,7 +4,9 @@ Class {
 	#instVars : [
 		'beforeMetaLink',
 		'afterMetaLink',
-		'originalMethods'
+		'originalMethods',
+		'callStack',
+		'nodes'
 	],
 	#category : 'InstrumentationProfilers-MetaLink',
 	#package : 'InstrumentationProfilers',
@@ -20,20 +22,41 @@ MetaLinksDumbProfiler >> addMethods: methodsCollection [
 { #category : 'initialization' }
 MetaLinksDumbProfiler >> enterMethod: aMethod [
 
-	('enterMethod:' , aMethod name) traceCr
+	| methodNode |
+	('enterMethod:' , aMethod name) traceCr.
+	methodNode := StackMethodNode new
+		name: aMethod name;
+		sender: callStack pop;
+		yourself.
+	nodes add: methodNode.
+	callStack push: methodNode
 ]
 
 { #category : 'initialization' }
 MetaLinksDumbProfiler >> exitMethod: aMethod [
 
-	('exitMethod:' , aMethod name) traceCr
+	('exitMethod:' , aMethod name) traceCr.
+	callStack pop.
+	"The before method is executed twice.
+	See https://github.com/pharo-project/pharo/issues/15283"
+	callStack pop
 ]
 
 { #category : 'initialization' }
 MetaLinksDumbProfiler >> initialize [
 
+	| aNode |
 	super initialize.
 	originalMethods := Set new.
+	nodes := OrderedCollection new.	
+	
+	aNode := StackMethodNode new
+			name: #root;
+			yourself.
+	nodes add: aNode.
+	callStack := Stack new
+		push: aNode;
+		yourself.
 
 	beforeMetaLink := MetaLink new
 		metaObject: self;
