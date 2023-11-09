@@ -1,11 +1,9 @@
 Class {
-	#name : 'MetaLinksProfiler',
+	#name : 'MetaLinksDumbProfiler',
 	#superclass : 'Object',
 	#instVars : [
 		'beforeMetaLink',
 		'afterMetaLink',
-		'result',
-		'callStack',
 		'originalMethods'
 	],
 	#category : 'InstrumentationProfilers-MetaLink',
@@ -14,40 +12,28 @@ Class {
 }
 
 { #category : 'adding' }
-MetaLinksProfiler >> addMethods: methodsCollection [
+MetaLinksDumbProfiler >> addMethods: methodsCollection [
 
-	originalMethods addAll: methodsCollection.
-	result methods: originalMethods
+	originalMethods addAll: methodsCollection
 ]
 
 { #category : 'initialization' }
-MetaLinksProfiler >> enterMethod: aMethod [
+MetaLinksDumbProfiler >> enterMethod: aMethod [
 
-	| node precedingNode |
-	('enterMethod:' , aMethod name) traceCr.
-	callStack ensureStackIsInitialized.
-	precedingNode := callStack top.
-	node := result nodeForMethod: aMethod withPrecedingNode: precedingNode.
-	precedingNode addCallTo: node.
-	node addCall.
-	callStack push: node.
-	node enteringNode
+	('enterMethod:' , aMethod name) traceCr
 ]
 
 { #category : 'initialization' }
-MetaLinksProfiler >> exitMethod: aMethod [
+MetaLinksDumbProfiler >> exitMethod: aMethod [
 
-	('exitMethod:' , aMethod name) traceCr.
-	callStack pop exitingNode
+	('exitMethod:' , aMethod name) traceCr
 ]
 
 { #category : 'initialization' }
-MetaLinksProfiler >> initialize [
+MetaLinksDumbProfiler >> initialize [
 
 	super initialize.
 	originalMethods := Set new.
-	result := PrfMethodProfilerResult new.
-	callStack := PrfProcessCallStack newWithRunner: self.
 
 	beforeMetaLink := MetaLink new
 		metaObject: self;
@@ -66,29 +52,24 @@ MetaLinksProfiler >> initialize [
 ]
 
 { #category : 'adding' }
-MetaLinksProfiler >> profile: aBlock [
+MetaLinksDumbProfiler >> profile: aBlock [
 
-	result mainProcess: thisProcess.
 	self startProfiling.
-	aBlock ensure: [ self stopProfiling ].
-	result buildCallGraph.
-	^ result
+	aBlock ensure: [ self stopProfiling ]
 ]
 
 { #category : 'adding' }
-MetaLinksProfiler >> startProfiling [
+MetaLinksDumbProfiler >> startProfiling [
 
 	originalMethods do: [ :method |
 		method ast
 			link: beforeMetaLink;
-			link: afterMetaLink ].
-	result rootNode enteringNode
+			link: afterMetaLink ]
 ]
 
 { #category : 'adding' }
-MetaLinksProfiler >> stopProfiling [
+MetaLinksDumbProfiler >> stopProfiling [
 
-	result rootNode exitingNode.
 	originalMethods do: [ :method |
 		method ast
 			removeLink: beforeMetaLink;
