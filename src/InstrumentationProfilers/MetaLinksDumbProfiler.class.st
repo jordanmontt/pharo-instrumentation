@@ -85,18 +85,16 @@ MetaLinksDumbProfiler >> profile: aBlock [
 MetaLinksDumbProfiler >> startProfiling [
 
 	originalMethods do: [ :method |
-		method ast
-			link: beforeMetaLink;
-			link: afterMetaLink ]
+		method ast link: beforeMetaLink.
+		method ast body link: afterMetaLink ]
 ]
 
 { #category : 'adding' }
 MetaLinksDumbProfiler >> stopProfiling [
 
 	originalMethods do: [ :method |
-		method ast
-			removeLink: beforeMetaLink;
-			removeLink: afterMetaLink.
+		method ast removeLink: beforeMetaLink.
+		method ast body removeLink: afterMetaLink.
 		beforeMetaLink uninstall.
 		afterMetaLink uninstall ]
 ]

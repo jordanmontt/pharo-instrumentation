@@ -1,3 +1,23 @@
+"
+```st
+| testClasses testSuites methods profiler |
+testClasses :=  'AI-Algorithms-Graph-Tests' asPackage definedClasses select: [ :e | e isTestCase ].
+testSuites := testClasses collect: #suite.
+
+methods := 'AI-Algorithms-Graph' asPackage methods , 'AI-Algorithms-Graph-Components' asPackage methods.
+methods := methods asSet.
+
+""profiler := MetaLinksProfiler new.""
+profiler := MetaLinksDumbProfiler new. 
+""profiler :=  PrfMethodProfiler new
+	useRunWithIn;
+	yorself""
+profiler addMethods: methods.
+
+profiler profile: [ testSuites do: #run ].
+profiler
+```
+"
 Class {
 	#name : 'MetaLinksProfiler',
 	#superclass : 'Object',
