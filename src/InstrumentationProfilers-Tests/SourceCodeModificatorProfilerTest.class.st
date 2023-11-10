@@ -64,3 +64,24 @@ SourceCodeModificatorProfilerTest >> testProfile [
 	"foo calls one increment"
 	self assert: SingletonClasToTest current counter equals: 1
 ]
+
+{ #category : 'tests' }
+SourceCodeModificatorProfilerTest >> testProfileWithException [
+
+	| profileBlock |
+	profileBlock := [ AClassToInstrument new fooWithException ].
+
+	profiler
+		beforeAction: [ SingletonClasToTest current increment ];
+		afterAction: [ SingletonClasToTest current increment ];
+		addMethods: { (AClassToInstrument >> #foo) };
+		profile: profileBlock.
+
+	"foo calls one increment but it should not be executed because an exception is signaled"
+	self assert: SingletonClasToTest current counter equals: 2.
+
+	SingletonClasToTest reset.
+	"foo calls one increment"
+	self should: profileBlock value raise: Exception.
+	self assert: SingletonClasToTest current counter equals: 0
+]
