@@ -17,15 +17,15 @@ SourceCodeModificatorProfiler >> addMethods: methodsCollection [
 ]
 
 { #category : 'accessing' }
-SourceCodeModificatorProfiler >> afterAction: aFullBlockClosure [
+SourceCodeModificatorProfiler >> afterAction: aBlockClosure [
 
-	afterAction := aFullBlockClosure
+	afterAction := aBlockClosure method ast body sourceCode
 ]
 
 { #category : 'accessing' }
-SourceCodeModificatorProfiler >> beforeAction: aFullBlockClosure [
+SourceCodeModificatorProfiler >> beforeAction: aBlockClosure [
 
-	beforeAction := aFullBlockClosure
+	beforeAction := aBlockClosure method ast body sourceCode
 ]
 
 { #category : 'initialization' }
@@ -44,16 +44,14 @@ SourceCodeModificatorProfiler >> instrument [
 { #category : 'as yet unclassified' }
 SourceCodeModificatorProfiler >> instrument: aMethod [
 
-	| beforeMethodBody afterMethodBody instrumentedSourceCode methodSignature |
+	| instrumentedSourceCode methodSignature |
 	methodSignature := aMethod sourceNode selectorAndArgumentNames.
-	beforeMethodBody := beforeAction method ast body sourceCode.
-	afterMethodBody := afterAction method ast body sourceCode.
 
 	instrumentedSourceCode := String streamContents: [ :stream | 
 		stream << methodSignature << String cr <<
-			beforeMethodBody << '.' << String cr <<
+			beforeAction << '.' << String cr <<
 			'[ ' << aMethod ast body sourceCode << ' ]' << String cr <<
-			' ensure: [ ' << afterMethodBody << ' ]' ].
+			' ensure: [ ' << afterAction << ' ]' ].
 
 	aMethod methodClass compile: instrumentedSourceCode
 ]
