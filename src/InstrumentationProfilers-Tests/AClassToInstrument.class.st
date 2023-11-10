@@ -6,6 +6,12 @@ Class {
 }
 
 { #category : 'accessing' }
+AClassToInstrument >> bar [
+
+	SingletonClasToTest current increment
+]
+
+{ #category : 'accessing' }
 AClassToInstrument >> foo [
 
 	SingletonClasToTest current increment
@@ -15,5 +21,11 @@ AClassToInstrument >> foo [
 AClassToInstrument >> fooWithException [
 
 	Error signal.
+	SingletonClasToTest current increment
+]
+
+{ #category : 'accessing' }
+AClassToInstrument >> poo [
+
 	SingletonClasToTest current increment
 ]

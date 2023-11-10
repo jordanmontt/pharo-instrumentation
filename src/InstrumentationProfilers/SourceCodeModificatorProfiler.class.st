@@ -63,11 +63,6 @@ SourceCodeModificatorProfiler >> instrument: aMethod [
 			'[ ' << aMethod ast body sourceCode << ' ]' << String cr <<
 			' ensure: [ ' << afterMethodBody << ' ]' ].
 
-	"Keep the original method to restore it later"	
-	aMethod methodClass methodDict
-		at: hiddenSelector
-		put: aMethod.
-
 	aMethod methodClass compile: instrumentedSourceCode
 ]
 
@@ -88,10 +83,5 @@ SourceCodeModificatorProfiler >> uninstrument [
 { #category : 'as yet unclassified' }
 SourceCodeModificatorProfiler >> uninstrument: aMethod [
 
-	| originalMethod |
-	originalMethod := aMethod methodClass methodDict at: hiddenSelector.
-	aMethod methodClass methodDict
-		at: aMethod selector
-		put: originalMethod.
-	aMethod methodClass methodDict removeKey: hiddenSelector
+	aMethod methodClass methodDict at: aMethod selector put: aMethod
 ]

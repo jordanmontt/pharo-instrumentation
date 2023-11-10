@@ -66,6 +66,27 @@ SourceCodeModificatorProfilerTest >> testProfile [
 ]
 
 { #category : 'tests' }
+SourceCodeModificatorProfilerTest >> testProfileSeveralMethods [
+
+	| profileBlock |
+	profileBlock := [ AClassToInstrument new foo; bar; poo ].
+
+	profiler
+		beforeAction: [ SingletonClasToTest current increment ];
+		afterAction: [ SingletonClasToTest current increment ];
+		addMethods: { (AClassToInstrument >> #foo) . (AClassToInstrument >> #bar) . (AClassToInstrument >> #poo) };
+		profile: profileBlock.
+
+	"foo, bar and poo call one increment"
+	self assert: SingletonClasToTest current counter equals: 9.
+
+	SingletonClasToTest reset.
+	profileBlock value.
+	"foo calls one increment"
+	self assert: SingletonClasToTest current counter equals: 3
+]
+
+{ #category : 'tests' }
 SourceCodeModificatorProfilerTest >> testProfileWithException [
 
 	| profileBlock |
