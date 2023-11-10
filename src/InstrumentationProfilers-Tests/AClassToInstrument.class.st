@@ -14,6 +14,6 @@ AClassToInstrument >> foo [
 { #category : 'accessing' }
 AClassToInstrument >> fooWithException [
 
-	Exception signal.
+	Error signal.
 	SingletonClasToTest current increment
 ]

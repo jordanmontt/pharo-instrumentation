@@ -75,7 +75,7 @@ SourceCodeModificatorProfiler >> instrument: aMethod [
 SourceCodeModificatorProfiler >> profile: aBlock [
 
 	self instrument.
-	aBlock ensure: [ self uninstrument ]
+	[ aBlock on: Exception do: [  ] ] ensure: [ self uninstrument ]
 ]
 
 { #category : 'as yet unclassified' }
