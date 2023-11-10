@@ -3,7 +3,9 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'methodsToInstrument',
-		'hiddenSelector'
+		'hiddenSelector',
+		'beforeAction',
+		'afterAction'
 	],
 	#category : 'InstrumentationProfilers',
 	#package : 'InstrumentationProfilers'
@@ -15,28 +17,16 @@ SourceCodeModificatorProfiler >> addMethods: methodsCollection [
 	methodsToInstrument addAll: methodsCollection
 ]
 
-{ #category : 'evaluating' }
-SourceCodeModificatorProfiler >> afterMethod [
+{ #category : 'accessing' }
+SourceCodeModificatorProfiler >> afterAction: aFullBlockClosure [
 
-	5 + 5 > 7
-		ifTrue: [
-			OrderedCollection new
-				add: 4;
-				yourself ]
-		ifFalse: [ self ].
-	self
+	afterAction := aFullBlockClosure
 ]
 
-{ #category : 'evaluating' }
-SourceCodeModificatorProfiler >> beforeMethod [
+{ #category : 'accessing' }
+SourceCodeModificatorProfiler >> beforeAction: aFullBlockClosure [
 
-	5 + 5 > 7
-		ifTrue: [
-			OrderedCollection new
-				add: 4;
-				yourself ]
-		ifFalse: [ self ].
-	self
+	beforeAction := aFullBlockClosure
 ]
 
 { #category : 'accessing' }
@@ -64,8 +54,8 @@ SourceCodeModificatorProfiler >> instrument: aMethod [
 
 	| beforeMethodBody afterMethodBody instrumentedSourceCode methodSignature |
 	methodSignature := aMethod sourceNode selectorAndArgumentNames.
-	beforeMethodBody := (self class >> #beforeMethod) ast body sourceCode.
-	afterMethodBody := (self class >> #afterMethod) ast body sourceCode.
+	beforeMethodBody := beforeAction method ast body sourceCode.
+	afterMethodBody := afterAction method ast body sourceCode.
 
 	instrumentedSourceCode := String streamContents: [ :stream | 
 		stream << methodSignature << String cr <<
@@ -78,14 +68,30 @@ SourceCodeModificatorProfiler >> instrument: aMethod [
 		at: hiddenSelector
 		put: aMethod.
 
-	aMethod methodClass methodDict removeKey: aMethod selector ifAbsent: [ ].
 	aMethod methodClass compile: instrumentedSourceCode
 ]
 
 { #category : 'adding' }
-SourceCodeModificatorProfiler >> startProfiling [
+SourceCodeModificatorProfiler >> profile: aBlock [
+
+	self instrument.
+	aBlock ensure: [ self uninstrument ]
 ]
 
-{ #category : 'adding' }
-SourceCodeModificatorProfiler >> stopProfiling [
+{ #category : 'as yet unclassified' }
+SourceCodeModificatorProfiler >> uninstrument [
+
+	methodsToInstrument do: [ :anInstrumentedMethod |
+		self uninstrument: anInstrumentedMethod ]
+]
+
+{ #category : 'as yet unclassified' }
+SourceCodeModificatorProfiler >> uninstrument: aMethod [
+
+	| originalMethod |
+	originalMethod := aMethod methodClass methodDict at: hiddenSelector.
+	aMethod methodClass methodDict
+		at: aMethod selector
+		put: originalMethod.
+	aMethod methodClass methodDict removeKey: hiddenSelector
 ]
