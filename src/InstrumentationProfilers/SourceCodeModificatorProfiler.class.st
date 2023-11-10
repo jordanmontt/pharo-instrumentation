@@ -78,6 +78,7 @@ SourceCodeModificatorProfiler >> instrument: aMethod [
 		at: hiddenSelector
 		put: aMethod.
 
+	aMethod methodClass methodDict removeKey: aMethod selector ifAbsent: [ ].
 	aMethod methodClass compile: instrumentedSourceCode
 ]
 
