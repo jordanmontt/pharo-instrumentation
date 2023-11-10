@@ -3,7 +3,6 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'methodsToInstrument',
-		'hiddenSelector',
 		'beforeAction',
 		'afterAction'
 	],
@@ -29,18 +28,11 @@ SourceCodeModificatorProfiler >> beforeAction: aFullBlockClosure [
 	beforeAction := aFullBlockClosure
 ]
 
-{ #category : 'accessing' }
-SourceCodeModificatorProfiler >> hiddenSelector [
-
-	^ hiddenSelector
-]
-
 { #category : 'initialization' }
 SourceCodeModificatorProfiler >> initialize [
 
 	super initialize.
-	methodsToInstrument := Set new.
-	hiddenSelector := MpHiddenSelector new
+	methodsToInstrument := Set new
 ]
 
 { #category : 'as yet unclassified' }
