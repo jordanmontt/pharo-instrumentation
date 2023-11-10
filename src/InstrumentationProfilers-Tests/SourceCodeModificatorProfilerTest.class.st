@@ -77,9 +77,10 @@ SourceCodeModificatorProfilerTest >> testProfileWithException [
 		addMethods: { (AClassToInstrument >> #fooWithException) };
 		profile: profileBlock.
 
-	"foo calls one increment but it should not be executed because an exception is signaled""
+	"foo calls one increment but it should not be executed because an exception is signaled"
+	"after and before action should be always executed"
 	self assert: SingletonClasToTest current counter equals: 2.
-"
+
 	SingletonClasToTest reset.
 	"foo calls one increment"
 	self should: [ profileBlock value ] raise: Error.
