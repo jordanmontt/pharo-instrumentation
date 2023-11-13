@@ -21,6 +21,48 @@ SourceCodeModificatorProfilerTest >> setUp [
 ]
 
 { #category : 'tests' }
+SourceCodeModificatorProfilerTest >> testAfterRaisesError [
+
+	| profileBlock |
+	profileBlock := [ AClassToInstrument new foo ].
+
+	profiler
+		beforeAction: [ SingletonClasToTest current increment ];
+		afterAction: [ Error signal ];
+		addMethods: { (AClassToInstrument >> #foo) };
+		profile: profileBlock.
+
+	"foo calls one increment"
+	self assert: SingletonClasToTest current counter equals: 2.
+
+	SingletonClasToTest reset.
+	profileBlock value.
+	"foo calls one increment"
+	self assert: SingletonClasToTest current counter equals: 1
+]
+
+{ #category : 'tests' }
+SourceCodeModificatorProfilerTest >> testBeforeRaisesError [
+
+	| profileBlock |
+	profileBlock := [ AClassToInstrument new foo ].
+
+	profiler
+		beforeAction: [ Error signal ];
+		afterAction: [ SingletonClasToTest current increment ];
+		addMethods: { (AClassToInstrument >> #foo) };
+		profile: profileBlock.
+
+	"foo calls one increment"
+	self assert: SingletonClasToTest current counter equals: 2.
+
+	SingletonClasToTest reset.
+	profileBlock value.
+	"foo calls one increment"
+	self assert: SingletonClasToTest current counter equals: 1
+]
+
+{ #category : 'tests' }
 SourceCodeModificatorProfilerTest >> testInstrument [
 
 	| profileBlock |

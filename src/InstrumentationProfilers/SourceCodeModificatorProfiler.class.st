@@ -19,13 +19,15 @@ SourceCodeModificatorProfiler >> addMethods: methodsCollection [
 { #category : 'accessing' }
 SourceCodeModificatorProfiler >> afterAction: aBlockClosure [
 
-	afterAction := aBlockClosure method ast body sourceCode
+	afterAction := aBlockClosure method ast body sourceCode.
+	afterAction := '[' , afterAction , '] on: Exception do: []'
 ]
 
 { #category : 'accessing' }
 SourceCodeModificatorProfiler >> beforeAction: aBlockClosure [
 
-	beforeAction := aBlockClosure method ast body sourceCode
+	beforeAction := aBlockClosure method ast body sourceCode.
+	beforeAction := '[' , beforeAction , '] on: Exception do: []'
 ]
 
 { #category : 'initialization' }
