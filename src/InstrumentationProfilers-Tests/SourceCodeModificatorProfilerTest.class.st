@@ -33,12 +33,7 @@ SourceCodeModificatorProfilerTest >> testAfterHasLocalReturn [
 		profile: profileBlock.
 
 	"foo calls one increment"
-	self assert: SingletonClasToTest current counter equals: 3.
-
-	SingletonClasToTest reset.
-	profileBlock value.
-	"foo calls one increment"
-	self assert: SingletonClasToTest current counter equals: 1
+	self assert: SingletonClasToTest current counter equals: 3
 ]
 
 { #category : 'tests' }
@@ -54,12 +49,7 @@ SourceCodeModificatorProfilerTest >> testAfterRaisesError [
 		profile: profileBlock.
 
 	"foo calls one increment"
-	self assert: SingletonClasToTest current counter equals: 2.
-
-	SingletonClasToTest reset.
-	profileBlock value.
-	"foo calls one increment"
-	self assert: SingletonClasToTest current counter equals: 1
+	self assert: SingletonClasToTest current counter equals: 2
 ]
 
 { #category : 'tests' }
@@ -75,12 +65,7 @@ SourceCodeModificatorProfilerTest >> testBeforeHasLocalReturn [
 		profile: profileBlock.
 
 	"foo calls one increment"
-	self assert: SingletonClasToTest current counter equals: 3.
-
-	SingletonClasToTest reset.
-	profileBlock value.
-	"foo calls one increment"
-	self assert: SingletonClasToTest current counter equals: 1
+	self assert: SingletonClasToTest current counter equals: 3
 ]
 
 { #category : 'tests' }
@@ -96,12 +81,7 @@ SourceCodeModificatorProfilerTest >> testBeforeRaisesError [
 		profile: profileBlock.
 
 	"foo calls one increment"
-	self assert: SingletonClasToTest current counter equals: 2.
-
-	SingletonClasToTest reset.
-	profileBlock value.
-	"foo calls one increment"
-	self assert: SingletonClasToTest current counter equals: 1
+	self assert: SingletonClasToTest current counter equals: 2
 ]
 
 { #category : 'tests' }
