@@ -21,6 +21,27 @@ SourceCodeModificatorProfilerTest >> setUp [
 ]
 
 { #category : 'tests' }
+SourceCodeModificatorProfilerTest >> testAfterHasLocalReturn [
+
+	| profileBlock |
+	profileBlock := [ AClassToInstrument new foo ].
+
+	profiler
+		beforeAction: [SingletonClasToTest current increment ];
+		afterAction: [ SingletonClasToTest current increment. ^ 5 ];
+		addMethods: { (AClassToInstrument >> #foo) };
+		profile: profileBlock.
+
+	"foo calls one increment"
+	self assert: SingletonClasToTest current counter equals: 3.
+
+	SingletonClasToTest reset.
+	profileBlock value.
+	"foo calls one increment"
+	self assert: SingletonClasToTest current counter equals: 1
+]
+
+{ #category : 'tests' }
 SourceCodeModificatorProfilerTest >> testAfterRaisesError [
 
 	| profileBlock |
@@ -34,6 +55,27 @@ SourceCodeModificatorProfilerTest >> testAfterRaisesError [
 
 	"foo calls one increment"
 	self assert: SingletonClasToTest current counter equals: 2.
+
+	SingletonClasToTest reset.
+	profileBlock value.
+	"foo calls one increment"
+	self assert: SingletonClasToTest current counter equals: 1
+]
+
+{ #category : 'tests' }
+SourceCodeModificatorProfilerTest >> testBeforeHasLocalReturn [
+
+	| profileBlock |
+	profileBlock := [ AClassToInstrument new foo ].
+
+	profiler
+		beforeAction: [SingletonClasToTest current increment. ^ 5 ];
+		afterAction: [ SingletonClasToTest current increment ];
+		addMethods: { (AClassToInstrument >> #foo) };
+		profile: profileBlock.
+
+	"foo calls one increment"
+	self assert: SingletonClasToTest current counter equals: 3.
 
 	SingletonClasToTest reset.
 	profileBlock value.
