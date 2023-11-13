@@ -12,16 +12,14 @@ BaselineOfInstrumentationProfilers >> baseline: spec [
 	spec for: #common do: [
 		spec
 			package: 'MethodProxiesRunWithIn';
-			package: 'InstrumentationProfilers' with: [ spec requires: #( 'MethodProxies' 'MethodProxiesRunWithIn' ) ].
+			package: 'MethodProfiler' with: [ spec requires: #( 'MethodProxies' 'MethodProxiesRunWithIn' ) ];
+			package: 'InstrumentationProfilers' with: [ spec requires: #( 'MethodProxies' 'MethodProxiesRunWithIn' 'MethodProfiler' ) ].
 
 		spec
 			baseline: 'MethodProxies'
 			with: [ spec repository: 'github://pharo-contributions/MethodProxies/src' ].
-		spec
-			baseline: 'MethodProfiler'
-			with: [ spec repository: 'github://jordanmontt/MethodProfiler:main' ].
 
 		spec
 			group: 'default' with: #( 'core' );
-			group: 'core' with: #( 'InstrumentationProfilers' 'MethodProfiler' ) ]
+			group: 'core' with: #( 'InstrumentationProfilers' ) ]
 ]
