@@ -20,8 +20,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'methods',
-		'lastRunner',
-		'useRunWithIn'
+		'useRunWithIn',
+		'runner'
 	],
 	#classVars : [
 		'FinalizationReg'
@@ -75,11 +75,11 @@ PrfMethodProfiler >> addPackage: aPackage [
 { #category : 'as yet unclassified' }
 PrfMethodProfiler >> createRunner [
 
-	lastRunner := useRunWithIn
+	runner := useRunWithIn
 		ifTrue: [ PrfMethodProfilerRunner newRWIForMethods: methods ]
 		ifFalse: [ PrfMethodProfilerRunner newForMethods: methods ].
 	FinalizationReg add: self.
-	^ lastRunner
+	^ runner
 ]
 
 { #category : 'initialization' }
@@ -109,10 +109,10 @@ PrfMethodProfiler >> excludePackage: aPackage [
 	aPackage classes do: [ :class | self excludeClass: class ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'finalization' }
 PrfMethodProfiler >> finalize [
 
-	lastRunner destroy
+	runner destroy
 ]
 
 { #category : 'initialization' }
@@ -132,6 +132,12 @@ PrfMethodProfiler >> isProfilingMethod: aMethod [
 PrfMethodProfiler >> profile: aBlock [
 
 	^ self createRunner profile: aBlock
+]
+
+{ #category : 'accessing' }
+PrfMethodProfiler >> runner [
+
+	^ runner
 ]
 
 { #category : 'initialization' }
