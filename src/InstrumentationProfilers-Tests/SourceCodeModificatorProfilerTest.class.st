@@ -7,8 +7,9 @@ Class {
 	#instVars : [
 		'profiler'
 	],
-	#category : 'InstrumentationProfilers-Tests',
-	#package : 'InstrumentationProfilers-Tests'
+	#category : 'InstrumentationProfilers-Tests-SourceCodeModificator',
+	#package : 'InstrumentationProfilers-Tests',
+	#tag : 'SourceCodeModificator'
 }
 
 { #category : 'running' }

@@ -7,8 +7,9 @@ Class {
 	#classVars : [
 		'Current'
 	],
-	#category : 'InstrumentationProfilers-Tests',
-	#package : 'InstrumentationProfilers-Tests'
+	#category : 'InstrumentationProfilers-Tests-SourceCodeModificator',
+	#package : 'InstrumentationProfilers-Tests',
+	#tag : 'SourceCodeModificator'
 }
 
 { #category : 'accessing' }
