@@ -48,7 +48,7 @@ GraphCallerTest >> setMpProfiler [
 ]
 
 { #category : 'running' }
-GraphCallerTest >> setProfilingBlockFor: testPackages [
+GraphCallerTest >> setProfilingBlockForTests: testPackages [
 
 	| testClasses testSuites |
 	testClasses := (testPackages flatCollect: #definedClasses) select: [ :e | e isTestCase ].
@@ -65,9 +65,21 @@ GraphCallerTest >> setRWIProfiler [
 ]
 
 { #category : 'tests' }
+GraphCallerTest >> testFuzzyMatcher [
+
+	self setProfilingBlockForTests: { 'FuzzyMatcher-Tests' asPackage }.
+	self setMethodsToInstrumentFor: { 'FuzzyMatcher' asPackage }.
+	
+	self setMpProfiler.
+	self setRWIProfiler.
+
+	self assertProfilersReturnSameResults
+]
+
+{ #category : 'tests' }
 GraphCallerTest >> testGraphAlgos [
 
-	self setProfilingBlockFor: { 'AI-Algorithms-Graph-Tests' asPackage }.
+	self setProfilingBlockForTests: { 'AI-Algorithms-Graph-Tests' asPackage }.
 	self setMethodsToInstrumentFor: { 'AI-Algorithms-Graph' asPackage }.
 
 	self setMpProfiler.
@@ -77,9 +89,33 @@ GraphCallerTest >> testGraphAlgos [
 ]
 
 { #category : 'tests' }
+GraphCallerTest >> testMicrodown [
+
+	self setProfilingBlockForTests: { 'Microdown-Tests' asPackage }.
+	self setMethodsToInstrumentFor: { 'Microdown' asPackage . 'Microdown-RichTextComposer' asPackage }.
+	
+	self setMpProfiler.
+	self setRWIProfiler.
+
+	self assertProfilersReturnSameResults
+]
+
+{ #category : 'tests' }
+GraphCallerTest >> testProfStef [
+
+	self setProfilingBlockForTests: { 'ProfStef-Tests' asPackage }.
+	self setMethodsToInstrumentFor: { 'ProfStef-Core' asPackage }.
+	
+	self setMpProfiler.
+	self setRWIProfiler.
+
+	self assertProfilersReturnSameResults
+]
+
+{ #category : 'tests' }
 GraphCallerTest >> testRewriteTool [
 
-	self setProfilingBlockFor: { 'NewTools-RewriterTools-Tests' asPackage .
+	self setProfilingBlockForTests: { 'NewTools-RewriterTools-Tests' asPackage .
 		'NewTools-RewriterTools-Backend-Tests' asPackage }.
 	self setMethodsToInstrumentFor: { 'NewTools-RewriterTools-Backend' asPackage .
 		'NewTools-RewriterTools' asPackage }.
