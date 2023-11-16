@@ -36,7 +36,7 @@ GraphCallerTest >> assertProfilersReturnSameResults [
 { #category : 'running' }
 GraphCallerTest >> setMethodsToInstrumentFor: packages [
 
-	packageMethods := packages flatCollect: #methods
+	packageMethods := packages flatCollect: #methods as: Set
 ]
 
 { #category : 'tests' }
