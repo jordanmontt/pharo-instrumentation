@@ -6,8 +6,9 @@ Class {
 		'beforeAction',
 		'afterAction'
 	],
-	#category : 'InstrumentationProfilers',
-	#package : 'InstrumentationProfilers'
+	#category : 'InstrumentationProfilers-Source code instrumentation',
+	#package : 'InstrumentationProfilers',
+	#tag : 'Source code instrumentation'
 }
 
 { #category : 'adding' }
