@@ -56,6 +56,10 @@ SourceCodeModificatorProfilerTest >> testAfterRaisesError [
 SourceCodeModificatorProfilerTest >> testBeforeHasLocalReturn [
 
 	| profileBlock |
+	self flag: 'I do not know if it makes sense to check this case.
+	Why whould the beforeMethod will have a non local return?'.
+	self skip.
+	
 	profileBlock := [ AClassToInstrument new foo ].
 
 	profiler

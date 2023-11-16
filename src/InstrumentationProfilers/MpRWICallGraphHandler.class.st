@@ -1,6 +1,6 @@
 Class {
-	#name : 'MpCallGraphHandler',
-	#superclass : 'MpHandler',
+	#name : 'MpRWICallGraphHandler',
+	#superclass : 'MpRWIHandler',
 	#instVars : [
 		'profiler',
 		'method'
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-MpCallGraphHandler class >> onMethod: aMethod profiler: aProfiler [
+MpRWICallGraphHandler class >> onMethod: aMethod profiler: aProfiler [
 
 	^ self new
 		method: aMethod;
@@ -20,25 +20,25 @@ MpCallGraphHandler class >> onMethod: aMethod profiler: aProfiler [
 ]
 
 { #category : 'evaluating' }
-MpCallGraphHandler >> afterMethod [
+MpRWICallGraphHandler >> afterMethod [
 
 	profiler exitingMethod
 ]
 
 { #category : 'evaluating' }
-MpCallGraphHandler >> beforeMethod [
+MpRWICallGraphHandler >> beforeMethod [
 
 	profiler enteringMethod: method
 ]
 
-{ #category : 'accessing' }
-MpCallGraphHandler >> method: aMethod [
+{ #category : 'evaluating' }
+MpRWICallGraphHandler >> method: aMethod [
 
 	method := aMethod
 ]
 
-{ #category : 'accessing' }
-MpCallGraphHandler >> profiler: aProfiler [
+{ #category : 'evaluating' }
+MpRWICallGraphHandler >> profiler: aProfiler [
 
 	profiler := aProfiler
 ]

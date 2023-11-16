@@ -18,13 +18,11 @@ PrfProfilerGraphAlgosTest >> setUp [
 { #category : 'tests' }
 PrfProfilerGraphAlgosTest >> testRunGraphAlgosTests [
 
-	| testClasses testSuites packageMethods classes |
-	classes := 'AI-Algorithms-Graph-Tests' asPackage definedClasses.
-	testClasses := classes select: [ :e | e isTestCase ].
+	| testClasses testSuites packageMethods |
+	testClasses := 'AI-Algorithms-Graph-Tests' asPackage definedClasses select: [ :e | e isTestCase ].
 	testSuites := testClasses collect: #suite.
 
-	packageMethods := classes flatCollect: #methods.
-
+	packageMethods := 'AI-Algorithms-Graph' asPackage methods.
 	packageMethods do: [ :m | profiler addMethod: m ].
 
 	profiler profile: [ testSuites do: #run ].
@@ -36,13 +34,11 @@ PrfProfilerGraphAlgosTest >> testRunGraphAlgosTests [
 { #category : 'tests' }
 PrfProfilerGraphAlgosTest >> testRunGraphAlgosTestsWithRWI [
 
-	| testClasses testSuites packageMethods classes |
-	classes := 'AI-Algorithms-Graph-Tests' asPackage definedClasses.
-	testClasses := classes select: [ :e | e isTestCase ].
+| testClasses testSuites packageMethods |
+	testClasses := 'AI-Algorithms-Graph-Tests' asPackage definedClasses select: [ :e | e isTestCase ].
 	testSuites := testClasses collect: #suite.
 
-	packageMethods := classes flatCollect: #methods.
-
+	packageMethods := 'AI-Algorithms-Graph' asPackage methods.
 	profiler useRunWithIn.
 	packageMethods do: [ :m | profiler addMethod: m ].
 
