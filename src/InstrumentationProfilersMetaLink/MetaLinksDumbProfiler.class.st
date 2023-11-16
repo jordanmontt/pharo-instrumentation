@@ -8,9 +8,8 @@ Class {
 		'callStack',
 		'nodes'
 	],
-	#category : 'InstrumentationProfilers-MetaLink',
-	#package : 'InstrumentationProfilers',
-	#tag : 'MetaLink'
+	#category : 'InstrumentationProfilersMetaLink',
+	#package : 'InstrumentationProfilersMetaLink'
 }
 
 { #category : 'adding' }

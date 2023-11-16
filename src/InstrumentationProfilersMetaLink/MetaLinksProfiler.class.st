@@ -28,9 +28,8 @@ Class {
 		'callStack',
 		'originalMethods'
 	],
-	#category : 'InstrumentationProfilers-MetaLink',
-	#package : 'InstrumentationProfilers',
-	#tag : 'MetaLink'
+	#category : 'InstrumentationProfilersMetaLink',
+	#package : 'InstrumentationProfilersMetaLink'
 }
 
 { #category : 'adding' }

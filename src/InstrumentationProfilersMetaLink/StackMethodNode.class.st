@@ -5,9 +5,8 @@ Class {
 		'name',
 		'sender'
 	],
-	#category : 'InstrumentationProfilers-MetaLink',
-	#package : 'InstrumentationProfilers',
-	#tag : 'MetaLink'
+	#category : 'InstrumentationProfilersMetaLink',
+	#package : 'InstrumentationProfilersMetaLink'
 }
 
 { #category : 'accessing' }
