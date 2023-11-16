@@ -25,7 +25,7 @@ GraphCallerTest >> assertProfilersReturnSameResults [
 		equals: (rwiProfiler nodes values sum: [ :node | node timesCalled ]).
 	
 	mpRootNode := (mpProfiler nodes values select: [ :e | e method = #root ]) first.
-	rwiRootNode := (mpProfiler nodes values select: [ :e | e method = #root ]) first.
+	rwiRootNode := (rwiProfiler nodes values select: [ :e | e method = #root ]) first.
 
 	self assert: mpRootNode timesCalled equals: 0.
 	self assert: rwiRootNode timesCalled equals: 0.
