@@ -5,41 +5,41 @@ The main API is composed of two methods:
 - `beforeExecutionWithReceiver: anObject arguments: anArrayOfObjects`
 "
 Class {
-	#name : 'MpRWIHandler',
+	#name : 'RWIHandler',
 	#superclass : 'Object',
 	#category : 'MethodProxiesRunWithIn',
 	#package : 'MethodProxiesRunWithIn'
 }
 
 { #category : 'evaluating' }
-MpRWIHandler >> aboutToReturnWithReceiver: receiver arguments: arguments [
+RWIHandler >> aboutToReturnWithReceiver: receiver arguments: arguments [
 
 	self afterMethod
 ]
 
 { #category : 'evaluating' }
-MpRWIHandler >> afterExecutionWithReceiver: anObject arguments: anArrayOfObjects returnValue: aReturnValue [
+RWIHandler >> afterExecutionWithReceiver: anObject arguments: anArrayOfObjects returnValue: aReturnValue [
 
 	^ aReturnValue
 ]
 
 { #category : 'evaluating' }
-MpRWIHandler >> afterMethod [
+RWIHandler >> afterMethod [
 	"Perform action after execution."
 ]
 
 { #category : 'evaluating' }
-MpRWIHandler >> beforeExecutionWithReceiver: anObject arguments: anArrayOfObjects [
+RWIHandler >> beforeExecutionWithReceiver: anObject arguments: anArrayOfObjects [
 
 	self beforeMethod
 ]
 
 { #category : 'evaluating' }
-MpRWIHandler >> beforeMethod [
+RWIHandler >> beforeMethod [
 ]
 
 { #category : 'evaluating' }
-MpRWIHandler >> captureCallingContext [
+RWIHandler >> captureCallingContext [
 
 	| runWithInContext |
 	

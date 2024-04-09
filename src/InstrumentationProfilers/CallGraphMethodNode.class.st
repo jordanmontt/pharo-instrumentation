@@ -41,6 +41,7 @@ CallGraphMethodNode >> initialize [
 
 { #category : 'accessing' }
 CallGraphMethodNode >> method [
+
 	^ method
 ]
 
@@ -52,6 +53,7 @@ CallGraphMethodNode >> method: aMethod [
 
 { #category : 'accessing' }
 CallGraphMethodNode >> methodCalls [
+
 	^ methodCalls
 ]
 
@@ -64,5 +66,6 @@ CallGraphMethodNode >> printOn: aStream [
 
 { #category : 'accessing' }
 CallGraphMethodNode >> timesCalled [
+
 	^ timesCalled
 ]

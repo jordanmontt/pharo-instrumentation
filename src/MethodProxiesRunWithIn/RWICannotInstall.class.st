@@ -1,5 +1,5 @@
 Class {
-	#name : 'MpRWICannotInstall',
+	#name : 'RWICannotInstall',
 	#superclass : 'Error',
 	#instVars : [
 		'methodProxy'
@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : 'signalling' }
-MpRWICannotInstall class >> signalWith: aMethodProxy [
+RWICannotInstall class >> signalWith: aMethodProxy [
 
 	self new
 		methodProxy: aMethodProxy;
@@ -17,13 +17,13 @@ MpRWICannotInstall class >> signalWith: aMethodProxy [
 ]
 
 { #category : 'accessing' }
-MpRWICannotInstall >> methodProxy [
+RWICannotInstall >> methodProxy [
 
 	^ methodProxy
 ]
 
 { #category : 'accessing' }
-MpRWICannotInstall >> methodProxy: anObject [
+RWICannotInstall >> methodProxy: anObject [
 
 	methodProxy := anObject
 ]

@@ -25,7 +25,7 @@ testCounts
 This package is developed and maintained by S. Ducasse, G. Polito and P. Tesone, but feel free to give a hand. 
 "
 Class {
-	#name : 'MpRWIMethodProxy',
+	#name : 'RWIMethodProxy',
 	#superclass : 'Object',
 	#instVars : [
 		'selector',
@@ -39,7 +39,7 @@ Class {
 }
 
 { #category : 'reflective operations' }
-MpRWIMethodProxy class >> doesNotUnderstand: aMessage [
+RWIMethodProxy class >> doesNotUnderstand: aMessage [
 
 	^ CompiledMethod 
 		  perform: aMessage selector
@@ -47,7 +47,7 @@ MpRWIMethodProxy class >> doesNotUnderstand: aMessage [
 ]
 
 { #category : 'instance creation' }
-MpRWIMethodProxy class >> on: selector inClass: aClass handler: aHandler [
+RWIMethodProxy class >> on: selector inClass: aClass handler: aHandler [
 
 	| proxy |
 	proxy := self new.
@@ -57,20 +57,20 @@ MpRWIMethodProxy class >> on: selector inClass: aClass handler: aHandler [
 ]
 
 { #category : 'instance creation' }
-MpRWIMethodProxy class >> onMethod: aMethod handler: aHandler [
+RWIMethodProxy class >> onMethod: aMethod handler: aHandler [
 
 	^ self on: aMethod selector inClass: aMethod methodClass handler: aHandler
 ]
 
 { #category : 'private' }
-MpRWIMethodProxy class >> uninstallAllWrappers [
+RWIMethodProxy class >> uninstallAllWrappers [
 	"self uninstallAllWrappers"
 
 	self allSubInstancesDo: [ :inst | inst uninstall ]
 ]
 
 { #category : 'comparing' }
-MpRWIMethodProxy >> = anObject [
+RWIMethodProxy >> = anObject [
 	"Answer whether the receiver and the argument represent the same
 	object. If = is redefined in any subclass, consider also redefining the
 	message hash."
@@ -79,7 +79,7 @@ MpRWIMethodProxy >> = anObject [
 ]
 
 { #category : 'accessing' }
-MpRWIMethodProxy >> calypsoEnvironmentType [
+RWIMethodProxy >> calypsoEnvironmentType [
 	^ proxifiedMethod 
 			ifNotNil: [ proxifiedMethod calypsoEnvironmentType ]
 			ifNil: [ super calypsoEnvironmentType ]
@@ -87,7 +87,7 @@ MpRWIMethodProxy >> calypsoEnvironmentType [
 ]
 
 { #category : 'initialization' }
-MpRWIMethodProxy >> class: aClass selector: aSymbol [
+RWIMethodProxy >> class: aClass selector: aSymbol [
 
 	self
 		methodClass: aClass;
@@ -95,13 +95,13 @@ MpRWIMethodProxy >> class: aClass selector: aSymbol [
 ]
 
 { #category : 'accessing' }
-MpRWIMethodProxy >> disable [
+RWIMethodProxy >> disable [
 
 	isDisabled := true
 ]
 
 { #category : 'accessing' }
-MpRWIMethodProxy >> doesNotUnderstand: aMessage [
+RWIMethodProxy >> doesNotUnderstand: aMessage [
 	^ proxifiedMethod 
 			ifNotNil: [ proxifiedMethod 
 								perform: aMessage selector 
@@ -111,41 +111,41 @@ MpRWIMethodProxy >> doesNotUnderstand: aMessage [
 ]
 
 { #category : 'accessing' }
-MpRWIMethodProxy >> fetchMethod [
+RWIMethodProxy >> fetchMethod [
 	
 	"Fetches the method to be instrumented"
 	^ methodClass >> selector
 ]
 
 { #category : 'installation' }
-MpRWIMethodProxy >> handler [
+RWIMethodProxy >> handler [
 
 	^ handler
 ]
 
 { #category : 'accessing' }
-MpRWIMethodProxy >> handler: aHandler [
+RWIMethodProxy >> handler: aHandler [
 
 	handler := aHandler
 ]
 
 { #category : 'installation' }
-MpRWIMethodProxy >> initialize [
+RWIMethodProxy >> initialize [
 
 	super initialize.
 	isDisabled := true
 ]
 
 { #category : 'installation' }
-MpRWIMethodProxy >> install [
+RWIMethodProxy >> install [
 	"We have a method proxy with a method = class * selector of the method it will proxy."
 	
 	|  method |
 	method := methodClass compiledMethodAt: selector ifAbsent: [ 
-		MpRWICannotInstall signalWith: self ].
+		RWICannotInstall signalWith: self ].
 	
 	(self shouldWrap: method) ifFalse: [ 
-		MpRWICannotInstall signalWith: self ].
+		RWICannotInstall signalWith: self ].
 	
 	self unproxifiedMethod: method.
 	methodClass methodDict at: selector put: self.
@@ -156,19 +156,19 @@ MpRWIMethodProxy >> install [
 ]
 
 { #category : 'accessing' }
-MpRWIMethodProxy >> isEnabled [
+RWIMethodProxy >> isEnabled [
 
 	^ isDisabled not
 ]
 
 { #category : 'accessing' }
-MpRWIMethodProxy >> isEnabled: anObject [
+RWIMethodProxy >> isEnabled: anObject [
 
 	isDisabled := anObject not
 ]
 
 { #category : 'testing' }
-MpRWIMethodProxy >> isInstalled [
+RWIMethodProxy >> isInstalled [
 	"Return whether the receiver is effectively installed in a method dictionary.
 	Note that in the case of nesting of method proxies the inner ones are not considered as installed."
 	
@@ -179,30 +179,30 @@ MpRWIMethodProxy >> isInstalled [
 ]
 
 { #category : 'testing' }
-MpRWIMethodProxy >> isMethodProxy [
+RWIMethodProxy >> isMethodProxy [
 
 	^ true
 ]
 
 { #category : 'accessing' }
-MpRWIMethodProxy >> methodClass [
+RWIMethodProxy >> methodClass [
 	^ methodClass
 ]
 
 { #category : 'accessing' }
-MpRWIMethodProxy >> methodClass: aClass [
+RWIMethodProxy >> methodClass: aClass [
 
 	methodClass := aClass
 ]
 
 { #category : 'evaluating' }
-MpRWIMethodProxy >> name [
+RWIMethodProxy >> name [
 
 	^ self printString
 ]
 
 { #category : 'printing' }
-MpRWIMethodProxy >> printOn: aStream [
+RWIMethodProxy >> printOn: aStream [
 
 	aStream
 		nextPutAll: self class name;
@@ -214,7 +214,7 @@ MpRWIMethodProxy >> printOn: aStream [
 ]
 
 { #category : 'evaluating' }
-MpRWIMethodProxy >> receiver: aReceiver withArgs: argArray executeMethod: compiledMethod [
+RWIMethodProxy >> receiver: aReceiver withArgs: argArray executeMethod: compiledMethod [
 	"Execute compiledMethod against the receiver and args in argArray"
 
 	<primitive: 188>
@@ -223,7 +223,7 @@ MpRWIMethodProxy >> receiver: aReceiver withArgs: argArray executeMethod: compil
 ]
 
 { #category : 'evaluating' }
-MpRWIMethodProxy >> run: aSelector with: anArrayOfObjects in: aReceiver [
+RWIMethodProxy >> run: aSelector with: anArrayOfObjects in: aReceiver [
 	"Do not intercept"
 
 	<methodProxyCannotWrap>
@@ -240,19 +240,19 @@ MpRWIMethodProxy >> run: aSelector with: anArrayOfObjects in: aReceiver [
 ]
 
 { #category : 'accessing' }
-MpRWIMethodProxy >> selector [
+RWIMethodProxy >> selector [
 
 	^ selector
 ]
 
 { #category : 'accessing' }
-MpRWIMethodProxy >> selector: aSymbol [
+RWIMethodProxy >> selector: aSymbol [
 
 	selector := aSymbol
 ]
 
 { #category : 'installation' }
-MpRWIMethodProxy >> shouldWrap: aMethod [
+RWIMethodProxy >> shouldWrap: aMethod [
 
 	(aMethod isCompiledMethod not and: [
 		 aMethod handler class ~~ self handler class ]) ifTrue: [ ^ true ].
@@ -265,7 +265,7 @@ MpRWIMethodProxy >> shouldWrap: aMethod [
 ]
 
 { #category : 'installation' }
-MpRWIMethodProxy >> uninstall [
+RWIMethodProxy >> uninstall [
 
 	| installedMethod |
 	thisProcess runInMetaLevel: [
@@ -280,20 +280,20 @@ MpRWIMethodProxy >> uninstall [
 ]
 
 { #category : 'accessing' }
-MpRWIMethodProxy >> unproxifiedMethod [
+RWIMethodProxy >> unproxifiedMethod [
 	"The unproxifedMethod returns the proxified method even in case we have multiple proxified nesting."
 	
 	^ proxifiedMethod ifNotNil: [ proxifiedMethod unproxifiedMethod ]
 ]
 
 { #category : 'when installed' }
-MpRWIMethodProxy >> unproxifiedMethod: aCompiledMethod [
+RWIMethodProxy >> unproxifiedMethod: aCompiledMethod [
 
 	proxifiedMethod := aCompiledMethod
 ]
 
 { #category : 'evaluating' }
-MpRWIMethodProxy >> valueWithReceiver: receiver arguments: arguments [
+RWIMethodProxy >> valueWithReceiver: receiver arguments: arguments [
 
 	<methodProxyCannotWrap>
 	| result |
@@ -309,7 +309,7 @@ MpRWIMethodProxy >> valueWithReceiver: receiver arguments: arguments [
 		          receiver: receiver
 		          withArgs: arguments
 		          executeMethod: proxifiedMethod ] methodProxyEnsure:
-		(MpRWIInstrumentationUnwinder
+		(RWIInstrumentationUnwinder
 			 newWithHandler: handler
 			 receiver: receiver
 			 arguments: arguments).
@@ -321,19 +321,19 @@ MpRWIMethodProxy >> valueWithReceiver: receiver arguments: arguments [
 ]
 
 { #category : 'accessing' }
-MpRWIMethodProxy >> wrappedClass [
+RWIMethodProxy >> wrappedClass [
 
 	^ methodClass
 ]
 
 { #category : 'accessing' }
-MpRWIMethodProxy >> wrappedClass: aClass [
+RWIMethodProxy >> wrappedClass: aClass [
 
 	methodClass := aClass
 ]
 
 { #category : 'when installed' }
-MpRWIMethodProxy >> wrappedMethod [
+RWIMethodProxy >> wrappedMethod [
 
 	^ proxifiedMethod
 ]

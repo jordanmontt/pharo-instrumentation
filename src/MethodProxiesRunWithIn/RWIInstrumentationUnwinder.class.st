@@ -1,5 +1,5 @@
 Class {
-	#name : 'MpRWIInstrumentationUnwinder',
+	#name : 'RWIInstrumentationUnwinder',
 	#superclass : 'InstrumentationEnsurer',
 	#instVars : [
 		'receiver',
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-MpRWIInstrumentationUnwinder class >> newWithHandler: aHandler receiver: receiver arguments: arguments [
+RWIInstrumentationUnwinder class >> newWithHandler: aHandler receiver: receiver arguments: arguments [
 
 	^ self new
 		  handler: aHandler;
@@ -21,43 +21,43 @@ MpRWIInstrumentationUnwinder class >> newWithHandler: aHandler receiver: receive
 ]
 
 { #category : 'accessing' }
-MpRWIInstrumentationUnwinder >> arguments [
+RWIInstrumentationUnwinder >> arguments [
 
 	^ arguments
 ]
 
 { #category : 'accessing' }
-MpRWIInstrumentationUnwinder >> arguments: anObject [
+RWIInstrumentationUnwinder >> arguments: anObject [
 
 	arguments := anObject
 ]
 
 { #category : 'accessing' }
-MpRWIInstrumentationUnwinder >> handler [
+RWIInstrumentationUnwinder >> handler [
 
 	^ handler
 ]
 
 { #category : 'accessing' }
-MpRWIInstrumentationUnwinder >> handler: anObject [
+RWIInstrumentationUnwinder >> handler: anObject [
 
 	handler := anObject
 ]
 
 { #category : 'accessing' }
-MpRWIInstrumentationUnwinder >> receiver [
+RWIInstrumentationUnwinder >> receiver [
 
 	^ receiver
 ]
 
 { #category : 'accessing' }
-MpRWIInstrumentationUnwinder >> receiver: anObject [
+RWIInstrumentationUnwinder >> receiver: anObject [
 
 	receiver := anObject
 ]
 
 { #category : 'evaluating' }
-MpRWIInstrumentationUnwinder >> value [
+RWIInstrumentationUnwinder >> value [
 
 	<methodProxyCannotWrap>
 	thisProcess runInMetaLevel: [

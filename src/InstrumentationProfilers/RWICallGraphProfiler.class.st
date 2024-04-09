@@ -9,11 +9,11 @@ Class {
 { #category : 'configuration' }
 RWICallGraphProfiler >> newHandler: aMethod [
 
-	^ MpRWICallGraphHandler onMethod: aMethod profiler: self
+	^ RWICallGraphHandler onMethod: aMethod profiler: self
 ]
 
 { #category : 'configuration' }
 RWICallGraphProfiler >> newMethodProxy: aMethod [
 
-	^ MpRWIMethodProxy onMethod: aMethod handler: (self newHandler: aMethod)
+	^ RWIMethodProxy onMethod: aMethod handler: (self newHandler: aMethod)
 ]

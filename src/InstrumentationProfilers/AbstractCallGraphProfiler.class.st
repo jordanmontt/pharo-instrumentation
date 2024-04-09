@@ -11,7 +11,7 @@ Class {
 	#tag : 'CallGraph'
 }
 
-{ #category : 'api' }
+{ #category : 'private' }
 AbstractCallGraphProfiler >> addMethod: aMethod [
 
 	methodProxies
@@ -24,7 +24,6 @@ AbstractCallGraphProfiler >> addMethods: aSetOfMethods [
 
 	(aSetOfMethods collect: [ :method | method unproxifiedMethod ])
 		do: [ :method | self addMethod: method ]
-
 ]
 
 { #category : 'accessing' }
@@ -42,13 +41,7 @@ AbstractCallGraphProfiler >> enteringMethod: aMethod [
 	node := self nodeForMethod: aMethod.
 	node addCall.
 	callerNode addCallTo: node.
-	callStack push: node.
-	"profiler callStack ensureStackIsInitialized.
-	callerNode := profiler callStack top.
-	node := profiler nodeForMethod: method.
-	callerNode addCallTo: node.
-	node addCall.
-	profiler callStack push: node"
+	callStack push: node
 ]
 
 { #category : 'api' }
@@ -64,12 +57,6 @@ AbstractCallGraphProfiler >> initialize [
 	methodProxies := Dictionary new.
 	nodes := Dictionary new.
 	callStack := CallGraphProcessCallStack onProfiler: self
-]
-
-{ #category : 'instrumentation' }
-AbstractCallGraphProfiler >> installMethodProxies [
-
-	methodProxies valuesDo: #install
 ]
 
 { #category : 'accessing' }
@@ -121,17 +108,11 @@ AbstractCallGraphProfiler >> rootNode [
 { #category : 'profiling' }
 AbstractCallGraphProfiler >> startProfiling [
 
-	self installMethodProxies
+	methodProxies valuesDo: #install
 ]
 
 { #category : 'profiling' }
 AbstractCallGraphProfiler >> stopProfiling [
-
-	self uninstallMethodProxies
-]
-
-{ #category : 'instrumentation' }
-AbstractCallGraphProfiler >> uninstallMethodProxies [
 
 	methodProxies valuesDo: #uninstall
 ]

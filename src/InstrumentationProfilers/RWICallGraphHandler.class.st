@@ -1,6 +1,6 @@
 Class {
-	#name : 'MpRWICallGraphHandler',
-	#superclass : 'MpRWIHandler',
+	#name : 'RWICallGraphHandler',
+	#superclass : 'RWIHandler',
 	#instVars : [
 		'profiler',
 		'method'
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-MpRWICallGraphHandler class >> onMethod: aMethod profiler: aProfiler [
+RWICallGraphHandler class >> onMethod: aMethod profiler: aProfiler [
 
 	^ self new
 		method: aMethod;
@@ -20,25 +20,25 @@ MpRWICallGraphHandler class >> onMethod: aMethod profiler: aProfiler [
 ]
 
 { #category : 'evaluating' }
-MpRWICallGraphHandler >> afterMethod [
+RWICallGraphHandler >> afterMethod [
 
 	profiler exitingMethod
 ]
 
 { #category : 'evaluating' }
-MpRWICallGraphHandler >> beforeMethod [
+RWICallGraphHandler >> beforeMethod [
 
 	profiler enteringMethod: method
 ]
 
 { #category : 'evaluating' }
-MpRWICallGraphHandler >> method: aMethod [
+RWICallGraphHandler >> method: aMethod [
 
 	method := aMethod
 ]
 
 { #category : 'evaluating' }
-MpRWICallGraphHandler >> profiler: aProfiler [
+RWICallGraphHandler >> profiler: aProfiler [
 
 	profiler := aProfiler
 ]

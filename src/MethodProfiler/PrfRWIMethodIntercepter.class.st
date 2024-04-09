@@ -9,5 +9,5 @@ Class {
 { #category : 'accessing' }
 PrfRWIMethodIntercepter >> methodProxyClass [
 
-	^ MpRWIMethodProxy
+	^ RWIMethodProxy
 ]
