@@ -58,7 +58,6 @@ MetaLinksProfiler >> initialize [
 	afterMetaLink := MetaLink new
 		metaObject: self;
 		selector: #exitingMethod;
-		arguments: #(method);
 		control: #after;
 		optionCompileOnLinkInstallation: true;
 		yourself.
