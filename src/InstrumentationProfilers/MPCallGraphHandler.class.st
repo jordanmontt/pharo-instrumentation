@@ -5,9 +5,9 @@ Class {
 		'profiler',
 		'method'
 	],
-	#category : 'InstrumentationProfilers-CallGraph',
+	#category : 'InstrumentationProfilers-MethodProxies',
 	#package : 'InstrumentationProfilers',
-	#tag : 'CallGraph'
+	#tag : 'MethodProxies'
 }
 
 { #category : 'instance creation' }

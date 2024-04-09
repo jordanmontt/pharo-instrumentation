@@ -7,8 +7,9 @@ Trait {
 		'callStack',
 		'nodes'
 	],
-	#category : 'InstrumentationProfilers',
-	#package : 'InstrumentationProfilers'
+	#category : 'InstrumentationProfilers-Core',
+	#package : 'InstrumentationProfilers',
+	#tag : 'Core'
 }
 
 { #category : 'accessing' }

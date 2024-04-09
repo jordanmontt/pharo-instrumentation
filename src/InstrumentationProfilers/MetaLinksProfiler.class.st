@@ -28,8 +28,9 @@ Class {
 		'afterMetaLink',
 		'methodsToInstrument'
 	],
-	#category : 'InstrumentationProfilersMetaLink',
-	#package : 'InstrumentationProfilersMetaLink'
+	#category : 'InstrumentationProfilers-MetaLinks',
+	#package : 'InstrumentationProfilers',
+	#tag : 'MetaLinks'
 }
 
 { #category : 'adding' }
