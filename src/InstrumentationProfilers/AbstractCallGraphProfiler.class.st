@@ -1,10 +1,10 @@
 Class {
 	#name : 'AbstractCallGraphProfiler',
 	#superclass : 'Object',
+	#traits : 'TCallGraph',
+	#classTraits : 'TCallGraph classTrait',
 	#instVars : [
-		'methodProxies',
-		'callStack',
-		'nodes'
+		'methodProxies'
 	],
 	#category : 'InstrumentationProfilers-CallGraph',
 	#package : 'InstrumentationProfilers',
@@ -24,30 +24,6 @@ AbstractCallGraphProfiler >> addMethods: aSetOfMethods [
 
 	(aSetOfMethods collect: [ :method | method unproxifiedMethod ])
 		do: [ :method | self addMethod: method ]
-]
-
-{ #category : 'accessing' }
-AbstractCallGraphProfiler >> callStack [
-
-	^ callStack
-]
-
-{ #category : 'api' }
-AbstractCallGraphProfiler >> enteringMethod: aMethod [
-
-	| node callerNode |
-	callStack ensureStackIsInitialized.
-	callerNode := callStack top.
-	node := self nodeForMethod: aMethod.
-	node addCall.
-	callerNode addCallTo: node.
-	callStack push: node
-]
-
-{ #category : 'api' }
-AbstractCallGraphProfiler >> exitingMethod [
-
-	callStack pop
 ]
 
 { #category : 'initialization' }
@@ -73,27 +49,6 @@ AbstractCallGraphProfiler >> newHandler: aMethod [
 { #category : 'configuration' }
 AbstractCallGraphProfiler >> newMethodProxy: aMethod [ 
 	^ self subclassResponsibility
-]
-
-{ #category : 'configuration' }
-AbstractCallGraphProfiler >> nodeForMethod: method [
-
-	^ nodes at: method
-		ifPresent: [ :node | node ]
-		ifAbsentPut: [ CallGraphMethodNode forMethod: method ]
-]
-
-{ #category : 'accessing' }
-AbstractCallGraphProfiler >> nodes [
-
-	^ nodes
-]
-
-{ #category : 'api' }
-AbstractCallGraphProfiler >> profile: aBlock [
-
-	self startProfiling.
-	[ aBlock value ] ensure: [ self stopProfiling ]
 ]
 
 { #category : 'configuration' }

@@ -4,9 +4,9 @@ Class {
 	#instVars : [
 		'beforeMetaLink',
 		'afterMetaLink',
-		'originalMethods',
 		'callStack',
-		'nodes'
+		'nodes',
+		'methodsToInstrument'
 	],
 	#category : 'InstrumentationProfilersMetaLink',
 	#package : 'InstrumentationProfilersMetaLink'
@@ -15,7 +15,7 @@ Class {
 { #category : 'adding' }
 MetaLinksDumbProfiler >> addMethods: methodsCollection [
 
-	originalMethods addAll: methodsCollection
+	methodsToInstrument addAll: methodsCollection
 ]
 
 { #category : 'initialization' }
@@ -46,12 +46,12 @@ MetaLinksDumbProfiler >> initialize [
 
 	| aNode |
 	super initialize.
-	originalMethods := Set new.
+	methodsToInstrument := Set new.
 	nodes := OrderedCollection new.	
 	
 	aNode := StackMethodNode new
-			name: #root;
-			yourself.
+		name: #root;
+		yourself.
 	nodes add: aNode.
 	callStack := Stack new
 		push: aNode;
@@ -83,7 +83,7 @@ MetaLinksDumbProfiler >> profile: aBlock [
 { #category : 'adding' }
 MetaLinksDumbProfiler >> startProfiling [
 
-	originalMethods do: [ :method |
+	methodsToInstrument do: [ :method |
 		method ast link: beforeMetaLink.
 		method ast body link: afterMetaLink ]
 ]
@@ -91,7 +91,7 @@ MetaLinksDumbProfiler >> startProfiling [
 { #category : 'adding' }
 MetaLinksDumbProfiler >> stopProfiling [
 
-	originalMethods do: [ :method |
+	methodsToInstrument do: [ :method |
 		method ast removeLink: beforeMetaLink.
 		method ast body removeLink: afterMetaLink.
 		beforeMetaLink uninstall.

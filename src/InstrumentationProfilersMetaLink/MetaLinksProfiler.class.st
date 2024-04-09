@@ -21,12 +21,12 @@ profiler
 Class {
 	#name : 'MetaLinksProfiler',
 	#superclass : 'Object',
+	#traits : 'TCallGraph',
+	#classTraits : 'TCallGraph classTrait',
 	#instVars : [
 		'beforeMetaLink',
 		'afterMetaLink',
-		'result',
-		'callStack',
-		'originalMethods'
+		'methodsToInstrument'
 	],
 	#category : 'InstrumentationProfilersMetaLink',
 	#package : 'InstrumentationProfilersMetaLink'
@@ -35,36 +35,17 @@ Class {
 { #category : 'adding' }
 MetaLinksProfiler >> addMethods: methodsCollection [
 
-	originalMethods addAll: methodsCollection.
-	result methods: originalMethods
-]
-
-{ #category : 'initialization' }
-MetaLinksProfiler >> enterMethod: aMethod [
-
-	| node precedingNode |
-	callStack ensureStackIsInitialized.
-	precedingNode := callStack top.
-	node := result nodeForMethod: aMethod withPrecedingNode: precedingNode.
-	precedingNode addCallTo: node.
-	node addCall.
-	callStack push: node.
-	node enteringNode
-]
-
-{ #category : 'initialization' }
-MetaLinksProfiler >> exitMethod: aMethod [
-
-	callStack pop exitingNode
+	methodsToInstrument addAll:
+		(methodsCollection collect: [ :method | method unproxifiedMethod ])
 ]
 
 { #category : 'initialization' }
 MetaLinksProfiler >> initialize [
 
 	super initialize.
-	originalMethods := Set new.
-	result := PrfMethodProfilerResult new.
-	callStack := PrfProcessCallStack newWithRunner: self.
+	methodsToInstrument := Set new.
+	callStack := CallGraphProcessCallStack onProfiler: self.
+	nodes := Dictionary new.
 
 	beforeMetaLink := MetaLink new
 		metaObject: self;
@@ -83,30 +64,18 @@ MetaLinksProfiler >> initialize [
 ]
 
 { #category : 'adding' }
-MetaLinksProfiler >> profile: aBlock [
-
-	result mainProcess: thisProcess.
-	self startProfiling.
-	aBlock ensure: [ self stopProfiling ].
-	result buildCallGraph.
-	^ result
-]
-
-{ #category : 'adding' }
 MetaLinksProfiler >> startProfiling [
 
-	originalMethods do: [ :method |
+	methodsToInstrument do: [ :method |
 		method ast
 			link: beforeMetaLink;
-			link: afterMetaLink ].
-	result rootNode enteringNode
+			link: afterMetaLink ]
 ]
 
 { #category : 'adding' }
 MetaLinksProfiler >> stopProfiling [
 
-	result rootNode exitingNode.
-	originalMethods do: [ :method |
+	methodsToInstrument do: [ :method |
 		method ast
 			removeLink: beforeMetaLink;
 			removeLink: afterMetaLink.
