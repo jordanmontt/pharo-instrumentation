@@ -8,8 +8,8 @@ Class {
 		'nodes',
 		'methodsToInstrument'
 	],
-	#category : 'InstrumentationProfilersMetaLink',
-	#package : 'InstrumentationProfilersMetaLink'
+	#category : 'InstrumentationProfilersWithMetaLinks',
+	#package : 'InstrumentationProfilersWithMetaLinks'
 }
 
 { #category : 'adding' }
