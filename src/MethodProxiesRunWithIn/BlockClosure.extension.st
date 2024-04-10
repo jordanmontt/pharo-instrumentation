@@ -7,9 +7,10 @@ BlockClosure >> methodProxyEnsure: aBlock [
 	 implemented as a primitive.  Primitive 198 always fails.  The VM uses prim
 	 198 in a context's method as the mark for an ensure:/ifCurtailed: activation."
 
-	| complete returnValue |
+	| handler complete returnValue |
 	<primitive: 198>
 	<methodProxyCannotWrap>
+	handler := aBlock.
 	returnValue := self valueNoContextSwitch.
 	complete ifNil:[
 		complete := true.
