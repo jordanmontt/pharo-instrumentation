@@ -41,7 +41,6 @@ CallGraphProcessCallStack >> initialize [
 
 { #category : 'removing' }
 CallGraphProcessCallStack >> pop [
-	"Precondition, the process variable is already initialized"
 
 	^ self value pop
 ]
