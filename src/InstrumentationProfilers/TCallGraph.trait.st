@@ -7,9 +7,9 @@ Trait {
 		'callStack',
 		'nodes'
 	],
-	#category : 'InstrumentationProfilers-Core',
+	#category : 'InstrumentationProfilers-Call-Graph',
 	#package : 'InstrumentationProfilers',
-	#tag : 'Core'
+	#tag : 'Call-Graph'
 }
 
 { #category : 'accessing' }
@@ -48,11 +48,4 @@ TCallGraph >> nodeForMethod: method [
 TCallGraph >> nodes [
 
 	^ nodes
-]
-
-{ #category : 'initialization' }
-TCallGraph >> profile: aBlock [
-
-	self startProfiling.
-	aBlock ensure: [ self stopProfiling ]
 ]

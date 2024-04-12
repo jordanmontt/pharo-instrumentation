@@ -1,54 +1,59 @@
 Class {
 	#name : 'AbstractCallGraphProfiler',
-	#superclass : 'Object',
-	#traits : 'TCallGraph',
-	#classTraits : 'TCallGraph classTrait',
+	#superclass : 'AbstractProfiler',
 	#instVars : [
-		'methodProxies'
+		'nodes',
+		'callStack'
 	],
-	#category : 'InstrumentationProfilers-Core',
+	#category : 'InstrumentationProfilers-Call-Graph',
 	#package : 'InstrumentationProfilers',
-	#tag : 'Core'
+	#tag : 'Call-Graph'
 }
 
-{ #category : 'private' }
-AbstractCallGraphProfiler >> addMethod: aMethod [
+{ #category : 'accessing' }
+AbstractCallGraphProfiler >> callStack [
 
-	methodProxies
-		at: aMethod
-		put: (self newMethodProxy: aMethod)
+	^ callStack
 ]
 
-{ #category : 'api' }
-AbstractCallGraphProfiler >> addMethods: aSetOfMethods [
+{ #category : 'initialization' }
+AbstractCallGraphProfiler >> enteringMethod: aMethod [
 
-	(aSetOfMethods collect: [ :method | method unproxifiedMethod ])
-		do: [ :method | self addMethod: method ]
+	| node callerNode |
+	callStack ensureStackIsInitialized.
+	callerNode := callStack top.
+	node := self nodeForMethod: aMethod.
+	node addCall.
+	callerNode addCallTo: node.
+	callStack push: node
+]
+
+{ #category : 'initialization' }
+AbstractCallGraphProfiler >> exitingMethod [
+
+	callStack pop
 ]
 
 { #category : 'initialization' }
 AbstractCallGraphProfiler >> initialize [
 
 	super initialize.
-	methodProxies := Dictionary new.
 	nodes := Dictionary new.
 	callStack := CallGraphProcessCallStack onProfiler: self
 ]
 
+{ #category : 'initialization' }
+AbstractCallGraphProfiler >> nodeForMethod: method [
+
+	^ nodes at: method
+		ifPresent: [ :node | node ]
+		ifAbsentPut: [ CallGraphMethodNode forMethod: method ]
+]
+
 { #category : 'accessing' }
-AbstractCallGraphProfiler >> methodProxies [
+AbstractCallGraphProfiler >> nodes [
 
-	^ methodProxies
-]
-
-{ #category : 'configuration' }
-AbstractCallGraphProfiler >> newHandler: aMethod [ 
-	^ self subclassResponsibility
-]
-
-{ #category : 'configuration' }
-AbstractCallGraphProfiler >> newMethodProxy: aMethod [ 
-	^ self subclassResponsibility
+	^ nodes
 ]
 
 { #category : 'configuration' }
@@ -58,16 +63,4 @@ AbstractCallGraphProfiler >> rootNode [
 	rootNode := CallGraphMethodNode forMethod: #root.
 	nodes at: #root put: rootNode.
 	^ rootNode
-]
-
-{ #category : 'profiling' }
-AbstractCallGraphProfiler >> startProfiling [
-
-	methodProxies valuesDo: #install
-]
-
-{ #category : 'profiling' }
-AbstractCallGraphProfiler >> stopProfiling [
-
-	methodProxies valuesDo: #uninstall
 ]

@@ -5,9 +5,9 @@ Class {
 		'profiler',
 		'method'
 	],
-	#category : 'InstrumentationProfilers-RunWithIn',
+	#category : 'InstrumentationProfilers-Call-Graph',
 	#package : 'InstrumentationProfilers',
-	#tag : 'RunWithIn'
+	#tag : 'Call-Graph'
 }
 
 { #category : 'instance creation' }

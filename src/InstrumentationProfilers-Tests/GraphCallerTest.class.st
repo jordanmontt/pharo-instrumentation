@@ -34,17 +34,29 @@ GraphCallerTest >> assertProfilersReturnSameResults [
 ]
 
 { #category : 'running' }
+GraphCallerTest >> runMpProfiler [
+
+	mpProfiler addMethods: packageMethods.
+	mpProfiler profile: profilingBlock
+]
+
+{ #category : 'running' }
+GraphCallerTest >> runRWIProfiler [
+
+	rwiProfiler addMethods: packageMethods.
+	rwiProfiler profile: profilingBlock
+]
+
+{ #category : 'accessing' }
+GraphCallerTest >> rwiProfiler: aRWIProfiler [
+
+	rwiProfiler := aRWIProfiler
+]
+
+{ #category : 'running' }
 GraphCallerTest >> setMethodsToInstrumentFor: packages [
 
 	packageMethods := packages flatCollect: #methods as: Set
-]
-
-{ #category : 'tests' }
-GraphCallerTest >> setMpProfiler [
-
-	mpProfiler := MpCallGraphProfiler new.
-	mpProfiler addMethods: packageMethods.
-	mpProfiler profile: profilingBlock
 ]
 
 { #category : 'running' }
@@ -56,12 +68,12 @@ GraphCallerTest >> setProfilingBlockForTests: testPackages [
 	profilingBlock := [ testSuites do: #run ]
 ]
 
-{ #category : 'tests' }
-GraphCallerTest >> setRWIProfiler [
+{ #category : 'running' }
+GraphCallerTest >> setUp [
 
-	rwiProfiler := RWICallGraphProfiler new.
-	rwiProfiler addMethods: packageMethods.
-	rwiProfiler profile: profilingBlock
+	super setUp.
+	mpProfiler := MpCallGraphProfiler new.
+	rwiProfiler := RWICallGraphProfiler new
 ]
 
 { #category : 'tests' }
@@ -70,8 +82,8 @@ GraphCallerTest >> testFuzzyMatcher [
 	self setProfilingBlockForTests: { 'FuzzyMatcher-Tests' asPackage }.
 	self setMethodsToInstrumentFor: { 'FuzzyMatcher' asPackage }.
 	
-	self setMpProfiler.
-	self setRWIProfiler.
+	self runMpProfiler.
+	self runRWIProfiler.
 
 	self assertProfilersReturnSameResults
 ]
@@ -82,8 +94,8 @@ GraphCallerTest >> testGraphAlgos [
 	self setProfilingBlockForTests: { 'AI-Algorithms-Graph-Tests' asPackage }.
 	self setMethodsToInstrumentFor: { 'AI-Algorithms-Graph' asPackage }.
 
-	self setMpProfiler.
-	self setRWIProfiler.
+	self runMpProfiler.
+	self runRWIProfiler.
 
 	self assertProfilersReturnSameResults
 ]
@@ -94,8 +106,8 @@ GraphCallerTest >> testMicrodown [
 	self setProfilingBlockForTests: { 'Microdown-Tests' asPackage }.
 	self setMethodsToInstrumentFor: { 'Microdown' asPackage . 'Microdown-RichTextComposer' asPackage }.
 	
-	self setMpProfiler.
-	self setRWIProfiler.
+	self runMpProfiler.
+	self runRWIProfiler.
 
 	self assertProfilersReturnSameResults
 ]
@@ -106,8 +118,8 @@ GraphCallerTest >> testProfStef [
 	self setProfilingBlockForTests: { 'ProfStef-Tests' asPackage }.
 	self setMethodsToInstrumentFor: { 'ProfStef-Core' asPackage }.
 	
-	self setMpProfiler.
-	self setRWIProfiler.
+	self runMpProfiler.
+	self runRWIProfiler.
 
 	self assertProfilersReturnSameResults
 ]
@@ -120,8 +132,8 @@ GraphCallerTest >> testRewriteTool [
 	self setMethodsToInstrumentFor: { 'NewTools-RewriterTools-Backend' asPackage .
 		'NewTools-RewriterTools' asPackage }.
 	
-	self setMpProfiler.
-	self setRWIProfiler.
+	self runMpProfiler.
+	self runRWIProfiler.
 
 	self assertProfilersReturnSameResults
 ]

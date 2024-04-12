@@ -6,9 +6,9 @@ Class {
 		'timesCalled',
 		'method'
 	],
-	#category : 'InstrumentationProfilers-Core',
+	#category : 'InstrumentationProfilers-Call-Graph',
 	#package : 'InstrumentationProfilers',
-	#tag : 'Core'
+	#tag : 'Call-Graph'
 }
 
 { #category : 'as yet unclassified' }

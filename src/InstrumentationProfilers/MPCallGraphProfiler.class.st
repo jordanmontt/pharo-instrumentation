@@ -1,9 +1,9 @@
 Class {
 	#name : 'MpCallGraphProfiler',
 	#superclass : 'AbstractCallGraphProfiler',
-	#category : 'InstrumentationProfilers-MethodProxies',
+	#category : 'InstrumentationProfilers-Call-Graph',
 	#package : 'InstrumentationProfilers',
-	#tag : 'MethodProxies'
+	#tag : 'Call-Graph'
 }
 
 { #category : 'configuration' }
