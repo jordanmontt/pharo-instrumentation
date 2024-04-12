@@ -2,7 +2,7 @@ Class {
 	#name : 'AbstractMethodCoverageProfiler',
 	#superclass : 'AbstractProfiler',
 	#instVars : [
-		'nodes'
+		'calledMethods'
 	],
 	#category : 'InstrumentationProfilers-Method-Coverage',
 	#package : 'InstrumentationProfilers',
@@ -12,13 +12,12 @@ Class {
 { #category : 'profiling' }
 AbstractMethodCoverageProfiler >> callingMethod: aMethod [
 
-	(self nodeForMethod: aMethod) registerMethodCall.
+	calledMethods add: aMethod
 ]
 
-{ #category : 'profiling' }
-AbstractMethodCoverageProfiler >> nodeForMethod: method [
+{ #category : 'initialization' }
+AbstractMethodCoverageProfiler >> initialize [
 
-	^ nodes at: method
-		ifPresent: [ :node | node ]
-		ifAbsentPut: [ MethodCoverageNode forMethod: method ]
+	super initialize.
+	calledMethods := Bag new
 ]
