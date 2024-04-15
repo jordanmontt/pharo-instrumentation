@@ -5,6 +5,15 @@ Class {
 	#package : 'InstrumentationProfilers-Bench'
 }
 
+{ #category : 'class initialization' }
+IPFileSystemBench class >> initialize [
+
+	| testClasses |
+	methodsToInstrument := self packagesToInstrument flatCollect: #methods as: Set.
+	testClasses := (self testPackages flatCollect: #definedClasses) select: [ :e | e isTestCase ].
+	testSuites := testClasses collect: #suite.
+]
+
 { #category : 'benchmarking' }
 IPFileSystemBench class >> packagesToInstrument [
 
