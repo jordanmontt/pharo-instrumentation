@@ -28,7 +28,7 @@ SourceCodeModificatorProfilerTest >> testAfterHasLocalReturn [
 	profileBlock := [ AClassToInstrument new foo ].
 
 	profiler
-		beforeAction: [SingletonClasToTest current increment ];
+		beforeAction: [ :method | SingletonClasToTest current increment ];
 		afterAction: [ SingletonClasToTest current increment. ^ 5 ];
 		addMethods: { (AClassToInstrument >> #foo) };
 		profile: profileBlock.
@@ -44,13 +44,13 @@ SourceCodeModificatorProfilerTest >> testAfterRaisesError [
 	profileBlock := [ AClassToInstrument new foo ].
 
 	profiler
-		beforeAction: [ SingletonClasToTest current increment ];
-		afterAction: [ Error signal ];
+		beforeAction: [ :method | SingletonClasToTest current increment ];
+		afterAction: [ SingletonClasToTest current increment. Error signal ];
 		addMethods: { (AClassToInstrument >> #foo) };
 		profile: profileBlock.
 
 	"foo calls one increment"
-	self assert: SingletonClasToTest current counter equals: 2
+	self assert: SingletonClasToTest current counter equals: 3
 ]
 
 { #category : 'tests' }
@@ -92,8 +92,9 @@ SourceCodeModificatorProfilerTest >> testBeforeRaisesError [
 { #category : 'tests' }
 SourceCodeModificatorProfilerTest >> testInstrument [
 
-	| profileBlock |
+	| profileBlock originalSourceCode |
 	profileBlock := [ AClassToInstrument new foo ].
+	originalSourceCode := (AClassToInstrument >> #foo) sourceCode.
 
 	profiler
 		beforeAction: [ SingletonClasToTest current increment ];
@@ -109,6 +110,8 @@ SourceCodeModificatorProfilerTest >> testInstrument [
 	profiler uninstrument.
 	SingletonClasToTest reset.
 	profileBlock value.
+	"original method restored"
+	self assert: originalSourceCode equals: (AClassToInstrument >> #foo) sourceCode.
 	"foo calls one increment"
 	self assert: SingletonClasToTest current counter equals: 1
 ]

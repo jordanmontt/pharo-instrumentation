@@ -20,13 +20,13 @@ SourceCodeModificatorProfiler >> addMethods: methodsCollection [
 { #category : 'accessing' }
 SourceCodeModificatorProfiler >> afterAction: aBlockClosure [
 
-	afterAction := aBlockClosure asString
+	afterAction := aBlockClosure asString "We want the squares [] "
 ]
 
 { #category : 'accessing' }
 SourceCodeModificatorProfiler >> beforeAction: aBlockClosure [
 
-	beforeAction := aBlockClosure asString
+	beforeAction := aBlockClosure
 ]
 
 { #category : 'initialization' }
@@ -50,9 +50,9 @@ SourceCodeModificatorProfiler >> instrument: aMethod [
 
 	instrumentedSourceCode := String streamContents: [ :stream | 
 		stream << methodSignature << String cr <<
-			beforeAction << '.' << String cr <<
+			(beforeAction cull: aMethod) << '.' << String cr <<
 			'[ ' << aMethod ast body sourceCode << ' ]' << String cr <<
-			' ensure: [ ' << afterAction << ' ]' ].
+			'ensure: ' << afterAction ].
 
 	aMethod methodClass compile: instrumentedSourceCode
 ]
@@ -61,7 +61,7 @@ SourceCodeModificatorProfiler >> instrument: aMethod [
 SourceCodeModificatorProfiler >> profile: aBlock [
 
 	self instrument.
-	[ aBlock on: Exception do: [  ] ] ensure: [ self uninstrument ]
+	aBlock ensure: [ self uninstrument ]
 ]
 
 { #category : 'profiling' }
