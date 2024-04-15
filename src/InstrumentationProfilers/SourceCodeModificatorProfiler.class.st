@@ -25,6 +25,7 @@ SourceCodeModificatorProfiler >> afterAction: aBlockClosure [
 
 { #category : 'accessing' }
 SourceCodeModificatorProfiler >> beforeAction: aBlockClosure [
+	"It needs to return a string"
 
 	beforeAction := aBlockClosure
 ]
