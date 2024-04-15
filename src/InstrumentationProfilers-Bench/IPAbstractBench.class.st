@@ -9,6 +9,12 @@ Class {
 	#package : 'InstrumentationProfilers-Bench'
 }
 
+{ #category : 'accessing' }
+IPAbstractBench class >> methodsToInstrument [
+
+	^ methodsToInstrument
+]
+
 { #category : 'benchmarking' }
 IPAbstractBench class >> packagesToInstrument [
 
