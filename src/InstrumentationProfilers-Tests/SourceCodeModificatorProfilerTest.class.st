@@ -177,8 +177,10 @@ SourceCodeModificatorProfilerTest >> testProfileWithException [
 	profiler
 		beforeAction: beforeActionBlock;
 		afterAction: [ SingletonClasToTest current increment ];
-		addMethods: { (AClassToInstrument >> #fooWithException) };
-		profile: profileBlock.
+		addMethods: { (AClassToInstrument >> #fooWithException) }.
+
+	"Just like method proxies, if the method raises an error, it should be signaled"
+	self should: [ profiler profile: profileBlock. ] raise: Error.
 
 	"foo calls one increment but it should not be executed because an exception is signaled"
 	"after and before action should be always executed"
