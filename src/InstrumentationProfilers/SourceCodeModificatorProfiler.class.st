@@ -36,13 +36,13 @@ SourceCodeModificatorProfiler >> initialize [
 	methodsToInstrument := Set new
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'profiling' }
 SourceCodeModificatorProfiler >> instrument [
 
 	methodsToInstrument do: [ :aMethod | self instrument: aMethod ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'profiling' }
 SourceCodeModificatorProfiler >> instrument: aMethod [
 
 	| instrumentedSourceCode methodSignature |
@@ -57,21 +57,21 @@ SourceCodeModificatorProfiler >> instrument: aMethod [
 	aMethod methodClass compile: instrumentedSourceCode
 ]
 
-{ #category : 'adding' }
+{ #category : 'profiling' }
 SourceCodeModificatorProfiler >> profile: aBlock [
 
 	self instrument.
 	[ aBlock on: Exception do: [  ] ] ensure: [ self uninstrument ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'profiling' }
 SourceCodeModificatorProfiler >> uninstrument [
 
 	methodsToInstrument do: [ :anInstrumentedMethod |
 		self uninstrument: anInstrumentedMethod ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'profiling' }
 SourceCodeModificatorProfiler >> uninstrument: aMethod [
 
 	aMethod methodClass methodDict at: aMethod selector put: aMethod
