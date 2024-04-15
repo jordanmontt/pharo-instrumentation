@@ -19,5 +19,5 @@ AbstractMethodCoverageProfiler >> callingMethod: aMethod [
 AbstractMethodCoverageProfiler >> initialize [
 
 	super initialize.
-	calledMethods := Bag new
+	calledMethods := Set new
 ]
