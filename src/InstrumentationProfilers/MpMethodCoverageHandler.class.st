@@ -31,11 +31,6 @@ MpMethodCoverageHandler >> method: aMethod [
 	method := aMethod
 ]
 
-{ #category : 'instance creation' }
-MpMethodCoverageHandler >> onMethod: aMethod profiler: aProfiler [ 
-	^ self class onMethod: aMethod profiler: aProfiler 
-]
-
 { #category : 'evaluating' }
 MpMethodCoverageHandler >> profiler: aProfiler [
 
