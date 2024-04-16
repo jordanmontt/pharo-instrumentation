@@ -6,7 +6,8 @@ Class {
 	#superclass : 'TestCase',
 	#instVars : [
 		'profiler',
-		'beforeActionBlock'
+		'beforeActionBlock',
+		'afterActionBlock'
 	],
 	#category : 'InstrumentationProfilers-Tests-SourceCodeModificator',
 	#package : 'InstrumentationProfilers-Tests',
@@ -20,7 +21,8 @@ SourceCodeModificatorProfilerTest >> setUp [
 
 	SingletonClasToTest reset.
 	profiler := SourceCodeModificatorProfiler new.
-	beforeActionBlock := [ :method | 'SingletonClasToTest current increment' ]
+	beforeActionBlock := [ :method | SingletonClasToTest current increment ].
+	afterActionBlock := [ SingletonClasToTest current increment ]
 ]
 
 { #category : 'tests' }
@@ -45,8 +47,6 @@ SourceCodeModificatorProfilerTest >> testAfterRaisesError [
 	| profileBlock |
 	profileBlock := [ AClassToInstrument new foo ].
 
-	self skip: 'Skiping because the profiler does not uninstrument when the after raises an error'.
-
 	"After should raise an error. Just like method proxies"
 	profiler
 		beforeAction: beforeActionBlock;
@@ -64,16 +64,14 @@ SourceCodeModificatorProfilerTest >> testBeforeRaisesError [
 	| profileBlock |
 	profileBlock := [ AClassToInstrument new foo ].
 
-	self skip: 'Skiping because the profiler does not uninstrument when the before raises an error'.
-
 	profiler
-		beforeAction: [ :method | 'Error signal' ];
+		beforeAction: [ :method | Error signal ];
 		afterAction: [ SingletonClasToTest current increment ];
 		addMethods: { (AClassToInstrument >> #foo) }.
 
 	self should: [profiler profile: profileBlock ] raise: Error.
-	"foo calls one increment"
-	self assert: SingletonClasToTest current counter equals: 2
+	"before raised an error so nothing else got executed"
+	self assert: SingletonClasToTest current counter equals: 0
 ]
 
 { #category : 'tests' }
@@ -85,7 +83,7 @@ SourceCodeModificatorProfilerTest >> testInstrument [
 
 	profiler
 		beforeAction: beforeActionBlock;
-		afterAction: [ SingletonClasToTest current increment ];
+		afterAction: afterActionBlock;
 		addMethods: { (AClassToInstrument >> #foo) };
 		instrument.
 
@@ -111,8 +109,29 @@ SourceCodeModificatorProfilerTest >> testProfile [
 
 	profiler
 		beforeAction: beforeActionBlock;
-		afterAction: [ SingletonClasToTest current increment ];
+		afterAction: afterActionBlock;
 		addMethods: { (AClassToInstrument >> #foo) };
+		profile: profileBlock.
+
+	"foo calls one increment"
+	self assert: SingletonClasToTest current counter equals: 3.
+
+	SingletonClasToTest reset.
+	profileBlock value.
+	"foo calls one increment"
+	self assert: SingletonClasToTest current counter equals: 1
+]
+
+{ #category : 'tests' }
+SourceCodeModificatorProfilerTest >> testProfileMethodWithTempVariables [
+
+	| profileBlock |
+	profileBlock := [ AClassToInstrument new tempy ].
+
+	profiler
+		beforeAction: beforeActionBlock;
+		afterAction: afterActionBlock;
+		addMethods: { (AClassToInstrument >> #tempy) };
 		profile: profileBlock.
 
 	"foo calls one increment"
@@ -132,7 +151,7 @@ SourceCodeModificatorProfilerTest >> testProfileSeveralMethods [
 
 	profiler
 		beforeAction: beforeActionBlock;
-		afterAction: [ SingletonClasToTest current increment ];
+		afterAction: afterActionBlock;
 		addMethods: { (AClassToInstrument >> #foo) . (AClassToInstrument >> #bar) . (AClassToInstrument >> #poo) };
 		profile: profileBlock.
 
@@ -154,7 +173,7 @@ SourceCodeModificatorProfilerTest >> testProfileSeveralMethodsAndClasses [
 
 	profiler
 		beforeAction: beforeActionBlock;
-		afterAction: [ SingletonClasToTest current increment ];
+		afterAction: afterActionBlock;
 		addMethods: { (AClassToInstrument >> #foo) . (AClassToInstrument >> #bar) . (AClassToInstrument >> #poo) .
 			(AClassToInstrumentCopy >> #foo) . (AClassToInstrumentCopy >> #bar) . (AClassToInstrumentCopy >> #poo) };
 		profile: profileBlock.
@@ -176,7 +195,7 @@ SourceCodeModificatorProfilerTest >> testProfileWithException [
 
 	profiler
 		beforeAction: beforeActionBlock;
-		afterAction: [ SingletonClasToTest current increment ];
+		afterAction: afterActionBlock;
 		addMethods: { (AClassToInstrument >> #fooWithException) }.
 
 	"Just like method proxies, if the method raises an error, it should be signaled"
