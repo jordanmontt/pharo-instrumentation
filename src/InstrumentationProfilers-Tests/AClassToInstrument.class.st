@@ -32,6 +32,18 @@ AClassToInstrument >> poo [
 ]
 
 { #category : 'accessing' }
+AClassToInstrument >> prototypeTrap [
+
+	#originalCodeMethod
+]
+
+{ #category : 'accessing' }
+AClassToInstrument >> prototypeTrap: arg1 arg2: arg2 [
+
+	#originalCodeMethod
+]
+
+{ #category : 'accessing' }
 AClassToInstrument >> tempy [
 
 	| var1 var2 var3 |

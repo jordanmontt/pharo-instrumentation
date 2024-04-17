@@ -102,6 +102,56 @@ SourceCodeModificatorProfilerTest >> testInstrument [
 ]
 
 { #category : 'tests' }
+SourceCodeModificatorProfilerTest >> testInstrumentFollowsPrototypeTrap [
+
+
+	| prototypeInstrumentedMethod originalSourceCode |
+	originalSourceCode := (AClassToInstrument >> #prototypeTrap) sourceCode.
+	prototypeInstrumentedMethod := 'prototypeTrap
+    Processor activeProcess isMeta ifFalse: [
+        Processor activeProcess runInMetaLevel: [ #beforeAction cull: AClassToInstrument>>#prototypeTrap ] ].
+    [ #originalCodeMethod ] ensure: [
+        Processor activeProcess isMeta ifFalse: [
+        Processor activeProcess runInMetaLevel: #afterAction ]. ]'.
+
+	profiler
+		beforeAction: '#beforeAction';
+		afterAction: '#afterAction';
+		addMethods: { (AClassToInstrument >> #prototypeTrap) };
+		instrument.
+
+	self assert: (AClassToInstrument >> #prototypeTrap) sourceCode equals: prototypeInstrumentedMethod.
+
+	profiler uninstrument.
+	self assert: originalSourceCode equals: (AClassToInstrument >> #prototypeTrap) sourceCode
+]
+
+{ #category : 'tests' }
+SourceCodeModificatorProfilerTest >> testInstrumentFollowsPrototypeTrapWithArgs [
+
+
+	| prototypeInstrumentedMethod originalSourceCode |
+	originalSourceCode := (AClassToInstrument >> #prototypeTrap:arg2: ) sourceCode.
+	prototypeInstrumentedMethod := 'prototypeTrap: arg1 arg2: arg2
+    Processor activeProcess isMeta ifFalse: [
+        Processor activeProcess runInMetaLevel: [ #beforeAction cull: AClassToInstrument>>#prototypeTrap:arg2: ] ].
+    [ #originalCodeMethod ] ensure: [
+        Processor activeProcess isMeta ifFalse: [
+        Processor activeProcess runInMetaLevel: #afterAction ]. ]'.
+
+	profiler
+		beforeAction: '#beforeAction';
+		afterAction: '#afterAction';
+		addMethods: { (AClassToInstrument >> #prototypeTrap:arg2:) };
+		instrument.
+
+	self assert: (AClassToInstrument >> #prototypeTrap:arg2:) sourceCode equals: prototypeInstrumentedMethod.
+
+	profiler uninstrument.
+	self assert: originalSourceCode equals: (AClassToInstrument >> #prototypeTrap:arg2:) sourceCode
+]
+
+{ #category : 'tests' }
 SourceCodeModificatorProfilerTest >> testProfile [
 
 	| profileBlock |
