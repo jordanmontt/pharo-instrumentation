@@ -11,7 +11,7 @@ SourceCodeCallGraphProfiler >> initialize [
 
 	super initialize.
 	self beforeAction: [ :instrumentedMethod |
-		'SCCallGraph default enteringMethod: ' , instrumentedMethod].
+		SCCallGraph default enteringMethod: instrumentedMethod ].
 	self afterAction: [ SCCallGraph default exitingMethod ]
 ]
 
