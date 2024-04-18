@@ -36,7 +36,7 @@ IPAbstractBench class >> testSuites [
 { #category : 'benchmarking' }
 IPAbstractBench >> runBaseline [
 
-	self class testSuites do: #debug
+	self class testSuites do: #run
 ]
 
 { #category : 'benchmarking' }
