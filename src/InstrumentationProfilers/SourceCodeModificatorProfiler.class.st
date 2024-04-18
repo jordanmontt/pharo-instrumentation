@@ -49,7 +49,7 @@ SourceCodeModificatorProfiler >> instrument: aMethod [
 
 	| beforeActionString afterActionString originalCodeString instrumentedMethodCode |
 	beforeActionString := self wrapWithMetaSafeMechanism:
-		'[ ' , beforeAction asString , ' cull: ' , aMethod name , ' ]'.
+		'[ ' , beforeAction asString , ' cull: ' , aMethod nameForProfiler , ' ]'.
 	afterActionString := self wrapWithMetaSafeMechanism: afterAction asString.
 	originalCodeString := '[ ' , aMethod methodNode body sourceCode , ' ]'.
 
