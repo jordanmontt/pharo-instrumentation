@@ -36,7 +36,7 @@ IPAbstractBench class >> testSuites [
 { #category : 'benchmarking' }
 IPAbstractBench >> runBaseline [
 
-	self class testSuites do: #run
+	self class testSuites do: #debug
 ]
 
 { #category : 'benchmarking' }
@@ -88,6 +88,24 @@ IPAbstractBench >> runRWIMethodCoverage [
 IPAbstractBench >> runRWINoAction [
 
 	^ RWINoActionProfiler new
+		addMethods: self class methodsToInstrument;
+		profile: [ self runBaseline ];
+		yourself
+]
+
+{ #category : 'benchmarking' }
+IPAbstractBench >> runSCMCallGraph [
+
+	^ SourceCodeCallGraphProfiler new
+		addMethods: self class methodsToInstrument;
+		profile: [ self runBaseline ];
+		yourself
+]
+
+{ #category : 'benchmarking' }
+IPAbstractBench >> runSCMMethodCoverage [
+
+	^ SourceCodeMethodCoverageProfiler new
 		addMethods: self class methodsToInstrument;
 		profile: [ self runBaseline ];
 		yourself
