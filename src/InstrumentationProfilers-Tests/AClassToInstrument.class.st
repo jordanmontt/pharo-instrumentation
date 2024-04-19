@@ -28,7 +28,7 @@ AClassToInstrument >> fooWithException [
 { #category : 'accessing' }
 AClassToInstrument >> methodWithPragma [
 
-	<primitive: 'prim' module: 'FileAttributesPlugin' error: error>
+	<primitive: 'prim' module: 'InstrumentationProfilers' error: error>
 	| var1 var2 |
 	var1 := 4.
 	var2 := 5.

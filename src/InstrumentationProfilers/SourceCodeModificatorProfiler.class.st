@@ -47,14 +47,16 @@ SourceCodeModificatorProfiler >> instrument [
 { #category : 'profiling' }
 SourceCodeModificatorProfiler >> instrument: aMethod [
 
-	| beforeActionString afterActionString originalCodeString instrumentedMethodCode |
+	| beforeActionString afterActionString pragmasString originalCodeString instrumentedMethodCode |
 	beforeActionString := self wrapWithMetaSafeMechanism:
 		'[ ' , beforeAction asString , ' cull: ' , aMethod nameForProfiler , ' ]'.
 	afterActionString := self wrapWithMetaSafeMechanism: afterAction asString.
 	originalCodeString := '[ ' , aMethod methodNode body sourceCode , ' ]'.
+	pragmasString := aMethod pragmas inject: '' into: [ :sum :node | sum , node asString , String cr].
 
 	instrumentedMethodCode := String streamContents: [ :stream |
-		stream << beforeActionString << String cr
+		stream << pragmasString <<
+			beforeActionString << String cr
 			<< '    ' << originalCodeString << ' ensure: [' << String cr <<
 			'    ' << afterActionString << ' ]' ].
 	

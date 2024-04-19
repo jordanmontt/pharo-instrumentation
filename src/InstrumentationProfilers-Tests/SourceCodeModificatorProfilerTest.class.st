@@ -164,7 +164,7 @@ SourceCodeModificatorProfilerTest >> testInstrumentWithPragmas [
 	| prototypeInstrumentedMethod originalSourceCode |
 	originalSourceCode := (AClassToInstrument >> #methodWithPragma) sourceCode.
 	prototypeInstrumentedMethod := 'methodWithPragma
-	<primitive: ''prim'' module: ''InstrumentationProfilers'' error: error>
+<primitive: ''prim'' module: ''InstrumentationProfilers'' error: ''error''>
     Processor activeProcess isMeta ifFalse: [
         Processor activeProcess runInMetaLevel: [ #beforeAction cull: ''AClassToInstrument>>#methodWithPragma'' ] ].
     [ | var1 var2 |
