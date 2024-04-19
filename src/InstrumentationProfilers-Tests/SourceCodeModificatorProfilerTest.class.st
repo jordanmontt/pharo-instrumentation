@@ -109,7 +109,7 @@ SourceCodeModificatorProfilerTest >> testInstrumentFollowsPrototypeTrap [
 	originalSourceCode := (AClassToInstrument >> #prototypeTrap) sourceCode.
 	prototypeInstrumentedMethod := 'prototypeTrap
     Processor activeProcess isMeta ifFalse: [
-        Processor activeProcess runInMetaLevel: [ #beforeAction cull: AClassToInstrument>>#prototypeTrap ] ].
+        Processor activeProcess runInMetaLevel: [ #beforeAction cull: ''AClassToInstrument>>#prototypeTrap'' ] ].
     [ #originalCodeMethod ] ensure: [
         Processor activeProcess isMeta ifFalse: [
         Processor activeProcess runInMetaLevel: #afterAction ]. ]'.
@@ -134,7 +134,7 @@ SourceCodeModificatorProfilerTest >> testInstrumentFollowsPrototypeTrapWithArgs 
 	originalSourceCode := (AClassToInstrument >> #prototypeTrap:arg2: ) sourceCode.
 	prototypeInstrumentedMethod := 'prototypeTrap: arg1 arg2: arg2
     Processor activeProcess isMeta ifFalse: [
-        Processor activeProcess runInMetaLevel: [ #beforeAction cull: AClassToInstrument>>#prototypeTrap:arg2: ] ].
+        Processor activeProcess runInMetaLevel: [ #beforeAction cull: ''AClassToInstrument>>#prototypeTrap:arg2:'' ] ].
     [ #originalCodeMethod ] ensure: [
         Processor activeProcess isMeta ifFalse: [
         Processor activeProcess runInMetaLevel: #afterAction ]. ]'.
@@ -149,6 +149,35 @@ SourceCodeModificatorProfilerTest >> testInstrumentFollowsPrototypeTrapWithArgs 
 
 	profiler uninstrument.
 	self assert: originalSourceCode equals: (AClassToInstrument >> #prototypeTrap:arg2:) sourceCode
+]
+
+{ #category : 'tests' }
+SourceCodeModificatorProfilerTest >> testInstrumentWithPragmas [
+
+	| prototypeInstrumentedMethod originalSourceCode |
+	originalSourceCode := (AClassToInstrument >> #methodWithPragma) sourceCode.
+	prototypeInstrumentedMethod := 'methodWithPragma
+	<primitive: ''prim'' module: ''InstrumentationProfilers'' error: error>
+    Processor activeProcess isMeta ifFalse: [
+        Processor activeProcess runInMetaLevel: [ #beforeAction cull: ''AClassToInstrument>>#methodWithPragma'' ] ].
+    [ | var1 var2 |
+	var1 := 4.
+	var2 := 5.
+	self doSomething: error.
+	^ 6 ] ensure: [
+        Processor activeProcess isMeta ifFalse: [
+        Processor activeProcess runInMetaLevel: #afterAction ]. ]'.
+
+	profiler
+		beforeAction: '#beforeAction';
+		afterAction: '#afterAction';
+		addMethods: { (AClassToInstrument >> #methodWithPragma) };
+		instrument.
+
+	self assert: (AClassToInstrument >> #methodWithPragma) sourceCode equals: prototypeInstrumentedMethod.
+
+	profiler uninstrument.
+	self assert: originalSourceCode equals: (AClassToInstrument >> #methodWithPragma) sourceCode
 ]
 
 { #category : 'tests' }
