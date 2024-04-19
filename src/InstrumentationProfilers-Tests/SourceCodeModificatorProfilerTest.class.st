@@ -25,6 +25,13 @@ SourceCodeModificatorProfilerTest >> setUp [
 	afterActionBlock := [ SingletonClasToTest current increment ]
 ]
 
+{ #category : 'running' }
+SourceCodeModificatorProfilerTest >> tearDown [
+
+	profiler uninstrument.
+	super tearDown
+]
+
 { #category : 'tests' }
 SourceCodeModificatorProfilerTest >> testAfterHasLocalReturn [
 
