@@ -5,17 +5,8 @@ Class {
 	#package : 'InstrumentationProfilers-Bench'
 }
 
-{ #category : 'class initialization' }
-IPDebuggerModelBench class >> initialize [
-
-	| testClasses |
-	methodsToInstrument := self packagesToInstrument flatCollect: #methods as: Set.
-	testClasses := (self testPackages flatCollect: #definedClasses) select: [ :e | e isTestCase ].
-	testSuites := testClasses collect: #suite.
-]
-
-{ #category : 'benchmarking' }
-IPDebuggerModelBench class >> packagesToInstrument [
+{ #category : 'initialization' }
+IPDebuggerModelBench >> packagesToInstrument [
 
 	^ {
 		  'Debugger-Model' asPackage.
@@ -23,8 +14,8 @@ IPDebuggerModelBench class >> packagesToInstrument [
 		  'EmergencyDebugger' asPackage }
 ]
 
-{ #category : 'benchmarking' }
-IPDebuggerModelBench class >> testPackages [
+{ #category : 'initialization' }
+IPDebuggerModelBench >> testPackages [
 
 	^ {
 		  'Debugger-Model-Tests' asPackage.

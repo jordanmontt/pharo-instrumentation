@@ -1,7 +1,7 @@
 Class {
 	#name : 'IPAbstractBench',
 	#superclass : 'Object',
-	#classInstVars : [
+	#instVars : [
 		'methodsToInstrument',
 		'testSuites'
 	],
@@ -9,41 +9,32 @@ Class {
 	#package : 'InstrumentationProfilers-Bench'
 }
 
-{ #category : 'accessing' }
-IPAbstractBench class >> methodsToInstrument [
+{ #category : 'initialization' }
+IPAbstractBench >> initialize [
 
-	^ methodsToInstrument
+	| testClasses |
+	methodsToInstrument := self packagesToInstrument flatCollect: #methods as: Set.
+	testClasses := (self testPackages flatCollect: #definedClasses) select: [ :e | e isTestCase ].
+	testSuites := testClasses collect: #suite
 ]
 
-{ #category : 'benchmarking' }
-IPAbstractBench class >> packagesToInstrument [
+{ #category : 'initialization' }
+IPAbstractBench >> packagesToInstrument [
 
 	^ self subclassResponsibility
-]
-
-{ #category : 'benchmarking' }
-IPAbstractBench class >> testPackages [
-
-	^ self subclassResponsibility
-]
-
-{ #category : 'as yet unclassified' }
-IPAbstractBench class >> testSuites [
-
-	^ testSuites
 ]
 
 { #category : 'benchmarking' }
 IPAbstractBench >> runBaseline [
 
-	self class testSuites do: #run
+	testSuites do: #run
 ]
 
 { #category : 'benchmarking' }
 IPAbstractBench >> runMpCallGraph [
 
 	^ MpCallGraphProfiler new
-		addMethods: self class methodsToInstrument;
+		addMethods: methodsToInstrument;
 		profile: [ self runBaseline ];
 		yourself
 ]
@@ -52,7 +43,7 @@ IPAbstractBench >> runMpCallGraph [
 IPAbstractBench >> runMpMethodCoverage [
 
 	^ MpMethodCoverageProfiler new
-		addMethods: self class methodsToInstrument;
+		addMethods: methodsToInstrument;
 		profile: [ self runBaseline ];
 		yourself
 ]
@@ -61,7 +52,7 @@ IPAbstractBench >> runMpMethodCoverage [
 IPAbstractBench >> runMpNoAction [
 
 	^ MpNoActionProfiler new
-		addMethods: self class methodsToInstrument;
+		addMethods: methodsToInstrument;
 		profile: [ self runBaseline ];
 		yourself
 ]
@@ -70,7 +61,7 @@ IPAbstractBench >> runMpNoAction [
 IPAbstractBench >> runRWICallGraph [
 
 	^ RWICallGraphProfiler new
-		addMethods: self class methodsToInstrument;
+		addMethods: methodsToInstrument;
 		profile: [ self runBaseline ];
 		yourself
 ]
@@ -79,7 +70,7 @@ IPAbstractBench >> runRWICallGraph [
 IPAbstractBench >> runRWIMethodCoverage [
 
 	^ RWIMethodCoverageProfiler new
-		addMethods: self class methodsToInstrument;
+		addMethods: methodsToInstrument;
 		profile: [ self runBaseline ];
 		yourself
 ]
@@ -88,7 +79,7 @@ IPAbstractBench >> runRWIMethodCoverage [
 IPAbstractBench >> runRWINoAction [
 
 	^ RWINoActionProfiler new
-		addMethods: self class methodsToInstrument;
+		addMethods: methodsToInstrument;
 		profile: [ self runBaseline ];
 		yourself
 ]
@@ -97,7 +88,7 @@ IPAbstractBench >> runRWINoAction [
 IPAbstractBench >> runSCMCallGraph [
 
 	^ SourceCodeCallGraphProfiler new
-		addMethods: self class methodsToInstrument;
+		addMethods: methodsToInstrument;
 		profile: [ self runBaseline ];
 		yourself
 ]
@@ -106,7 +97,13 @@ IPAbstractBench >> runSCMCallGraph [
 IPAbstractBench >> runSCMMethodCoverage [
 
 	^ SourceCodeMethodCoverageProfiler new
-		addMethods: self class methodsToInstrument;
+		addMethods: methodsToInstrument;
 		profile: [ self runBaseline ];
 		yourself
+]
+
+{ #category : 'initialization' }
+IPAbstractBench >> testPackages [
+
+	^ self subclassResponsibility
 ]
