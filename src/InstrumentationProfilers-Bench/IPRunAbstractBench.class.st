@@ -1,16 +1,17 @@
 Class {
-	#name : 'IPAbstractBench',
+	#name : 'IPRunAbstractBench',
 	#superclass : 'Object',
 	#instVars : [
 		'methodsToInstrument',
 		'testSuites'
 	],
-	#category : 'InstrumentationProfilers-Bench',
-	#package : 'InstrumentationProfilers-Bench'
+	#category : 'InstrumentationProfilers-Bench-Run-All',
+	#package : 'InstrumentationProfilers-Bench',
+	#tag : 'Run-All'
 }
 
 { #category : 'initialization' }
-IPAbstractBench >> initialize [
+IPRunAbstractBench >> initialize [
 
 	| testClasses |
 	methodsToInstrument := self packagesToInstrument flatCollect: #methods as: Set.
@@ -19,19 +20,19 @@ IPAbstractBench >> initialize [
 ]
 
 { #category : 'initialization' }
-IPAbstractBench >> packagesToInstrument [
+IPRunAbstractBench >> packagesToInstrument [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : 'baseline' }
-IPAbstractBench >> runBaseline [
+{ #category : 'as yet unclassified' }
+IPRunAbstractBench >> runBaseline [
 
 	testSuites do: #run
 ]
 
-{ #category : 'mp' }
-IPAbstractBench >> runMpCallGraph [
+{ #category : 'as yet unclassified' }
+IPRunAbstractBench >> runMpCallGraph [
 
 	^ MpCallGraphProfiler new
 		addMethods: methodsToInstrument;
@@ -39,8 +40,8 @@ IPAbstractBench >> runMpCallGraph [
 		yourself
 ]
 
-{ #category : 'mp' }
-IPAbstractBench >> runMpMethodCoverage [
+{ #category : 'as yet unclassified' }
+IPRunAbstractBench >> runMpMethodCoverage [
 
 	^ MpMethodCoverageProfiler new
 		addMethods: methodsToInstrument;
@@ -48,8 +49,8 @@ IPAbstractBench >> runMpMethodCoverage [
 		yourself
 ]
 
-{ #category : 'mp' }
-IPAbstractBench >> runMpNoAction [
+{ #category : 'as yet unclassified' }
+IPRunAbstractBench >> runMpNoAction [
 
 	^ MpNoActionProfiler new
 		addMethods: methodsToInstrument;
@@ -57,8 +58,8 @@ IPAbstractBench >> runMpNoAction [
 		yourself
 ]
 
-{ #category : 'rwi' }
-IPAbstractBench >> runRWICallGraph [
+{ #category : 'as yet unclassified' }
+IPRunAbstractBench >> runRWICallGraph [
 
 	^ RWICallGraphProfiler new
 		addMethods: methodsToInstrument;
@@ -66,8 +67,8 @@ IPAbstractBench >> runRWICallGraph [
 		yourself
 ]
 
-{ #category : 'rwi' }
-IPAbstractBench >> runRWIMethodCoverage [
+{ #category : 'as yet unclassified' }
+IPRunAbstractBench >> runRWIMethodCoverage [
 
 	^ RWIMethodCoverageProfiler new
 		addMethods: methodsToInstrument;
@@ -75,8 +76,8 @@ IPAbstractBench >> runRWIMethodCoverage [
 		yourself
 ]
 
-{ #category : 'rwi' }
-IPAbstractBench >> runRWINoAction [
+{ #category : 'as yet unclassified' }
+IPRunAbstractBench >> runRWINoAction [
 
 	^ RWINoActionProfiler new
 		addMethods: methodsToInstrument;
@@ -84,8 +85,8 @@ IPAbstractBench >> runRWINoAction [
 		yourself
 ]
 
-{ #category : 'scm' }
-IPAbstractBench >> runSCMCallGraph [
+{ #category : 'as yet unclassified' }
+IPRunAbstractBench >> runSCMCallGraph [
 
 	^ SourceCodeCallGraphProfiler new
 		addMethods: methodsToInstrument;
@@ -93,8 +94,8 @@ IPAbstractBench >> runSCMCallGraph [
 		yourself
 ]
 
-{ #category : 'scm' }
-IPAbstractBench >> runSCMMethodCoverage [
+{ #category : 'as yet unclassified' }
+IPRunAbstractBench >> runSCMMethodCoverage [
 
 	^ SourceCodeMethodCoverageProfiler new
 		addMethods: methodsToInstrument;
@@ -102,8 +103,8 @@ IPAbstractBench >> runSCMMethodCoverage [
 		yourself
 ]
 
-{ #category : 'scm' }
-IPAbstractBench >> runSCMNoAction [
+{ #category : 'as yet unclassified' }
+IPRunAbstractBench >> runSCMNoAction [
 
 	^ SourceCodeNoActionProfiler new
 		addMethods: methodsToInstrument;
@@ -112,7 +113,7 @@ IPAbstractBench >> runSCMNoAction [
 ]
 
 { #category : 'initialization' }
-IPAbstractBench >> testPackages [
+IPRunAbstractBench >> testPackages [
 
 	^ self subclassResponsibility
 ]

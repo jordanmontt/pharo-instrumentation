@@ -1,12 +1,13 @@
 Class {
-	#name : 'IPDebuggerModelBench',
-	#superclass : 'IPAbstractBench',
-	#category : 'InstrumentationProfilers-Bench',
-	#package : 'InstrumentationProfilers-Bench'
+	#name : 'IPRunDebuggerModelBench',
+	#superclass : 'IPRunAbstractBench',
+	#category : 'InstrumentationProfilers-Bench-Run-All',
+	#package : 'InstrumentationProfilers-Bench',
+	#tag : 'Run-All'
 }
 
 { #category : 'initialization' }
-IPDebuggerModelBench >> packagesToInstrument [
+IPRunDebuggerModelBench >> packagesToInstrument [
 
 	^ {
 		  'Debugger-Model' asPackage.
@@ -15,7 +16,7 @@ IPDebuggerModelBench >> packagesToInstrument [
 ]
 
 { #category : 'initialization' }
-IPDebuggerModelBench >> testPackages [
+IPRunDebuggerModelBench >> testPackages [
 
 	^ {
 		  'Debugger-Model-Tests' asPackage.

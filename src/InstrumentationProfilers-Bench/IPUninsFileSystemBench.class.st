@@ -1,12 +1,13 @@
 Class {
-	#name : 'IPFileSystemBench',
-	#superclass : 'IPAbstractBench',
-	#category : 'InstrumentationProfilers-Bench',
-	#package : 'InstrumentationProfilers-Bench'
+	#name : 'IPUninsFileSystemBench',
+	#superclass : 'IPUninsAbstractBench',
+	#category : 'InstrumentationProfilers-Bench-Uninstrumentation',
+	#package : 'InstrumentationProfilers-Bench',
+	#tag : 'Uninstrumentation'
 }
 
 { #category : 'initialization' }
-IPFileSystemBench >> packagesToInstrument [
+IPUninsFileSystemBench >> packagesToInstrument [
 
 	^ {
 		  #'FileSystem-Core' asPackage.
@@ -18,7 +19,7 @@ IPFileSystemBench >> packagesToInstrument [
 ]
 
 { #category : 'initialization' }
-IPFileSystemBench >> testPackages [
+IPUninsFileSystemBench >> testPackages [
 
 	^ {
 		  #'FileSystem-Memory-Tests' asPackage.
