@@ -24,13 +24,13 @@ IPAbstractBench >> packagesToInstrument [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'benchmarking' }
+{ #category : 'baseline' }
 IPAbstractBench >> runBaseline [
 
 	testSuites do: #run
 ]
 
-{ #category : 'benchmarking' }
+{ #category : 'mp' }
 IPAbstractBench >> runMpCallGraph [
 
 	^ MpCallGraphProfiler new
@@ -39,7 +39,7 @@ IPAbstractBench >> runMpCallGraph [
 		yourself
 ]
 
-{ #category : 'benchmarking' }
+{ #category : 'mp' }
 IPAbstractBench >> runMpMethodCoverage [
 
 	^ MpMethodCoverageProfiler new
@@ -48,7 +48,7 @@ IPAbstractBench >> runMpMethodCoverage [
 		yourself
 ]
 
-{ #category : 'benchmarking' }
+{ #category : 'mp' }
 IPAbstractBench >> runMpNoAction [
 
 	^ MpNoActionProfiler new
@@ -57,7 +57,7 @@ IPAbstractBench >> runMpNoAction [
 		yourself
 ]
 
-{ #category : 'benchmarking' }
+{ #category : 'rwi' }
 IPAbstractBench >> runRWICallGraph [
 
 	^ RWICallGraphProfiler new
@@ -66,7 +66,7 @@ IPAbstractBench >> runRWICallGraph [
 		yourself
 ]
 
-{ #category : 'benchmarking' }
+{ #category : 'rwi' }
 IPAbstractBench >> runRWIMethodCoverage [
 
 	^ RWIMethodCoverageProfiler new
@@ -75,7 +75,7 @@ IPAbstractBench >> runRWIMethodCoverage [
 		yourself
 ]
 
-{ #category : 'benchmarking' }
+{ #category : 'rwi' }
 IPAbstractBench >> runRWINoAction [
 
 	^ RWINoActionProfiler new
@@ -84,7 +84,7 @@ IPAbstractBench >> runRWINoAction [
 		yourself
 ]
 
-{ #category : 'benchmarking' }
+{ #category : 'scm' }
 IPAbstractBench >> runSCMCallGraph [
 
 	^ SourceCodeCallGraphProfiler new
@@ -93,7 +93,7 @@ IPAbstractBench >> runSCMCallGraph [
 		yourself
 ]
 
-{ #category : 'benchmarking' }
+{ #category : 'scm' }
 IPAbstractBench >> runSCMMethodCoverage [
 
 	^ SourceCodeMethodCoverageProfiler new
@@ -102,7 +102,7 @@ IPAbstractBench >> runSCMMethodCoverage [
 		yourself
 ]
 
-{ #category : 'benchmarking' }
+{ #category : 'scm' }
 IPAbstractBench >> runSCMNoAction [
 
 	^ SourceCodeNoActionProfiler new
