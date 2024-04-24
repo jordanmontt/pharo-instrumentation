@@ -20,7 +20,7 @@ SourceCodeModificatorProfiler >> addMethods: methodsCollection [
 { #category : 'accessing' }
 SourceCodeModificatorProfiler >> afterAction: aBlockClosure [
 
-	afterAction := aBlockClosure asString "We want the squares [] "
+	afterAction := aBlockClosure "We want the squares [] "
 ]
 
 { #category : 'accessing' }
@@ -82,7 +82,7 @@ SourceCodeModificatorProfiler >> uninstrument [
 { #category : 'profiling' }
 SourceCodeModificatorProfiler >> uninstrument: aMethod [
 
-	aMethod methodClass compile: aMethod sourceCode
+	aMethod methodClass methodDict at: aMethod selector put: aMethod
 ]
 
 { #category : 'profiling' }

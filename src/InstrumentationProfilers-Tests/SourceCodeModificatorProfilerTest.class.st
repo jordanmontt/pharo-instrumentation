@@ -86,7 +86,7 @@ SourceCodeModificatorProfilerTest >> testInstrument [
 
 	| profileBlock originalSourceCode |
 	profileBlock := [ AClassToInstrument new foo ].
-	originalSourceCode := (AClassToInstrument >> #foo) sourceCode.
+	originalSourceCode := (AClassToInstrument >> #foo) sourceCode copy.
 
 	profiler
 		beforeAction: beforeActionBlock;
