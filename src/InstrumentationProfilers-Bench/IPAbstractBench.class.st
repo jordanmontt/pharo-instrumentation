@@ -102,6 +102,15 @@ IPAbstractBench >> runSCMMethodCoverage [
 		yourself
 ]
 
+{ #category : 'benchmarking' }
+IPAbstractBench >> runSCMNoAction [
+
+	^ SourceCodeNoActionProfiler new
+		addMethods: methodsToInstrument;
+		profile: [ self runBaseline ];
+		yourself
+]
+
 { #category : 'initialization' }
 IPAbstractBench >> testPackages [
 
