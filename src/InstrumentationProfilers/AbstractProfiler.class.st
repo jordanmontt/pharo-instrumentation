@@ -31,6 +31,12 @@ AbstractProfiler >> initialize [
 	methodProxies := Dictionary new
 ]
 
+{ #category : 'profiling' }
+AbstractProfiler >> instrument [
+
+	methodProxies valuesDo: #install
+]
+
 { #category : 'accessing' }
 AbstractProfiler >> methodProxies [
 
@@ -57,11 +63,17 @@ AbstractProfiler >> profile: aBlock [
 { #category : 'profiling' }
 AbstractProfiler >> startProfiling [
 
-	methodProxies valuesDo: #install
+	self instrument
 ]
 
 { #category : 'profiling' }
 AbstractProfiler >> stopProfiling [
+
+	self uninstrument
+]
+
+{ #category : 'profiling' }
+AbstractProfiler >> uninstrument [
 
 	methodProxies valuesDo: #uninstall
 ]
