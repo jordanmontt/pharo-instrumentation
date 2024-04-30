@@ -4,9 +4,9 @@ Trait {
 		'callStack',
 		'nodes'
 	],
-	#category : 'InstrumentationProfilers-Source code instrumentation',
+	#category : 'InstrumentationProfilers-Core',
 	#package : 'InstrumentationProfilers',
-	#tag : 'Source code instrumentation'
+	#tag : 'Core'
 }
 
 { #category : 'accessing' }

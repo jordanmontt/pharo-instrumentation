@@ -1,9 +1,9 @@
 Class {
 	#name : 'RWIMethodCoverageProfiler',
 	#superclass : 'AbstractMethodCoverageProfiler',
-	#category : 'InstrumentationProfilers-Method-Coverage',
+	#category : 'InstrumentationProfilers-RWI',
 	#package : 'InstrumentationProfilers',
-	#tag : 'Method-Coverage'
+	#tag : 'RWI'
 }
 
 { #category : 'configuration' }

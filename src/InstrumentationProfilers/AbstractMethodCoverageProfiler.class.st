@@ -4,9 +4,9 @@ Class {
 	#instVars : [
 		'calledMethods'
 	],
-	#category : 'InstrumentationProfilers-Method-Coverage',
+	#category : 'InstrumentationProfilers-Core',
 	#package : 'InstrumentationProfilers',
-	#tag : 'Method-Coverage'
+	#tag : 'Core'
 }
 
 { #category : 'profiling' }

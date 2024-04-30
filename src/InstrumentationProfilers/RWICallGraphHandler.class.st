@@ -5,9 +5,9 @@ Class {
 		'profiler',
 		'method'
 	],
-	#category : 'InstrumentationProfilers-Call-Graph',
+	#category : 'InstrumentationProfilers-RWI',
 	#package : 'InstrumentationProfilers',
-	#tag : 'Call-Graph'
+	#tag : 'RWI'
 }
 
 { #category : 'instance creation' }

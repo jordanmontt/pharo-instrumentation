@@ -1,9 +1,9 @@
 Class {
 	#name : 'MpMethodCoverageProfiler',
 	#superclass : 'AbstractMethodCoverageProfiler',
-	#category : 'InstrumentationProfilers-Method-Coverage',
+	#category : 'InstrumentationProfilers-Trap-Method',
 	#package : 'InstrumentationProfilers',
-	#tag : 'Method-Coverage'
+	#tag : 'Trap-Method'
 }
 
 { #category : 'configuration' }

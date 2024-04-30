@@ -1,9 +1,9 @@
 Class {
 	#name : 'RWINoActionProfiler',
 	#superclass : 'AbstractProfiler',
-	#category : 'InstrumentationProfilers-No-Action',
+	#category : 'InstrumentationProfilers-RWI',
 	#package : 'InstrumentationProfilers',
-	#tag : 'No-Action'
+	#tag : 'RWI'
 }
 
 { #category : 'configuration' }

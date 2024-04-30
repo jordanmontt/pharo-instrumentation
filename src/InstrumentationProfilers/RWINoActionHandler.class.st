@@ -1,7 +1,7 @@
 Class {
 	#name : 'RWINoActionHandler',
 	#superclass : 'RWIHandler',
-	#category : 'InstrumentationProfilers-No-Action',
+	#category : 'InstrumentationProfilers-RWI',
 	#package : 'InstrumentationProfilers',
-	#tag : 'No-Action'
+	#tag : 'RWI'
 }

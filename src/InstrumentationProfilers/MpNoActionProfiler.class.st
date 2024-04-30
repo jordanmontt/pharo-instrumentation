@@ -1,9 +1,9 @@
 Class {
 	#name : 'MpNoActionProfiler',
 	#superclass : 'AbstractProfiler',
-	#category : 'InstrumentationProfilers-No-Action',
+	#category : 'InstrumentationProfilers-Trap-Method',
 	#package : 'InstrumentationProfilers',
-	#tag : 'No-Action'
+	#tag : 'Trap-Method'
 }
 
 { #category : 'configuration' }

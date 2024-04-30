@@ -1,7 +1,7 @@
 Class {
 	#name : 'MpNoActionHandler',
 	#superclass : 'MpHandler',
-	#category : 'InstrumentationProfilers-No-Action',
+	#category : 'InstrumentationProfilers-Trap-Method',
 	#package : 'InstrumentationProfilers',
-	#tag : 'No-Action'
+	#tag : 'Trap-Method'
 }

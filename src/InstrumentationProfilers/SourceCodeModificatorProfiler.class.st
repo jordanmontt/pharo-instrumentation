@@ -1,3 +1,30 @@
+"
+Important:
+
+In order to this profiler to work correctly, the methods to be instrumented need to have the pragma declaration before the temp variables.
+
+Example:
+
+This WORKS:
+
+```
+methodWithPragma
+  <primitive: 'prim' module: 'AModule' error: error>
+  | var1 var2 |
+  var1 := 4.
+  self doSomething: error
+```
+
+This DOES NOT work:
+
+```
+methodWithPragma
+  | var1 var2 |
+  <primitive: 'prim' module: 'AModule' error: error>      
+  var1 := 4.
+  self doSomething: error
+```
+"
 Class {
 	#name : 'SourceCodeModificatorProfiler',
 	#superclass : 'Object',
@@ -20,7 +47,7 @@ SourceCodeModificatorProfiler >> addMethods: methodsCollection [
 { #category : 'accessing' }
 SourceCodeModificatorProfiler >> afterAction: aBlockClosure [
 
-	afterAction := aBlockClosure "We want the squares [] "
+	afterAction := aBlockClosure
 ]
 
 { #category : 'accessing' }

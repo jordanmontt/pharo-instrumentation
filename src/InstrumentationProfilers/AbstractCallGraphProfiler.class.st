@@ -3,7 +3,7 @@ Class {
 	#superclass : 'AbstractProfiler',
 	#traits : 'TCallGraphBuilder',
 	#classTraits : 'TCallGraphBuilder classTrait',
-	#category : 'InstrumentationProfilers-Call-Graph',
+	#category : 'InstrumentationProfilers-Core',
 	#package : 'InstrumentationProfilers',
-	#tag : 'Call-Graph'
+	#tag : 'Core'
 }

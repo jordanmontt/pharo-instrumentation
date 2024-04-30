@@ -5,9 +5,9 @@ Class {
 		'stacks',
 		'profiler'
 	],
-	#category : 'InstrumentationProfilers-Call-Graph',
+	#category : 'InstrumentationProfilers-Core',
 	#package : 'InstrumentationProfilers',
-	#tag : 'Call-Graph'
+	#tag : 'Core'
 }
 
 { #category : 'as yet unclassified' }

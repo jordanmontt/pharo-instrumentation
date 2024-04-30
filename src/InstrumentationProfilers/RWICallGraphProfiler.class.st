@@ -1,9 +1,9 @@
 Class {
 	#name : 'RWICallGraphProfiler',
 	#superclass : 'AbstractCallGraphProfiler',
-	#category : 'InstrumentationProfilers-Call-Graph',
+	#category : 'InstrumentationProfilers-RWI',
 	#package : 'InstrumentationProfilers',
-	#tag : 'Call-Graph'
+	#tag : 'RWI'
 }
 
 { #category : 'configuration' }

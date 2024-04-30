@@ -5,9 +5,9 @@ Class {
 		'profiler',
 		'method'
 	],
-	#category : 'InstrumentationProfilers-Method-Coverage',
+	#category : 'InstrumentationProfilers-RWI',
 	#package : 'InstrumentationProfilers',
-	#tag : 'Method-Coverage'
+	#tag : 'RWI'
 }
 
 { #category : 'instance creation' }
