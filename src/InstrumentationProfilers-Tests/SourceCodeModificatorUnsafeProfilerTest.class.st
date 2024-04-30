@@ -51,3 +51,26 @@ SourceCodeModificatorUnsafeProfilerTest >> testInstrumentFollowsPrototypeTrap [
 	profiler uninstrument.
 	self assert: originalSourceCode equals: (AClassToInstrument >> #prototypeTrap) sourceCode
 ]
+
+{ #category : 'tests' }
+SourceCodeModificatorUnsafeProfilerTest >> testInstrumentFollowsPrototypeTrapWithArgs [
+
+
+	| prototypeInstrumentedMethod originalSourceCode |
+	originalSourceCode := (AClassToInstrument >> #prototypeTrap:arg2: ) sourceCode.
+	prototypeInstrumentedMethod := 'prototypeTrap: arg1 arg2: arg2
+#beforeAction cull: ''AClassToInstrument>>#prototypeTrap:arg2:''.
+    [ #originalCodeMethod ] ensure: [
+    #afterAction ]'.
+
+	profiler
+		beforeAction: '#beforeAction';
+		afterAction: '#afterAction';
+		addMethods: { (AClassToInstrument >> #prototypeTrap:arg2:) };
+		instrument.
+
+	self assert: (AClassToInstrument >> #prototypeTrap:arg2:) sourceCode equals: prototypeInstrumentedMethod.
+
+	profiler uninstrument.
+	self assert: originalSourceCode equals: (AClassToInstrument >> #prototypeTrap:arg2:) sourceCode
+]
