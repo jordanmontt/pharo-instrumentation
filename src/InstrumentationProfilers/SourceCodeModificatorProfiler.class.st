@@ -75,8 +75,7 @@ SourceCodeModificatorProfiler >> instrument [
 SourceCodeModificatorProfiler >> instrument: aMethod [
 
 	| beforeActionString afterActionString pragmasString originalCodeString instrumentedMethodCode |
-	beforeActionString := self wrapWithMetaSafeMechanism:
-		'[ ' , beforeAction asString , ' cull: ' , aMethod nameForProfiler , ' ]'.
+	beforeActionString := self wrapBeforeActionFor: aMethod.
 	afterActionString := self wrapWithMetaSafeMechanism: afterAction asString.
 	originalCodeString := '[ ' , aMethod methodNode body sourceCode , ' ]'.
 	pragmasString := aMethod pragmas inject: '' into: [ :sum :node | sum , node asString , String cr].
@@ -110,6 +109,13 @@ SourceCodeModificatorProfiler >> uninstrument [
 SourceCodeModificatorProfiler >> uninstrument: aMethod [
 
 	aMethod methodClass methodDict at: aMethod selector put: aMethod
+]
+
+{ #category : 'profiling' }
+SourceCodeModificatorProfiler >> wrapBeforeActionFor: aMethod [
+
+	^ self wrapWithMetaSafeMechanism:
+		  '[ ' , beforeAction asString , ' cull: ' , aMethod nameForProfiler , ' ]'
 ]
 
 { #category : 'profiling' }
