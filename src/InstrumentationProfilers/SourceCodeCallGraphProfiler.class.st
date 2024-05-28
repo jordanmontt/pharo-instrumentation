@@ -19,5 +19,5 @@ SourceCodeCallGraphProfiler >> initialize [
 SourceCodeCallGraphProfiler >> profile: aBlock [
 
 	SCCallGraph reset.
-	super profile: aBlock
+	^ super profile: aBlock
 ]

@@ -19,5 +19,5 @@ SourceCodeMethodCoverageProfiler >> initialize [
 SourceCodeMethodCoverageProfiler >> profile: aBlock [
 
 	SCMethodCoverage reset.
-	super profile: aBlock
+	^ super profile: aBlock
 ]

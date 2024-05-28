@@ -57,7 +57,7 @@ AbstractProfiler >> newMethodProxy: aMethod [
 AbstractProfiler >> profile: aBlock [
 
 	self startProfiling.
-	aBlock ensure: [ self stopProfiling ]
+	^ aBlock ensure: [ self stopProfiling ]
 ]
 
 { #category : 'profiling' }

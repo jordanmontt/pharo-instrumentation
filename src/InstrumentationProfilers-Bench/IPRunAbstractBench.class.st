@@ -36,8 +36,7 @@ IPRunAbstractBench >> runMpCallGraph [
 
 	^ MpCallGraphProfiler new
 		addMethods: methodsToInstrument;
-		profile: [ self runBaseline ];
-		yourself
+		profile: [ [self runBaseline] timeToRun asMilliSeconds ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -45,8 +44,7 @@ IPRunAbstractBench >> runMpMethodCoverage [
 
 	^ MpMethodCoverageProfiler new
 		addMethods: methodsToInstrument;
-		profile: [ self runBaseline ];
-		yourself
+		profile: [ [self runBaseline] timeToRun asMilliSeconds ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -54,8 +52,7 @@ IPRunAbstractBench >> runMpNoAction [
 
 	^ MpNoActionProfiler new
 		addMethods: methodsToInstrument;
-		profile: [ self runBaseline ];
-		yourself
+		profile: [[ self runBaseline] timeToRun asMilliSeconds ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -63,8 +60,7 @@ IPRunAbstractBench >> runRWICallGraph [
 
 	^ RWICallGraphProfiler new
 		addMethods: methodsToInstrument;
-		profile: [ self runBaseline ];
-		yourself
+		profile: [ [self runBaseline] timeToRun asMilliSeconds ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -72,8 +68,7 @@ IPRunAbstractBench >> runRWIMethodCoverage [
 
 	^ RWIMethodCoverageProfiler new
 		addMethods: methodsToInstrument;
-		profile: [ self runBaseline ];
-		yourself
+		profile: [ [self runBaseline] timeToRun asMilliSeconds ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -81,8 +76,7 @@ IPRunAbstractBench >> runRWINoAction [
 
 	^ RWINoActionProfiler new
 		addMethods: methodsToInstrument;
-		profile: [ self runBaseline ];
-		yourself
+		profile: [ [self runBaseline] timeToRun asMilliSeconds ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -90,8 +84,7 @@ IPRunAbstractBench >> runSCMCallGraph [
 
 	^ SourceCodeCallGraphProfiler new
 		addMethods: methodsToInstrument;
-		profile: [ self runBaseline ];
-		yourself
+		profile: [ [self runBaseline] timeToRun asMilliSeconds ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -99,8 +92,7 @@ IPRunAbstractBench >> runSCMMethodCoverage [
 
 	^ SourceCodeMethodCoverageProfiler new
 		addMethods: methodsToInstrument;
-		profile: [ self runBaseline ];
-		yourself
+		profile: [ [self runBaseline] timeToRun asMilliSeconds ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -108,8 +100,7 @@ IPRunAbstractBench >> runSCMNoAction [
 
 	^ SourceCodeNoActionProfiler new
 		addMethods: methodsToInstrument;
-		profile: [ self runBaseline ];
-		yourself
+		profile: [ [self runBaseline] timeToRun asMilliSeconds ]
 ]
 
 { #category : 'initialization' }
