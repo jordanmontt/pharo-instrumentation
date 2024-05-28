@@ -14,7 +14,7 @@ AbstractProfiler >> addMethod: aMethod [
 
 	methodProxies
 		at: aMethod
-		put: (self newMethodProxy: aMethod)
+		put: (self newMethodProxy: aMethod nameForProfiler)
 ]
 
 { #category : 'api' }
