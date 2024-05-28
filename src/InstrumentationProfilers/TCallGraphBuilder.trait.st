@@ -19,7 +19,6 @@ TCallGraphBuilder >> callStack [
 TCallGraphBuilder >> enteringMethod: aMethod [
 
 	| node callerNode |
-	callStack ensureStackIsInitialized.
 	callerNode := callStack top.
 	node := self nodeForMethod: aMethod.
 	node addCall.
@@ -38,7 +37,9 @@ TCallGraphBuilder >> initialize [
 
 	super initialize.
 	nodes := Dictionary new.
-	callStack := CallGraphProcessCallStack onProfiler: self
+	callStack := Stack new
+		push: self rootNode;
+		yourself
 ]
 
 { #category : 'initialization' }
