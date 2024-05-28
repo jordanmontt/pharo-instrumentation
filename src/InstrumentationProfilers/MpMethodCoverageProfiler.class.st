@@ -9,7 +9,7 @@ Class {
 { #category : 'configuration' }
 MpMethodCoverageProfiler >> newHandler: aMethod [
 
-	^ MpMethodCoverageHandler onMethod: aMethod profiler: self
+	^ MpMethodCoverageHandler onMethod: aMethod nameForProfiler profiler: self
 ]
 
 { #category : 'configuration' }

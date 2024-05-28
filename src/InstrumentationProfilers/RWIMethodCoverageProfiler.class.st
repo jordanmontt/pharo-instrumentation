@@ -9,7 +9,7 @@ Class {
 { #category : 'configuration' }
 RWIMethodCoverageProfiler >> newHandler: aMethod [
 
-	^ RWIMethodCoverageHandler onMethod: aMethod profiler: self
+	^ RWIMethodCoverageHandler onMethod: aMethod nameForProfiler profiler: self
 ]
 
 { #category : 'configuration' }

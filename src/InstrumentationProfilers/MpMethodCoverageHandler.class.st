@@ -15,7 +15,7 @@ MpMethodCoverageHandler class >> onMethod: aMethod profiler: aProfiler [
 
 	^ self new
 		method: aMethod;
-		profiler: aProfiler
+		profiler: aProfiler;
 		yourself
 ]
 

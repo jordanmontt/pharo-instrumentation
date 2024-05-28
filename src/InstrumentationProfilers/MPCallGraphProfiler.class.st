@@ -9,7 +9,7 @@ Class {
 { #category : 'configuration' }
 MpCallGraphProfiler >> newHandler: aMethod [
 
-	^ MpCallGraphHandler onMethod: aMethod profiler: self
+	^ MpCallGraphHandler onMethod: aMethod nameForProfiler profiler: self
 ]
 
 { #category : 'configuration' }

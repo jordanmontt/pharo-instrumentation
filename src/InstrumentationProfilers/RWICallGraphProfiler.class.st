@@ -9,7 +9,7 @@ Class {
 { #category : 'configuration' }
 RWICallGraphProfiler >> newHandler: aMethod [
 
-	^ RWICallGraphHandler onMethod: aMethod profiler: self
+	^ RWICallGraphHandler onMethod: aMethod nameForProfiler profiler: self
 ]
 
 { #category : 'configuration' }
