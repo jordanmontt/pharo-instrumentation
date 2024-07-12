@@ -5,9 +5,9 @@ Class {
 		'profiler',
 		'method'
 	],
-	#category : 'InstrumentationProfilers-Trap-Method',
+	#category : 'InstrumentationProfilers-MethodProxies',
 	#package : 'InstrumentationProfilers',
-	#tag : 'Trap-Method'
+	#tag : 'MethodProxies'
 }
 
 { #category : 'instance creation' }

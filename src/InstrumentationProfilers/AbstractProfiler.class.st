@@ -2,55 +2,45 @@ Class {
 	#name : 'AbstractProfiler',
 	#superclass : 'Object',
 	#instVars : [
-		'methodProxies'
+		'instrumentator'
+	],
+	#classInstVars : [
+		'defaultInstance'
 	],
 	#category : 'InstrumentationProfilers-Core',
 	#package : 'InstrumentationProfilers',
 	#tag : 'Core'
 }
 
-{ #category : 'api' }
-AbstractProfiler >> addMethod: aMethod [
+{ #category : 'accessing' }
+AbstractProfiler class >> defaultInstance [
 
-	methodProxies
-		at: aMethod
-		put: (self newMethodProxy: aMethod)
+	^ defaultInstance ifNil: [ defaultInstance := self new ]
 ]
 
-{ #category : 'api' }
-AbstractProfiler >> addMethods: aSetOfMethods [
+{ #category : 'class initialization' }
+AbstractProfiler class >> reset [
 
-	(aSetOfMethods collect: [ :method | method unproxifiedMethod ])
-		do: [ :method | self addMethod: method ]
-]
-
-{ #category : 'initialization' }
-AbstractProfiler >> initialize [
-
-	super initialize.
-	methodProxies := Dictionary new
+	defaultInstance := nil
 ]
 
 { #category : 'profiling' }
 AbstractProfiler >> instrument [
 
-	methodProxies valuesDo: #install
+	instrumentator instrument
 ]
 
-{ #category : 'accessing' }
-AbstractProfiler >> methodProxies [
+{ #category : 'profiling' }
+AbstractProfiler >> instrumentator: anObject [
 
-	^ methodProxies
+	instrumentator := anObject.
+	instrumentator profiler: self
 ]
 
-{ #category : 'configuration' }
-AbstractProfiler >> newHandler: aMethod [ 
-	^ self subclassResponsibility
-]
+{ #category : 'api' }
+AbstractProfiler >> methods: aSetOfMethods [
 
-{ #category : 'configuration' }
-AbstractProfiler >> newMethodProxy: aMethod [ 
-	^ self subclassResponsibility
+	instrumentator methods: aSetOfMethods
 ]
 
 { #category : 'profiling' }
@@ -75,5 +65,5 @@ AbstractProfiler >> stopProfiling [
 { #category : 'profiling' }
 AbstractProfiler >> uninstrument [
 
-	methodProxies valuesDo: #uninstall
+	instrumentator uninstrument
 ]

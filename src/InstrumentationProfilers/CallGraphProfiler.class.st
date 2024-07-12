@@ -1,5 +1,6 @@
-Trait {
-	#name : 'TCallGraphBuilder',
+Class {
+	#name : 'CallGraphProfiler',
+	#superclass : 'AbstractProfiler',
 	#instVars : [
 		'callStack',
 		'nodes'
@@ -10,13 +11,13 @@ Trait {
 }
 
 { #category : 'accessing' }
-TCallGraphBuilder >> callStack [
+CallGraphProfiler >> callStack [
 
 	^ callStack
 ]
 
 { #category : 'initialization' }
-TCallGraphBuilder >> enteringMethod: aMethod [
+CallGraphProfiler >> enteringMethod: aMethod [
 
 	| node callerNode |
 	callerNode := callStack top.
@@ -27,13 +28,13 @@ TCallGraphBuilder >> enteringMethod: aMethod [
 ]
 
 { #category : 'initialization' }
-TCallGraphBuilder >> exitingMethod [
+CallGraphProfiler >> exitingMethod [
 
 	callStack pop
 ]
 
 { #category : 'initialization' }
-TCallGraphBuilder >> initialize [
+CallGraphProfiler >> initialize [
 
 	super initialize.
 	nodes := Dictionary new.
@@ -42,8 +43,14 @@ TCallGraphBuilder >> initialize [
 		yourself
 ]
 
+{ #category : 'accessing' }
+CallGraphProfiler >> instrumentator [
+
+	^ instrumentator
+]
+
 { #category : 'initialization' }
-TCallGraphBuilder >> nodeForMethod: method [
+CallGraphProfiler >> nodeForMethod: method [
 
 	^ nodes at: method
 		ifPresent: [ :node | node ]
@@ -51,13 +58,13 @@ TCallGraphBuilder >> nodeForMethod: method [
 ]
 
 { #category : 'accessing' }
-TCallGraphBuilder >> nodes [
+CallGraphProfiler >> nodes [
 
 	^ nodes
 ]
 
 { #category : 'private' }
-TCallGraphBuilder >> rootNode [
+CallGraphProfiler >> rootNode [
 
 	| rootNode |
 	rootNode := CallGraphMethodNode forMethod: #root.

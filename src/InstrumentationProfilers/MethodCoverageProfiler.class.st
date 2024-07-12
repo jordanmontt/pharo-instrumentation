@@ -1,5 +1,5 @@
 Class {
-	#name : 'AbstractMethodCoverageProfiler',
+	#name : 'MethodCoverageProfiler',
 	#superclass : 'AbstractProfiler',
 	#instVars : [
 		'calledMethods'
@@ -10,13 +10,13 @@ Class {
 }
 
 { #category : 'profiling' }
-AbstractMethodCoverageProfiler >> callingMethod: aMethod [
+MethodCoverageProfiler >> callingMethod: aMethod [
 
 	calledMethods add: aMethod
 ]
 
 { #category : 'initialization' }
-AbstractMethodCoverageProfiler >> initialize [
+MethodCoverageProfiler >> initialize [
 
 	super initialize.
 	calledMethods := Set new

@@ -5,9 +5,9 @@ Class {
 	#name : 'SourceCodeModificatorProfilerTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'profiler',
 		'beforeActionBlock',
-		'afterActionBlock'
+		'afterActionBlock',
+		'instrumentator'
 	],
 	#category : 'InstrumentationProfilers-Tests-SourceCodeModificator',
 	#package : 'InstrumentationProfilers-Tests',
@@ -20,7 +20,7 @@ SourceCodeModificatorProfilerTest >> setUp [
 	super setUp.
 
 	SingletonClasToTest reset.
-	profiler := SourceCodeModificatorProfiler new.
+	instrumentator := SourceCodeInstrumentator new.
 	beforeActionBlock := [ :method | SingletonClasToTest current increment ].
 	afterActionBlock := [ SingletonClasToTest current increment ]
 ]
@@ -28,7 +28,7 @@ SourceCodeModificatorProfilerTest >> setUp [
 { #category : 'running' }
 SourceCodeModificatorProfilerTest >> tearDown [
 
-	profiler uninstrument.
+	instrumentator uninstrument.
 	super tearDown
 ]
 
@@ -38,11 +38,13 @@ SourceCodeModificatorProfilerTest >> testAfterHasLocalReturn [
 	| profileBlock |
 	profileBlock := [ AClassToInstrument new foo ].
 
-	profiler
+	instrumentator
 		beforeAction: beforeActionBlock;
 		afterAction: [ SingletonClasToTest current increment. ^ 5 ];
-		addMethods: { (AClassToInstrument >> #foo) };
-		profile: profileBlock.
+		methods: { (AClassToInstrument >> #foo) }.
+		
+	instrumentator instrument.
+	profileBlock ensure: [ instrumentator uninstrument ].
 
 	"foo calls one increment"
 	self assert: SingletonClasToTest current counter equals: 3
@@ -55,12 +57,14 @@ SourceCodeModificatorProfilerTest >> testAfterRaisesError [
 	profileBlock := [ AClassToInstrument new foo ].
 
 	"After should raise an error. Just like method proxies"
-	profiler
+	instrumentator
 		beforeAction: beforeActionBlock;
 		afterAction: [ SingletonClasToTest current increment. Error signal ];
-		addMethods: { (AClassToInstrument >> #foo) }.
+		methods: { (AClassToInstrument >> #foo) }.
+		
+	instrumentator instrument.
 	
-	self should: [ profiler profile: profileBlock ] raise: Error.
+	self should: [ profileBlock ensure: [ instrumentator uninstrument ] ] raise: Error.
 	"foo calls one increment. Error was raised after the execution so we should have 3"
 	self assert: SingletonClasToTest current counter equals: 3
 ]
@@ -71,12 +75,13 @@ SourceCodeModificatorProfilerTest >> testBeforeRaisesError [
 	| profileBlock |
 	profileBlock := [ AClassToInstrument new foo ].
 
-	profiler
+	instrumentator
 		beforeAction: [ :method | Error signal ];
 		afterAction: [ SingletonClasToTest current increment ];
-		addMethods: { (AClassToInstrument >> #foo) }.
-
-	self should: [profiler profile: profileBlock ] raise: Error.
+		methods: { (AClassToInstrument >> #foo) };
+		instrument.
+	
+	self should: [ profileBlock ensure: [ instrumentator uninstrument ] ] raise: Error.
 	"before raised an error so nothing else got executed"
 	self assert: SingletonClasToTest current counter equals: 0
 ]
@@ -88,10 +93,10 @@ SourceCodeModificatorProfilerTest >> testInstrument [
 	profileBlock := [ AClassToInstrument new foo ].
 	originalSourceCode := (AClassToInstrument >> #foo) sourceCode copy.
 
-	profiler
+	instrumentator
 		beforeAction: beforeActionBlock;
 		afterAction: afterActionBlock;
-		addMethods: { (AClassToInstrument >> #foo) };
+		methods: { (AClassToInstrument >> #foo) };
 		instrument.
 
 	profileBlock value.
@@ -99,7 +104,7 @@ SourceCodeModificatorProfilerTest >> testInstrument [
 	"foo calls one increment"
 	self assert: SingletonClasToTest current counter equals: 3.
 
-	profiler uninstrument.
+	instrumentator uninstrument.
 	SingletonClasToTest reset.
 	profileBlock value.
 	"original method restored"
@@ -121,15 +126,15 @@ SourceCodeModificatorProfilerTest >> testInstrumentFollowsPrototypeTrap [
         Processor activeProcess isMeta ifFalse: [
         Processor activeProcess runInMetaLevel: #afterAction ]. ]'.
 
-	profiler
+	instrumentator
 		beforeAction: '#beforeAction';
 		afterAction: '#afterAction';
-		addMethods: { (AClassToInstrument >> #prototypeTrap) };
+		methods: { (AClassToInstrument >> #prototypeTrap) };
 		instrument.
 
 	self assert: (AClassToInstrument >> #prototypeTrap) sourceCode equals: prototypeInstrumentedMethod.
 
-	profiler uninstrument.
+	instrumentator uninstrument.
 	self assert: originalSourceCode equals: (AClassToInstrument >> #prototypeTrap) sourceCode
 ]
 
@@ -146,15 +151,15 @@ SourceCodeModificatorProfilerTest >> testInstrumentFollowsPrototypeTrapWithArgs 
         Processor activeProcess isMeta ifFalse: [
         Processor activeProcess runInMetaLevel: #afterAction ]. ]'.
 
-	profiler
+	instrumentator
 		beforeAction: '#beforeAction';
 		afterAction: '#afterAction';
-		addMethods: { (AClassToInstrument >> #prototypeTrap:arg2:) };
+		methods: { (AClassToInstrument >> #prototypeTrap:arg2:) };
 		instrument.
 
 	self assert: (AClassToInstrument >> #prototypeTrap:arg2:) sourceCode equals: prototypeInstrumentedMethod.
 
-	profiler uninstrument.
+	instrumentator uninstrument.
 	self assert: originalSourceCode equals: (AClassToInstrument >> #prototypeTrap:arg2:) sourceCode
 ]
 
@@ -175,15 +180,15 @@ SourceCodeModificatorProfilerTest >> testInstrumentWithPragmas [
         Processor activeProcess isMeta ifFalse: [
         Processor activeProcess runInMetaLevel: #afterAction ]. ]'.
 
-	profiler
+	instrumentator
 		beforeAction: '#beforeAction';
 		afterAction: '#afterAction';
-		addMethods: { (AClassToInstrument >> #methodWithPragma) };
+		methods: { (AClassToInstrument >> #methodWithPragma) };
 		instrument.
 
 	self assert: (AClassToInstrument >> #methodWithPragma) sourceCode equals: prototypeInstrumentedMethod.
 
-	profiler uninstrument.
+	instrumentator uninstrument.
 	self assert: originalSourceCode equals: (AClassToInstrument >> #methodWithPragma) sourceCode
 ]
 
@@ -193,11 +198,13 @@ SourceCodeModificatorProfilerTest >> testProfile [
 	| profileBlock |
 	profileBlock := [ AClassToInstrument new foo ].
 
-	profiler
+	instrumentator
 		beforeAction: beforeActionBlock;
 		afterAction: afterActionBlock;
-		addMethods: { (AClassToInstrument >> #foo) };
-		profile: profileBlock.
+		methods: { (AClassToInstrument >> #foo) };
+		instrument.
+
+	profileBlock ensure: [ instrumentator uninstrument ].
 
 	"foo calls one increment"
 	self assert: SingletonClasToTest current counter equals: 3.
@@ -214,11 +221,13 @@ SourceCodeModificatorProfilerTest >> testProfileMethodWithTempVariables [
 	| profileBlock |
 	profileBlock := [ AClassToInstrument new tempy ].
 
-	profiler
+	instrumentator
 		beforeAction: beforeActionBlock;
 		afterAction: afterActionBlock;
-		addMethods: { (AClassToInstrument >> #tempy) };
-		profile: profileBlock.
+		methods: { (AClassToInstrument >> #tempy) }.
+		
+	instrumentator instrument.
+	profileBlock ensure: [ instrumentator uninstrument ].
 
 	"foo calls one increment"
 	self assert: SingletonClasToTest current counter equals: 3.
@@ -235,11 +244,13 @@ SourceCodeModificatorProfilerTest >> testProfileSeveralMethods [
 	| profileBlock |
 	profileBlock := [ AClassToInstrument new foo; bar; poo ].
 
-	profiler
+	instrumentator
 		beforeAction: beforeActionBlock;
 		afterAction: afterActionBlock;
-		addMethods: { (AClassToInstrument >> #foo) . (AClassToInstrument >> #bar) . (AClassToInstrument >> #poo) };
-		profile: profileBlock.
+		methods: { (AClassToInstrument >> #foo) . (AClassToInstrument >> #bar) . (AClassToInstrument >> #poo) };
+		instrument.
+	
+	profileBlock ensure: [ instrumentator uninstrument ].
 
 	"foo, bar and poo call one increment"
 	self assert: SingletonClasToTest current counter equals: 9.
@@ -257,12 +268,14 @@ SourceCodeModificatorProfilerTest >> testProfileSeveralMethodsAndClasses [
 	profileBlock := [ AClassToInstrument new foo; bar; poo.
 		AClassToInstrumentCopy new foo; bar; poo ].
 
-	profiler
+	instrumentator
 		beforeAction: beforeActionBlock;
 		afterAction: afterActionBlock;
-		addMethods: { (AClassToInstrument >> #foo) . (AClassToInstrument >> #bar) . (AClassToInstrument >> #poo) .
+		methods: { (AClassToInstrument >> #foo) . (AClassToInstrument >> #bar) . (AClassToInstrument >> #poo) .
 			(AClassToInstrumentCopy >> #foo) . (AClassToInstrumentCopy >> #bar) . (AClassToInstrumentCopy >> #poo) };
-		profile: profileBlock.
+		instrument.
+		
+	profileBlock ensure: [ instrumentator uninstrument ].
 
 	"foo, bar and poo call one increment"
 	self assert: SingletonClasToTest current counter equals: 18.
@@ -279,13 +292,14 @@ SourceCodeModificatorProfilerTest >> testProfileWithException [
 	| profileBlock |
 	profileBlock := [ AClassToInstrument new fooWithException ].
 
-	profiler
+	instrumentator
 		beforeAction: beforeActionBlock;
 		afterAction: afterActionBlock;
-		addMethods: { (AClassToInstrument >> #fooWithException) }.
+		methods: { (AClassToInstrument >> #fooWithException) };
+		instrument.
 
 	"Just like method proxies, if the method raises an error, it should be signaled"
-	self should: [ profiler profile: profileBlock. ] raise: Error.
+	self should: [ profileBlock ensure: [ instrumentator uninstrument ] ] raise: Error.
 
 	"foo calls one increment but it should not be executed because an exception is signaled"
 	"after and before action should be always executed"

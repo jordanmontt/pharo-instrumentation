@@ -1,13 +1,13 @@
 Class {
-	#name : 'SourceCodeNoActionProfiler',
-	#superclass : 'SourceCodeModificatorProfiler',
+	#name : 'SourceCodeNoActionInstrumentator',
+	#superclass : 'SourceCodeInstrumentator',
 	#category : 'InstrumentationProfilers-Source code instrumentation',
 	#package : 'InstrumentationProfilers',
 	#tag : 'Source code instrumentation'
 }
 
 { #category : 'initialization' }
-SourceCodeNoActionProfiler >> initialize [
+SourceCodeNoActionInstrumentator >> initialize [
 
 	super initialize.
 	self beforeAction: [ "do nothing" ].

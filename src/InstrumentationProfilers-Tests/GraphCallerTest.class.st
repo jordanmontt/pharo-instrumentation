@@ -18,8 +18,8 @@ GraphCallerTest >> assertProfilersReturnSameResults [
 	| mpRootNode rwiRootNode |
 	self assert: mpProfiler nodes size equals: rwiProfiler nodes size.
 
-	self assert: mpProfiler methodProxies size equals: packageMethods size.
-	self assert: rwiProfiler methodProxies size equals: packageMethods size.
+	self assert: mpProfiler instrumentator methodProxies size equals: packageMethods size.
+	self assert: rwiProfiler instrumentator methodProxies size equals: packageMethods size.
 
 	self
 		assert: (mpProfiler nodes values sum: [ :node | node timesCalled ])
@@ -36,14 +36,14 @@ GraphCallerTest >> assertProfilersReturnSameResults [
 { #category : 'running' }
 GraphCallerTest >> runMpProfiler [
 
-	mpProfiler addMethods: packageMethods.
+	mpProfiler methods: packageMethods.
 	mpProfiler profile: profilingBlock
 ]
 
 { #category : 'running' }
-GraphCallerTest >> runRWIProfiler [
+GraphCallerTest >> runRwiProfiler [
 
-	rwiProfiler addMethods: packageMethods.
+	rwiProfiler methods: packageMethods.
 	rwiProfiler profile: profilingBlock
 ]
 
@@ -72,8 +72,12 @@ GraphCallerTest >> setProfilingBlockForTests: testPackages [
 GraphCallerTest >> setUp [
 
 	super setUp.
-	mpProfiler := MpCallGraphProfiler new.
-	rwiProfiler := RWICallGraphProfiler new
+	mpProfiler := CallGraphProfiler new
+		              instrumentator: MpCallGraphInstrumentator new;
+		              yourself.
+	rwiProfiler := CallGraphProfiler new
+		               instrumentator: RwiCallGraphInstrumentator new;
+		               yourself
 ]
 
 { #category : 'tests' }
@@ -83,7 +87,7 @@ GraphCallerTest >> testFuzzyMatcher [
 	self setMethodsToInstrumentFor: { 'FuzzyMatcher' asPackage }.
 	
 	self runMpProfiler.
-	self runRWIProfiler.
+	self runRwiProfiler.
 
 	self assertProfilersReturnSameResults
 ]
@@ -95,7 +99,7 @@ GraphCallerTest >> testGraphAlgos [
 	self setMethodsToInstrumentFor: { 'AI-Algorithms-Graph' asPackage }.
 
 	self runMpProfiler.
-	self runRWIProfiler.
+	self runRwiProfiler.
 
 	self assertProfilersReturnSameResults
 ]
@@ -107,7 +111,7 @@ GraphCallerTest >> testMicrodown [
 	self setMethodsToInstrumentFor: { 'Microdown' asPackage . 'Microdown-RichTextComposer' asPackage }.
 	
 	self runMpProfiler.
-	self runRWIProfiler.
+	self runRwiProfiler.
 
 	self assertProfilersReturnSameResults
 ]
@@ -119,7 +123,7 @@ GraphCallerTest >> testProfStef [
 	self setMethodsToInstrumentFor: { 'ProfStef-Core' asPackage }.
 	
 	self runMpProfiler.
-	self runRWIProfiler.
+	self runRwiProfiler.
 
 	self assertProfilersReturnSameResults
 ]
@@ -133,7 +137,7 @@ GraphCallerTest >> testRewriteTool [
 		'NewTools-RewriterTools' asPackage }.
 	
 	self runMpProfiler.
-	self runRWIProfiler.
+	self runRwiProfiler.
 
 	self assertProfilersReturnSameResults
 ]
