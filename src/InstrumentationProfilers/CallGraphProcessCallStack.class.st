@@ -55,8 +55,6 @@ CallGraphProcessCallStack >> profiler: aProfiler [
 CallGraphProcessCallStack >> push: aNode [
 
 	self ensureStackIsInitialized.
-	self flag: 'There was the call to self ensureStackIsInitialized that it was present in the method profiler.
-	I do not know why since the method is called already in the enteringMethod: method'.
 	^ self value push: aNode
 ]
 

@@ -38,8 +38,9 @@ CallGraphProfiler >> initialize [
 
 	super initialize.
 	nodes := Dictionary new.
-	callStack := Stack new
-		push: self rootNode;
+	callStack := CallGraphProcessCallStack new
+		profiler: self;
+		ensureStackIsInitialized;
 		yourself
 ]
 
@@ -53,7 +54,6 @@ CallGraphProfiler >> instrumentator [
 CallGraphProfiler >> nodeForMethod: method [
 
 	^ nodes at: method
-		ifPresent: [ :node | node ]
 		ifAbsentPut: [ CallGraphMethodNode forMethod: method ]
 ]
 
@@ -66,8 +66,7 @@ CallGraphProfiler >> nodes [
 { #category : 'private' }
 CallGraphProfiler >> rootNode [
 
-	| rootNode |
-	rootNode := CallGraphMethodNode forMethod: #root.
-	nodes at: #root put: rootNode.
-	^ rootNode
+	^ nodes
+		at: #root
+		ifAbsentPut: [ CallGraphMethodNode forMethod: #root ]
 ]
