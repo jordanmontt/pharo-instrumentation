@@ -1,5 +1,5 @@
 Class {
-	#name : 'MpInstrumentator',
+	#name : 'MpAbstractInstrumentator',
 	#superclass : 'Object',
 	#instVars : [
 		'methodProxies',
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-MpInstrumentator class >> onProfiler: aProfiler [
+MpAbstractInstrumentator class >> onProfiler: aProfiler [
 
 	^ self new
 		profiler: aProfiler;
@@ -19,25 +19,25 @@ MpInstrumentator class >> onProfiler: aProfiler [
 ]
 
 { #category : 'initialization' }
-MpInstrumentator >> initialize [
+MpAbstractInstrumentator >> initialize [
 
 	super initialize.
 	methodProxies := Dictionary new
 ]
 
 { #category : 'profiling' }
-MpInstrumentator >> instrument [
+MpAbstractInstrumentator >> instrument [
 
 	methodProxies valuesDo: #install
 ]
 
 { #category : 'accessing' }
-MpInstrumentator >> methodProxies [
+MpAbstractInstrumentator >> methodProxies [
 	^ methodProxies
 ]
 
 { #category : 'accessing' }
-MpInstrumentator >> methods: aSetOfMethods [
+MpAbstractInstrumentator >> methods: aSetOfMethods [
 
 	(aSetOfMethods collect: [ :method | method unproxifiedMethod ])
 		do: [ :method |
@@ -47,25 +47,25 @@ MpInstrumentator >> methods: aSetOfMethods [
 ]
 
 { #category : 'accessing' }
-MpInstrumentator >> newHandler: aMethod [
+MpAbstractInstrumentator >> newHandler: aMethod [
 
 	^ self subclassResponsibility
 ]
 
 { #category : 'accessing' }
-MpInstrumentator >> newMethodProxy: aMethod [
+MpAbstractInstrumentator >> newMethodProxy: aMethod [
 
 	^ MpMethodProxy onMethod: aMethod handler: (self newHandler: aMethod)
 ]
 
 { #category : 'accessing' }
-MpInstrumentator >> profiler: aProfiler [
+MpAbstractInstrumentator >> profiler: aProfiler [
 
 	profiler := aProfiler
 ]
 
 { #category : 'profiling' }
-MpInstrumentator >> uninstrument [
+MpAbstractInstrumentator >> uninstrument [
 
 	methodProxies valuesDo: #uninstall
 ]

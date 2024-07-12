@@ -1,6 +1,6 @@
 Class {
 	#name : 'MpCallGraphInstrumentator',
-	#superclass : 'MpInstrumentator',
+	#superclass : 'MpAbstractInstrumentator',
 	#category : 'InstrumentationProfilers-MethodProxies',
 	#package : 'InstrumentationProfilers',
 	#tag : 'MethodProxies'
