@@ -9,5 +9,5 @@ Class {
 { #category : 'instance creation' }
 RwiMethodCoverageInstrumentator >> newHandler: aMethod [
 
-	^ RWIMethodCoverageHandler onMethod: aMethod nameForProfiler profiler: self
+	^ RWIMethodCoverageHandler onMethod: aMethod nameForProfiler profiler: profiler
 ]

@@ -9,17 +9,17 @@ Class {
 { #category : 'default' }
 BencherMp >> callGraphInstrumentator [
 
-	^ MpCallGraphInstrumentator new
+	^ MpCallGraphInstrumentator onProfiler: profiler
 ]
 
 { #category : 'default' }
 BencherMp >> methodCoverageInstrumentator [
 
-	^ MpMethodCoverageInstrumentator new
+	^ MpMethodCoverageInstrumentator onProfiler: profiler
 ]
 
 { #category : 'default' }
 BencherMp >> noActionInstrumentator [
 
-	^ MpNoActionInstrumentator new
+	^ MpNoActionInstrumentator onProfiler: profiler
 ]

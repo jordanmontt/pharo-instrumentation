@@ -11,9 +11,16 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+RwiInstrumentator class >> new [
+
+	self error: 'Use onProfiler: instead'
+]
+
+{ #category : 'as yet unclassified' }
 RwiInstrumentator class >> onProfiler: aProfiler [
 
-	^ self new
+	^ self basicNew
+		initialize;
 		profiler: aProfiler;
 		yourself
 ]

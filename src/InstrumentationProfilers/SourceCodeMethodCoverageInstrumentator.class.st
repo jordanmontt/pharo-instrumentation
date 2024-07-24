@@ -13,9 +13,3 @@ SourceCodeMethodCoverageInstrumentator >> initialize [
 	self beforeAction: [ :instrumentedMethod | MethodCoverageProfiler defaultInstance callingMethod: instrumentedMethod ].
 	self afterAction: [ "do nothing" ]
 ]
-
-{ #category : 'initialization' }
-SourceCodeMethodCoverageInstrumentator >> reset [
-
-	MethodCoverageProfiler reset
-]

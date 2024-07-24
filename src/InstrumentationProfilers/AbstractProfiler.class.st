@@ -33,8 +33,7 @@ AbstractProfiler >> instrument [
 { #category : 'profiling' }
 AbstractProfiler >> instrumentator: anObject [
 
-	instrumentator := anObject.
-	instrumentator profiler: self
+	instrumentator := anObject
 ]
 
 { #category : 'api' }

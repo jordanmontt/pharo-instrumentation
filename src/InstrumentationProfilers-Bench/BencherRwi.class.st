@@ -9,17 +9,17 @@ Class {
 { #category : 'default' }
 BencherRwi >> callGraphInstrumentator [
 
-	^ RwiCallGraphInstrumentator new
+	^ RwiCallGraphInstrumentator onProfiler: profiler
 ]
 
 { #category : 'default' }
 BencherRwi >> methodCoverageInstrumentator [
 
-	^ RwiMethodCoverageInstrumentator new
+	^ RwiMethodCoverageInstrumentator onProfiler: profiler
 ]
 
 { #category : 'default' }
 BencherRwi >> noActionInstrumentator [
 
-	^ RwiNoActionInstrumentator new
+	^ RwiNoActionInstrumentator onProfiler: profiler
 ]

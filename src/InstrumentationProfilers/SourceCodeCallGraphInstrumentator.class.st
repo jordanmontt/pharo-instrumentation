@@ -14,9 +14,3 @@ SourceCodeCallGraphInstrumentator >> initialize [
 	self beforeAction: [ :instrumentedMethod | CallGraphProfiler defaultInstance enteringMethod: instrumentedMethod ].
 	self afterAction: [ CallGraphProfiler defaultInstance exitingMethod ]
 ]
-
-{ #category : 'initialization' }
-SourceCodeCallGraphInstrumentator >> reset [
-
-	CallGraphProfiler reset
-]

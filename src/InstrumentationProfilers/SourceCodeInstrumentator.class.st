@@ -35,8 +35,7 @@ SourceCodeInstrumentator >> initialize [
 { #category : 'profiling' }
 SourceCodeInstrumentator >> instrument [
 
-	methodsToInstrument do: [ :aMethod | self instrument: aMethod ].
-	self reset
+	methodsToInstrument do: [ :aMethod | self instrument: aMethod ]
 ]
 
 { #category : 'profiling' }
@@ -63,12 +62,6 @@ SourceCodeInstrumentator >> instrument: aMethod [
 SourceCodeInstrumentator >> methods: methodsCollection [
 
 	methodsToInstrument addAll: methodsCollection
-]
-
-{ #category : 'as yet unclassified' }
-SourceCodeInstrumentator >> reset [
-
-	
 ]
 
 { #category : 'profiling' }

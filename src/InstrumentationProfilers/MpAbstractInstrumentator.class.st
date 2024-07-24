@@ -11,11 +11,18 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+MpAbstractInstrumentator class >> new [
+
+	^ self error: 'Use onProfiler: instead of new'
+]
+
+{ #category : 'as yet unclassified' }
 MpAbstractInstrumentator class >> onProfiler: aProfiler [
 
-	^ self new
-		profiler: aProfiler;
-		yourself
+	^ self basicNew
+		  initialize;
+		  profiler: aProfiler;
+		  yourself
 ]
 
 { #category : 'initialization' }

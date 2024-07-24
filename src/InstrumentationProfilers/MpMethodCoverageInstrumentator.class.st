@@ -9,5 +9,5 @@ Class {
 { #category : 'accessing' }
 MpMethodCoverageInstrumentator >> newHandler: aMethod [
 
-	^ MpMethodCoverageHandler onMethod: aMethod nameForProfiler profiler: self
+	^ MpMethodCoverageHandler onMethod: aMethod nameForProfiler profiler: profiler
 ]

@@ -12,16 +12,19 @@ Class {
 	#tag : 'New-Benchmarks'
 }
 
-{ #category : 'api - bench' }
+{ #category : 'api - execution' }
 Bencher >> benchExecuteProfiler [
+	"Returns the time that it takes to instrument, execute, and uninstrument. The three things together"
 
 	| timeToRun |
 	timeToRun := [ profiler profile: blockToProfile ] timeToRun.
 	^ self formatTime: timeToRun
 ]
 
-{ #category : 'api - bench' }
+{ #category : 'api - execution' }
 Bencher >> benchExecution [
+	"Returns the time that it takes to execute the bench with the instrumentation.
+It does not take into account the time for instumenting nor uninstrumenting"
 
 	| timeToRun |
 	profiler instrument.
@@ -30,8 +33,9 @@ Bencher >> benchExecution [
 	^ self formatTime: timeToRun
 ]
 
-{ #category : 'api - bench' }
+{ #category : 'api - execution' }
 Bencher >> benchInstrument [
+	"Returns the time that it takes to only instrument the method."
 
 	| timeToRun |
 	timeToRun := [ profiler instrument ] timeToRun.
@@ -39,19 +43,14 @@ Bencher >> benchInstrument [
 	^ self formatTime: timeToRun
 ]
 
-{ #category : 'api - bench' }
+{ #category : 'api - execution' }
 Bencher >> benchUninstrument [
+	"Returns the time that it takes to only uninstrument the method."
 
 	| timeToRun |
 	profiler instrument.
 	timeToRun := [ profiler uninstrument ] timeToRun.
 	^ self formatTime: timeToRun
-]
-
-{ #category : 'api - bench' }
-Bencher >> blockToProfile: aBlock [
-
-	blockToProfile := aBlock
 ]
 
 { #category : 'default' }
@@ -68,7 +67,8 @@ Bencher >> formatTime: timeToRun [
 { #category : 'initialization' }
 Bencher >> initialize [
 
-	super initialize
+	super initialize.
+	blockToProfile := [ testSuites do: #run ]
 ]
 
 { #category : 'default' }
@@ -93,7 +93,7 @@ Bencher >> packagesToInstrument: aCollectionOrSetOfPackages [
 	methodsToInstrument := aCollectionOrSetOfPackages flatCollect: #methods as: Set.
 ]
 
-{ #category : 'initialization' }
+{ #category : 'api' }
 Bencher >> testPackages: testPackages [
 
 	| testClasses |
@@ -102,29 +102,70 @@ Bencher >> testPackages: testPackages [
 	testSuites := testClasses collect: #suite
 ]
 
+{ #category : 'api - benchmarks' }
+Bencher >> useASTBench [
+
+	self testPackages: { 'AST-Core-Tests' asPackage }.
+	self packagesToInstrument: { 'AST-Core' asPackage }
+]
+
 { #category : 'api - profiler' }
 Bencher >> useCallGraphProfiler [
 
 	profiler := CallGraphProfiler new
-		methods: methodsToInstrument;
 		instrumentator: self callGraphInstrumentator;
+		methods: methodsToInstrument;
 		yourself
+]
+
+{ #category : 'api - benchmarks' }
+Bencher >> useCompressionBench [
+
+	self testPackages: { 'Compression-Tests' asPackage }.
+	self packagesToInstrument: { 'Compression' asPackage }
+]
+
+{ #category : 'api - benchmarks' }
+Bencher >> useFileSystemBench [
+
+	self testPackages:{
+		  #'FileSystem-Memory-Tests' asPackage.
+		  #'FileSystem-Core-Tests' asPackage.
+		  #'FileSystem-Disk-Tests' asPackage.
+		  #'FileSystem-Tests-Attributes' asPackage.
+		  'Files-Tests' asPackage }.
+	self packagesToInstrument: {
+		  #'FileSystem-Core' asPackage.
+		  #'FileSystem-Zip' asPackage.
+		  #'FileSystem-Memory' asPackage.
+		  #'FileSystem-Path' asPackage.
+		  #'FileSystem-Disk' asPackage.
+		  'Files' asPackage }
 ]
 
 { #category : 'api - profiler' }
 Bencher >> useMethodCoverageProfiler [
 
-	profiler := MethodCoverageProfiler new
-		methods: methodsToInstrument;
+	profiler := MethodCoverageProfiler new.
+	profiler
 		instrumentator: self methodCoverageInstrumentator;
-		yourself
+		methods: methodsToInstrument
+]
+
+{ #category : 'api - benchmarks' }
+Bencher >> useMicrodownBench [
+
+	self testPackages: { 'Microdown-Tests' asPackage }.
+	self packagesToInstrument: {
+			'Microdown' asPackage.
+			'Microdown-RichTextComposer' asPackage }
 ]
 
 { #category : 'api - profiler' }
 Bencher >> useNoActionProfiler [
 
 	profiler := AbstractProfiler new
-		methods: methodsToInstrument;
 		instrumentator: self noActionInstrumentator;
+		methods: methodsToInstrument;
 		yourself
 ]
