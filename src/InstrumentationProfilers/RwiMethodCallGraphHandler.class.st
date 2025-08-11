@@ -30,7 +30,6 @@ RwiMethodCallGraphHandler class >> onMethod: aMethod profiler: aProfiler [
 RwiMethodCallGraphHandler >> afterExecutionWithReceiver: anObject arguments: anArrayOfObjects returnValue: aReturnValue [
 
 	profiler exitingMethod.
-	'after' traceCr.
 	^ aReturnValue
 ]
 

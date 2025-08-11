@@ -223,23 +223,14 @@ RWIMethodProxy >> receiver: aReceiver withArgs: argArray executeMethod: compiled
 ]
 
 { #category : 'evaluating' }
-RWIMethodProxy >> run: aSelector with: anArrayOfObjects in: aReceiver [
-	"Do not intercept"
+RWIMethodProxy >> run: aSelector with: arguments in: receiver [
 
 	<methodProxyCannotWrap>
-	| process |
-	process := Processor activeProcess.
-
-	(isDisabled or: [ process isMeta ]) ifTrue: [
-		^ self
-			  receiver: aReceiver
-			  withArgs: anArrayOfObjects
-			  executeMethod: proxifiedMethod ].
-
-	"Purposely do not use a non-local return.
-	Otherwise the non-local return logic would be instrumented once the ensure block is executed.
-	However, since a lot of code executes between the ensure block and the real method return, this could end in infinite loops"
-	^ self valueWithReceiver: aReceiver arguments: anArrayOfObjects
+	"If we are in meta state do not execute the handlers"
+	(isDisabled or: [ Processor activeProcess isMeta ])
+		ifTrue: [ ^ self receiver: receiver withArgs: arguments executeMethod: proxifiedMethod ].
+	
+	^ self valueWithReceiver: receiver arguments: arguments
 ]
 
 { #category : 'accessing' }
@@ -298,30 +289,24 @@ RWIMethodProxy >> unproxifiedMethod: aCompiledMethod [
 { #category : 'evaluating' }
 RWIMethodProxy >> valueWithReceiver: receiver arguments: arguments [
 
+	<primitive: 198>
 	<methodProxyCannotWrap>
-	| result |
-	"Hooking into user methods to define before actions.
-	Before actions are not instrumented."
-	thisProcess runInMetaLevel: [
-		'before' traceCr.
-		handler beforeExecutionWithReceiver: receiver arguments: arguments ].
+	| unwinder complete result process |
+	"Put the unwinder as the first temp in case a non-local return or exception happens"
+	unwinder:= RWIInstrumentationUnwinder newWithHandler: handler receiver: receiver arguments: arguments.
+	process := Processor activeProcess.
 
-	"Purposely do not use a non-local return.
-	Otherwise the non-local return logic would be instrumented and this could end in infinite loops"
-	[
-	result := self
-		          receiver: receiver
-		          withArgs: arguments
-		          executeMethod: proxifiedMethod ] methodProxyEnsure:
-		(RWIInstrumentationUnwinder
-			 newWithHandler: handler
-			 receiver: receiver
-			 arguments: arguments).
+	"Execute the before"
+	process runInMetaLevel: [ handler beforeExecutionWithReceiver: receiver arguments: arguments ].
 
-	thisProcess runInMetaLevel: [^ handler
-		  afterExecutionWithReceiver: receiver
-		  arguments: arguments
-		  returnValue: result]
+	"Execute the proxified original method"
+	result := self receiver: receiver withArgs: arguments executeMethod: proxifiedMethod.
+
+	"Execute the after method"
+	process runInMetaLevel: [ 
+		result := handler afterExecutionWithReceiver: receiver arguments: arguments returnValue: result.
+		complete := true.
+		^ result ]
 ]
 
 { #category : 'accessing' }

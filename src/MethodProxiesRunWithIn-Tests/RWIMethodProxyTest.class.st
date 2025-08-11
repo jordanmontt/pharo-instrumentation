@@ -62,8 +62,6 @@ RWIMethodProxyTest >> testCanRunConcurrently [
 	"This tests the ability of method proxies to not influence each other between threads."
 	| mp1 mp2 mpTrigger1 mpTrigger2 handlerTrigger1 handlerTrigger2 sharedObject testSemaphore |
 
-	self skip.
-
 	sharedObject := RWITestConcurrentSharedObject new.
 	testSemaphore := Semaphore new.
 
@@ -218,7 +216,7 @@ RWIMethodProxyTest >> testCannotWrapCriticalProxyMethods3 [
 RWIMethodProxyTest >> testCannotWrapCriticalProxyMethods4 [
 
 	| mp handler |
-	mp := RWIMethodProxy onMethod: BlockClosure >> #methodProxyEnsure: handler: (handler := RWICountingHandler new).
+	mp := RWIMethodProxy onMethod: BlockClosure >> #methodProxiesEnsure: handler: (handler := RWICountingHandler new).
 	
 	self assertCannotInstall: mp
 ]

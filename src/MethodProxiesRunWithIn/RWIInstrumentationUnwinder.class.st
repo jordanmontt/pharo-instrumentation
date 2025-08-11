@@ -32,6 +32,19 @@ RWIInstrumentationUnwinder >> arguments: anObject [
 	arguments := anObject
 ]
 
+{ #category : 'converting' }
+RWIInstrumentationUnwinder >> asContextWithSender: aContext [
+	"Inner private support method for evaluation.  Do not use unless you know what you're doing."
+
+	^(Context newForMethod: (RWIInstrumentationUnwinder >> #value))
+		setSender: aContext
+		receiver: self
+		method: (RWIInstrumentationUnwinder >> #value)
+		closure: nil
+		startpc: (RWIInstrumentationUnwinder >> #value) initialPC;
+		privRefresh
+]
+
 { #category : 'accessing' }
 RWIInstrumentationUnwinder >> handler [
 
@@ -60,8 +73,7 @@ RWIInstrumentationUnwinder >> receiver: anObject [
 RWIInstrumentationUnwinder >> value [
 
 	<methodProxyCannotWrap>
-	| process |
-	process := Processor activeProcess.
-	process runInMetaLevel: [
-		^ handler aboutToReturnWithReceiver: receiver arguments: arguments ]
+	'unwind' traceCr.
+	Processor activeProcess runInMetaLevel: [
+		handler aboutToReturnWithReceiver: receiver arguments: arguments ]
 ]
