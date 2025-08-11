@@ -12,13 +12,10 @@ BaselineOfInstrumentationProfilers >> baseline: spec [
 	spec for: #common do: [
 		spec
 			package: 'MethodProxiesRunWithIn';
+			package: 'InstrumentationProfilers' with: [ spec requires: #('MethodProxiesRunWithIn') ];
+			package: 'InstrumentationProfilers-Bench' with: [ spec requires: #('InstrumentationProfilers') ];
 			package: 'MethodProxiesRunWithIn-Tests' with: [ spec requires:  'MethodProxiesRunWithIn' ];
-			
-			package: 'InstrumentationProfilers-Bench';
-			package: 'InstrumentationProfilers' with: [ 
-				spec requires: #( 'IllimaniProfiler' 'MethodProxies' 'MethodCallGraph' 'MethodProxiesRunWithIn' ) ];
-			package: 'InstrumentationProfilers-Tests' with: [ 
-				spec requires: #( 'InstrumentationProfilers' ) ].
+			package: 'InstrumentationProfilers-Tests' with: [ spec requires: #( 'InstrumentationProfilers' ) ].
 
 		spec
 			baseline: 'MethodProxies'
@@ -29,6 +26,10 @@ BaselineOfInstrumentationProfilers >> baseline: spec [
 		spec
 			baseline: 'IllimaniProfiler'
 			with: [ spec repository: 'github://jordanmontt/illimani-memory-profiler:dev' ].
+		spec baseline: 'VeritasBenchSuite' with: [ spec repository: 'github://jordanmontt/PharoVeritasBenchSuiter:main' ].
+		spec
+			package: 'InstrumentationProfilers' with: [ 
+				spec requires: #( 'IllimaniProfiler' 'MethodProxies' 'MethodCallGraph' 'MethodProxiesRunWithIn' 'VeritasBenchSuite') ].
 
 		spec
 			group: 'default' with: #( 'core' 'tests' );
