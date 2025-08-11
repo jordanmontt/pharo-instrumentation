@@ -26,7 +26,7 @@ BaselineOfInstrumentationProfilers >> baseline: spec [
 		spec
 			baseline: 'IllimaniProfiler'
 			with: [ spec repository: 'github://jordanmontt/illimani-memory-profiler:dev' ].
-		spec baseline: 'VeritasBenchSuite' with: [ spec repository: 'github://jordanmontt/PharoVeritasBenchSuiter:main' ].
+		spec baseline: 'VeritasBenchSuite' with: [ spec repository: 'github://jordanmontt/PharoVeritasBenchSuite:main' ].
 		spec
 			package: 'InstrumentationProfilers' with: [ 
 				spec requires: #( 'IllimaniProfiler' 'MethodProxies' 'MethodCallGraph' 'MethodProxiesRunWithIn' 'VeritasBenchSuite') ].
