@@ -227,7 +227,10 @@ RWIMethodProxy >> run: aSelector with: anArrayOfObjects in: aReceiver [
 	"Do not intercept"
 
 	<methodProxyCannotWrap>
-	(isDisabled or: [ thisProcess isMeta ]) ifTrue: [
+	| process |
+	process := Processor activeProcess.
+
+	(isDisabled or: [ process isMeta ]) ifTrue: [
 		^ self
 			  receiver: aReceiver
 			  withArgs: anArrayOfObjects

@@ -14,7 +14,7 @@ Class {
 { #category : 'evaluating' }
 RWIHandler >> aboutToReturnWithReceiver: receiver arguments: arguments [
 
-	self afterExecutionWithReceiver: receiver arguments: arguments returnValue: nil
+	^ self afterExecutionWithReceiver: receiver arguments: arguments returnValue: nil
 ]
 
 { #category : 'evaluating' }

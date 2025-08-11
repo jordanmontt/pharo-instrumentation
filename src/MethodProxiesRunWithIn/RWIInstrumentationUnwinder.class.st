@@ -60,6 +60,8 @@ RWIInstrumentationUnwinder >> receiver: anObject [
 RWIInstrumentationUnwinder >> value [
 
 	<methodProxyCannotWrap>
-	thisProcess runInMetaLevel: [
+	| process |
+	process := Processor activeProcess.
+	process runInMetaLevel: [
 		^ handler aboutToReturnWithReceiver: receiver arguments: arguments ]
 ]
