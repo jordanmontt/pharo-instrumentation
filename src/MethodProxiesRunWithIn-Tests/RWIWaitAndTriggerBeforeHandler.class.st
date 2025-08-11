@@ -1,10 +1,11 @@
 Class {
-	#name : #RWIWaitAndTriggerBeforeHandler,
-	#superclass : #RWIHandler,
-	#category : #'MethodProxiesRunWithIn-Tests' 
+	#name : 'RWIWaitAndTriggerBeforeHandler',
+	#superclass : 'RWIHandler',
+	#category : 'MethodProxiesRunWithIn-Tests',
+	#package : 'MethodProxiesRunWithIn-Tests'
 }
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 RWIWaitAndTriggerBeforeHandler >> beforeExecutionWithReceiver: anObject arguments: anArrayOfObjects [
 	"Begin execution, stop instrumentation and let first thread enter its method."
 	anObject concurrencySemaphore signal.

@@ -1,16 +1,17 @@
 Class {
-	#name : #RWIClassB,
-	#superclass : #RWIClassA,
-	#category : #'MethodProxiesRunWithIn-Tests' 
+	#name : 'RWIClassB',
+	#superclass : 'RWIClassA',
+	#category : 'MethodProxiesRunWithIn-Tests',
+	#package : 'MethodProxiesRunWithIn-Tests'
 }
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 RWIClassB >> methodThree [
 
 	^ 789
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 RWIClassB >> methodTwo [
 
 	^ 84

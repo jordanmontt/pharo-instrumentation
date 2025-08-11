@@ -1,1 +1,1 @@
-Package { #name : #'MethodProxiesRunWithIn-Tests' }
+Package { #name : 'MethodProxiesRunWithIn-Tests' }

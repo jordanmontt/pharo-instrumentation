@@ -1,18 +1,19 @@
 Class {
-	#name : #RWIMethodProxyTest,
-	#superclass : #TestCase,
+	#name : 'RWIMethodProxyTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'trackedWrappers'
 	],
-	#category : #'MethodProxiesRunWithIn-Tests' 
+	#category : 'MethodProxiesRunWithIn-Tests',
+	#package : 'MethodProxiesRunWithIn-Tests'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 RWIMethodProxyTest class >> shouldInheritSelectors [
 	^ true
 ]
 
-{ #category : #'tests - safety' }
+{ #category : 'tests - safety' }
 RWIMethodProxyTest >> assertCannotInstall: mp [
 
 	[mp install.
@@ -21,18 +22,18 @@ RWIMethodProxyTest >> assertCannotInstall: mp [
 			self assert: ex methodProxy equals: mp ]
 ]
 
-{ #category : #'tests - safety' }
+{ #category : 'tests - safety' }
 RWIMethodProxyTest >> callEnsureWithNonLocalReturn [
 	
 	[ ^ 7 ] ensure: [ 2 ]
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RWIMethodProxyTest >> handlerClass [ 
 	^ MpHandler
 ]
 
-{ #category : #'tests - dead representation' }
+{ #category : 'tests - dead representation' }
 RWIMethodProxyTest >> installMethodProxy: aMethodProxy [
 
 	trackedWrappers add: aMethodProxy.
@@ -40,7 +41,7 @@ RWIMethodProxyTest >> installMethodProxy: aMethodProxy [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RWIMethodProxyTest >> setUp [ 
 
 	super setUp.
@@ -49,14 +50,14 @@ RWIMethodProxyTest >> setUp [
 	
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RWIMethodProxyTest >> tearDown [
 
 	trackedWrappers do: [ :e | e uninstall ].
 	super tearDown
 ]
 
-{ #category : #'tests - safety' }
+{ #category : 'tests - safety' }
 RWIMethodProxyTest >> testCanRunConcurrently [
 	"This tests the ability of method proxies to not influence each other between threads."
 	| mp1 mp2 mpTrigger1 mpTrigger2 handlerTrigger1 handlerTrigger2 sharedObject testSemaphore |
@@ -84,7 +85,7 @@ RWIMethodProxyTest >> testCanRunConcurrently [
 	self assert: handlerTrigger2 count equals: 0
 ]
 
-{ #category : #'tests - safety' }
+{ #category : 'tests - safety' }
 RWIMethodProxyTest >> testCanWrapAboutToReturnThroughWithNonLocalReturn [
 
 	| mp handler |
@@ -97,7 +98,7 @@ RWIMethodProxyTest >> testCanWrapAboutToReturnThroughWithNonLocalReturn [
 	self assert: handler count equals: 1
 ]
 
-{ #category : #'tests - safety' }
+{ #category : 'tests - safety' }
 RWIMethodProxyTest >> testCanWrapBasicNew [
 
 	| mp handler |
@@ -110,7 +111,7 @@ RWIMethodProxyTest >> testCanWrapBasicNew [
 	self assert: handler count equals: 1
 ]
 
-{ #category : #'tests - safety' }
+{ #category : 'tests - safety' }
 RWIMethodProxyTest >> testCanWrapEnsure [
 
 	| mp handler |
@@ -123,7 +124,7 @@ RWIMethodProxyTest >> testCanWrapEnsure [
 	self assert: handler count equals: 1
 ]
 
-{ #category : #'tests - safety' }
+{ #category : 'tests - safety' }
 RWIMethodProxyTest >> testCanWrapEnsureNonLocalReturn [
 
 	| mp handler |
@@ -136,7 +137,7 @@ RWIMethodProxyTest >> testCanWrapEnsureNonLocalReturn [
 	self assert: handler count equals: 1
 ]
 
-{ #category : #'tests - safety' }
+{ #category : 'tests - safety' }
 RWIMethodProxyTest >> testCanWrapEnsureWithException [
 
 	| mp handler |
@@ -149,7 +150,7 @@ RWIMethodProxyTest >> testCanWrapEnsureWithException [
 	self assert: handler count equals: 1
 ]
 
-{ #category : #'tests - safety' }
+{ #category : 'tests - safety' }
 RWIMethodProxyTest >> testCanWrapValue [
 	<compilerOptions: #(- optionConstantBlockClosure)>
 	| mp handler |
@@ -162,7 +163,7 @@ RWIMethodProxyTest >> testCanWrapValue [
 	self assert: handler count equals: 2
 ]
 
-{ #category : #'tests - safety' }
+{ #category : 'tests - safety' }
 RWIMethodProxyTest >> testCanWrapValueWithException [
 
 	| mp handler |
@@ -175,7 +176,7 @@ RWIMethodProxyTest >> testCanWrapValueWithException [
 	self assert: handler count equals: 2 "value" + 1 "on:do:"
 ]
 
-{ #category : #'tests - installation' }
+{ #category : 'tests - installation' }
 RWIMethodProxyTest >> testCannotProxyUnexistentMethod [
 
 	| mp |
@@ -184,7 +185,7 @@ RWIMethodProxyTest >> testCannotProxyUnexistentMethod [
 	self assertCannotInstall: mp
 ]
 
-{ #category : #'tests - safety' }
+{ #category : 'tests - safety' }
 RWIMethodProxyTest >> testCannotWrapCriticalProxyMethods [
 
 	| mp handler |
@@ -193,7 +194,7 @@ RWIMethodProxyTest >> testCannotWrapCriticalProxyMethods [
 	self assertCannotInstall: mp
 ]
 
-{ #category : #'tests - safety' }
+{ #category : 'tests - safety' }
 RWIMethodProxyTest >> testCannotWrapCriticalProxyMethods2 [
 
 	| mp handler |
@@ -202,7 +203,7 @@ RWIMethodProxyTest >> testCannotWrapCriticalProxyMethods2 [
 	self assertCannotInstall: mp
 ]
 
-{ #category : #'tests - safety' }
+{ #category : 'tests - safety' }
 RWIMethodProxyTest >> testCannotWrapCriticalProxyMethods3 [
 
 	| mp handler |
@@ -211,7 +212,7 @@ RWIMethodProxyTest >> testCannotWrapCriticalProxyMethods3 [
 	self assertCannotInstall: mp
 ]
 
-{ #category : #'tests - safety' }
+{ #category : 'tests - safety' }
 RWIMethodProxyTest >> testCannotWrapCriticalProxyMethods4 [
 
 	| mp handler |
@@ -220,16 +221,16 @@ RWIMethodProxyTest >> testCannotWrapCriticalProxyMethods4 [
 	self assertCannotInstall: mp
 ]
 
-{ #category : #'tests - safety' }
+{ #category : 'tests - safety' }
 RWIMethodProxyTest >> testCannotWrapCriticalProxyMethods5 [
 
 	| mp handler |
-	mp := RWIMethodProxy onMethod: MpInstrumentationUnwinder >> #value handler: (handler := RWICountingHandler new).
+	mp := RWIMethodProxy onMethod: RWIInstrumentationUnwinder >> #value handler: (handler := RWICountingHandler new).
 	
 	self assertCannotInstall: mp
 ]
 
-{ #category : #'tests - safety' }
+{ #category : 'tests - safety' }
 RWIMethodProxyTest >> testCannotWrapCriticalProxyMethods6 [
 
 	| mp handler |
@@ -238,7 +239,7 @@ RWIMethodProxyTest >> testCannotWrapCriticalProxyMethods6 [
 	self assertCannotInstall: mp
 ]
 
-{ #category : #'tests - dead representation' }
+{ #category : 'tests - dead representation' }
 RWIMethodProxyTest >> testCreatingAnInstanceDoesNotInstallIt [
 
 	| mp method |
@@ -250,7 +251,7 @@ RWIMethodProxyTest >> testCreatingAnInstanceDoesNotInstallIt [
 	self assert: mp wrappedMethod equals: nil
 ]
 
-{ #category : #'tests - safety' }
+{ #category : 'tests - safety' }
 RWIMethodProxyTest >> testExceptionsAfterInstrumentationDoNotBreakInstrumentation [
 
 	| mp handler |
@@ -267,7 +268,7 @@ RWIMethodProxyTest >> testExceptionsAfterInstrumentationDoNotBreakInstrumentatio
 	self assert: handler count equals: 2
 ]
 
-{ #category : #'tests - safety' }
+{ #category : 'tests - safety' }
 RWIMethodProxyTest >> testExceptionsAfterInstrumentationFlow [
 "Managing exceptions in the wrapper"
 	| p |
@@ -284,7 +285,7 @@ RWIMethodProxyTest >> testExceptionsAfterInstrumentationFlow [
 				self assert: error messageText equals: 'error after instrumentation' ].]
 ]
 
-{ #category : #'tests - safety' }
+{ #category : 'tests - safety' }
 RWIMethodProxyTest >> testExceptionsDuringInstrumentationDoNotBreakInstrumentation [
 "Managing exceptions in the wrapper"
 	| w |
@@ -301,7 +302,7 @@ RWIMethodProxyTest >> testExceptionsDuringInstrumentationDoNotBreakInstrumentati
 				self assert: error messageText equals: 'error during instrumentation' ].]
 ]
 
-{ #category : #'tests - installation' }
+{ #category : 'tests - installation' }
 RWIMethodProxyTest >> testInstallSetCompiledMethod [
 
 	| mw method |
@@ -315,7 +316,7 @@ RWIMethodProxyTest >> testInstallSetCompiledMethod [
 		mw uninstall ]
 ]
 
-{ #category : #'tests - installation' }
+{ #category : 'tests - installation' }
 RWIMethodProxyTest >> testIsInstalled [
 
 	| mw method |
@@ -327,7 +328,7 @@ RWIMethodProxyTest >> testIsInstalled [
 	self assert: mw isInstalled ] ensure: [ mw uninstall ]
 ]
 
-{ #category : #'tests - installation' }
+{ #category : 'tests - installation' }
 RWIMethodProxyTest >> testIsInstalledNestedMWAreNotInstalled [
 
 	| mp method mp2 |
@@ -345,7 +346,7 @@ RWIMethodProxyTest >> testIsInstalledNestedMWAreNotInstalled [
 	self deny: mp isInstalled
 ]
 
-{ #category : #'tests - safety' }
+{ #category : 'tests - safety' }
 RWIMethodProxyTest >> testRecursiveMethodWrapperDoesNotRecurse [
 
 	| mw method |
@@ -356,7 +357,7 @@ RWIMethodProxyTest >> testRecursiveMethodWrapperDoesNotRecurse [
 	self assert: RWIMockObject new recursiveMethod equals: 'trapped [original]'.
 ]
 
-{ #category : #'tests - installation' }
+{ #category : 'tests - installation' }
 RWIMethodProxyTest >> testUninstall [
 
 	| mp method |
@@ -370,7 +371,7 @@ RWIMethodProxyTest >> testUninstall [
 	self assert: mp wrappedMethod isNil
 ]
 
-{ #category : #'tests - installation' }
+{ #category : 'tests - installation' }
 RWIMethodProxyTest >> testUninstallNestedInRightOrderIsOk [
 
 	| mp mp2 method |
@@ -389,7 +390,7 @@ RWIMethodProxyTest >> testUninstallNestedInRightOrderIsOk [
 		identicalTo: method
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RWIMethodProxyTest >> testUnwrappedMethodAtOneLevelIsTheWrappedMethod [
 
 	| mp method |
@@ -401,7 +402,7 @@ RWIMethodProxyTest >> testUnwrappedMethodAtOneLevelIsTheWrappedMethod [
 		mp uninstall ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RWIMethodProxyTest >> testUnwrappedMethodOfNestedMethodWrapperInTheCompiledMethod [
 
 	| mp method mp2 |
@@ -418,7 +419,7 @@ RWIMethodProxyTest >> testUnwrappedMethodOfNestedMethodWrapperInTheCompiledMetho
 		mp uninstall ]
 ]
 
-{ #category : #'tests - safety' }
+{ #category : 'tests - safety' }
 RWIMethodProxyTest >> testWrapEssentialPrimitiveShouldBeCalledDuringInstallation [
 
 	| mw method handler |
@@ -429,7 +430,7 @@ RWIMethodProxyTest >> testWrapEssentialPrimitiveShouldBeCalledDuringInstallation
 	self deny: handler called
 ]
 
-{ #category : #'tests - safety' }
+{ #category : 'tests - safety' }
 RWIMethodProxyTest >> testWrapEssentialPrimitiveShouldNotRecurse [
 
 	| mw method handler |
@@ -444,7 +445,7 @@ RWIMethodProxyTest >> testWrapEssentialPrimitiveShouldNotRecurse [
 	self assert: handler called
 ]
 
-{ #category : #'tests - safety' }
+{ #category : 'tests - safety' }
 RWIMethodProxyTest >> testWrapMethodCalledDuringInstallationIsNotIntercepted [
 
 	| mw method handler |
@@ -455,7 +456,7 @@ RWIMethodProxyTest >> testWrapMethodCalledDuringInstallationIsNotIntercepted [
 	self deny: handler called
 ]
 
-{ #category : #'tests - safety' }
+{ #category : 'tests - safety' }
 RWIMethodProxyTest >> testWrapNonLocalReturns [
 
 	| mp handler |
@@ -470,7 +471,7 @@ RWIMethodProxyTest >> testWrapNonLocalReturns [
 	self assert: handler count equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RWIMethodProxyTest >> testWrappingTwiceIsPossible [
 
 	| mp1 method mp2 |

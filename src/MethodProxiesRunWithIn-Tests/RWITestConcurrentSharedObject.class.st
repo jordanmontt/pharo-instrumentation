@@ -1,30 +1,31 @@
 Class {
-	#name : #RWITestConcurrentSharedObject,
-	#superclass : #Object,
+	#name : 'RWITestConcurrentSharedObject',
+	#superclass : 'Object',
 	#instVars : [
 		'concurrencySemaphore'
 	],
-	#category : #'MethodProxiesRunWithIn-Tests' 
+	#category : 'MethodProxiesRunWithIn-Tests',
+	#package : 'MethodProxiesRunWithIn-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RWITestConcurrentSharedObject >> concurrencySemaphore [
 
 	^ concurrencySemaphore
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RWITestConcurrentSharedObject >> concurrencySemaphore: anObject [
 
 	concurrencySemaphore := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RWITestConcurrentSharedObject >> initialize [ 
 	self concurrencySemaphore: (Semaphore new).
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 RWITestConcurrentSharedObject >> methodProcess1 [
 	"We are in instrumented territory this trigger should be registered."
 	self trigger1.
@@ -33,17 +34,17 @@ RWITestConcurrentSharedObject >> methodProcess1 [
 	concurrencySemaphore wait.
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 RWITestConcurrentSharedObject >> methodProcess2 [
 	"Do nothing"
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 RWITestConcurrentSharedObject >> trigger1 [
 	"Proxified method being counted"
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 RWITestConcurrentSharedObject >> trigger2 [
 	"Proxified method being counted"
 ]

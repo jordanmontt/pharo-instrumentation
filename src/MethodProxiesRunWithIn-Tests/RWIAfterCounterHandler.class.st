@@ -3,26 +3,28 @@ I am a method proxy handler for testing that increments a counter after the meth
 I therefore test method exit
 "
 Class {
-	#name : #RWIAfterCounterHandler,
-	#superclass : #RWIHandler,
+	#name : 'RWIAfterCounterHandler',
+	#superclass : 'RWIHandler',
 	#instVars : [
 		'count'
 	],
-	#category : #'MethodProxiesRunWithIn-Tests' 
+	#category : 'MethodProxiesRunWithIn-Tests',
+	#package : 'MethodProxiesRunWithIn-Tests'
 }
 
-{ #category : #evaluating }
-RWIAfterCounterHandler >> afterMethod [
+{ #category : 'evaluating' }
+RWIAfterCounterHandler >> afterExecutionWithReceiver: aReceiver arguments: args returnValue: returnValue [
 
-	count := count + 1
+	count := count + 1.
+	^ returnValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RWIAfterCounterHandler >> count [
 	^ count
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 RWIAfterCounterHandler >> initialize [
 
 	super initialize.

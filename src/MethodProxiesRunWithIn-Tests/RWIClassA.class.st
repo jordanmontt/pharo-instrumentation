@@ -3,76 +3,77 @@ Instance Variables:
 	x	<Integer>
 "
 Class {
-	#name : #RWIClassA,
-	#superclass : #Object,
+	#name : 'RWIClassA',
+	#superclass : 'Object',
 	#instVars : [
 		'x'
 	],
-	#category : #'MethodProxiesRunWithIn-Tests' 
+	#category : 'MethodProxiesRunWithIn-Tests',
+	#package : 'MethodProxiesRunWithIn-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RWIClassA >> methodAcceptingABlock: aBlock [
 
 	^ aBlock value
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 RWIClassA >> methodDelay [
 
 	(Delay forMilliseconds: 1) wait.
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 RWIClassA >> methodLastingOneSecond [
 
 	(Delay forMilliseconds: 0.5) wait.
 	^ 999
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 RWIClassA >> methodOne [
 	^ 101
 	
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 RWIClassA >> methodTwo [
 	^ 42
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 RWIClassA >> methodWithArgument: anInteger [
 
 	self x: self x + anInteger.
 	^ self x
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 RWIClassA >> methodWithException [
 
 	1/0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RWIClassA >> methodWithNonLocalReturn [
 
 	self methodAcceptingABlock: [ ^ self ]
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 RWIClassA >> methodWithWarning [
 
 	Warning new signal: 'I warned you'.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RWIClassA >> x [
 
 	^ x
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RWIClassA >> x: anInteger [
 
 	x := anInteger
