@@ -1,7 +1,7 @@
 Class {
 	#name : #RWIWaitBeforeHandler,
 	#superclass : #RWIHandler,
-	#category : #'Tests'
+	#category : #'MethodProxiesRunWithIn-Tests' 
 }
 
 { #category : #evaluating }

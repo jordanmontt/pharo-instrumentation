@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'x'
 	],
-	#category : #'Tests'
+	#category : #'MethodProxiesRunWithIn-Tests' 
 }
 
 { #category : #accessing }

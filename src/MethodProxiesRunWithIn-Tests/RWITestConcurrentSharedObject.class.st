@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'concurrencySemaphore'
 	],
-	#category : #'Tests'
+	#category : #'MethodProxiesRunWithIn-Tests' 
 }
 
 { #category : #accessing }

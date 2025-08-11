@@ -1,7 +1,7 @@
 Class {
 	#name : #RWIClassB,
 	#superclass : #RWIClassA,
-	#category : #'Tests'
+	#category : #'MethodProxiesRunWithIn-Tests' 
 }
 
 { #category : #debugging }

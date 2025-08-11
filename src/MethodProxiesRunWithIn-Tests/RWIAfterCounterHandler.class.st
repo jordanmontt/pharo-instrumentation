@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'count'
 	],
-	#category : #'Tests'
+	#category : #'MethodProxiesRunWithIn-Tests' 
 }
 
 { #category : #evaluating }

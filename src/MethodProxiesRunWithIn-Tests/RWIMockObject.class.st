@@ -1,7 +1,7 @@
 Class {
 	#name : #RWIMockObject,
 	#superclass : #Object,
-	#category : #'Tests'
+	#category : #'MethodProxiesRunWithIn-Tests' 
 }
 
 { #category : #G }

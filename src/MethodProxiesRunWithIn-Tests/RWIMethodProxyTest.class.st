@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'trackedWrappers'
 	],
-	#category : #'Tests'
+	#category : #'MethodProxiesRunWithIn-Tests' 
 }
 
 { #category : #asserting }

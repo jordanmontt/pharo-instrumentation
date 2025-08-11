@@ -1,7 +1,7 @@
 Class {
 	#name : #RWIMockMethodProxyHandler,
 	#superclass : #RWIHandler,
-	#category : #'Tests'
+	#category : #'MethodProxiesRunWithIn-Tests' 
 }
 
 { #category : #evaluating }
