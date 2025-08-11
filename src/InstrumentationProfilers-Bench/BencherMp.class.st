@@ -6,20 +6,28 @@ Class {
 	#tag : 'New-Benchmarks'
 }
 
-{ #category : 'default' }
-BencherMp >> callGraphInstrumentator [
+{ #category : 'api - profiler' }
+BencherMp >> useAllocationCallGraphProfiler [
 
-	^ MpCallGraphInstrumentator onProfiler: profiler
+	profiler := IllAllocationCallGraphProfiler new
 ]
 
-{ #category : 'default' }
-BencherMp >> methodCoverageInstrumentator [
+{ #category : 'api - profiler' }
+BencherMp >> useAllocationRateProfiler [
 
-	^ MpMethodCoverageInstrumentator onProfiler: profiler
+	profiler := IllAllocationRateProfiler new
 ]
 
-{ #category : 'default' }
-BencherMp >> noActionInstrumentator [
+{ #category : 'api - profiler' }
+BencherMp >> useMethodCallGraphProfiler [
 
-	^ MpNoActionInstrumentator onProfiler: profiler
+	profiler := MethodCallGraphProfiler new
+]
+
+{ #category : 'api - profiler' }
+BencherMp >> useNoActionProfiler [
+
+	profiler := MethodCallGraphProfiler new
+			instrumentator: MCGMpInstrumentatorNoAction new;
+		   	yourself
 ]

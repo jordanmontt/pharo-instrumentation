@@ -12,6 +12,12 @@ Class {
 }
 
 { #category : 'accessing' }
+SourceCodeInstrumentator class >> resetProfilerDefaultInstance [
+
+	"Override me"
+]
+
+{ #category : 'accessing' }
 SourceCodeInstrumentator >> afterAction: aBlockClosure [
 
 	afterAction := aBlockClosure
@@ -35,7 +41,8 @@ SourceCodeInstrumentator >> initialize [
 { #category : 'profiling' }
 SourceCodeInstrumentator >> instrument [
 
-	methodsToInstrument do: [ :aMethod | self instrument: aMethod ]
+	methodsToInstrument do: [ :aMethod | self instrument: aMethod ].
+	self class resetProfilerDefaultInstance
 ]
 
 { #category : 'profiling' }

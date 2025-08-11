@@ -6,7 +6,7 @@ Class {
 	#tag : 'RWI'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 RwiNoActionInstrumentator >> newHandler: aMethod [
 
 	^ RWINoActionHandler new

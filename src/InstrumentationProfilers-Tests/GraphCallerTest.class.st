@@ -36,15 +36,15 @@ GraphCallerTest >> assertProfilersReturnSameResults [
 { #category : 'running' }
 GraphCallerTest >> runMpProfiler [
 
-	mpProfiler methods: packageMethods.
-	mpProfiler profile: profilingBlock
+	mpProfiler methodsToInstrument: packageMethods.
+	mpProfiler profileOn: profilingBlock
 ]
 
 { #category : 'running' }
 GraphCallerTest >> runRwiProfiler [
 
-	rwiProfiler methods: packageMethods.
-	rwiProfiler profile: profilingBlock
+	rwiProfiler methodsToInstrument: packageMethods.
+	rwiProfiler profileOn: profilingBlock
 ]
 
 { #category : 'accessing' }
@@ -72,12 +72,9 @@ GraphCallerTest >> setProfilingBlockForTests: testPackages [
 GraphCallerTest >> setUp [
 
 	super setUp.
-	mpProfiler := CallGraphProfiler new
-		              instrumentator: MpCallGraphInstrumentator new;
-		              yourself.
-	rwiProfiler := CallGraphProfiler new
-		               instrumentator: RwiCallGraphInstrumentator new;
-		               yourself
+	mpProfiler := MethodCallGraphProfiler new.
+	rwiProfiler := MethodCallGraphProfiler new.
+	rwiProfiler instrumentator: (RwiMethodCallGraphInstrumentator onProfiler: self)
 ]
 
 { #category : 'tests' }
@@ -86,8 +83,8 @@ GraphCallerTest >> testFuzzyMatcher [
 	self setProfilingBlockForTests: { 'FuzzyMatcher-Tests' asPackage }.
 	self setMethodsToInstrumentFor: { 'FuzzyMatcher' asPackage }.
 	
-	self runMpProfiler.
 	self runRwiProfiler.
+	self runMpProfiler.
 
 	self assertProfilersReturnSameResults
 ]

@@ -9,7 +9,7 @@ Class {
 { #category : 'default' }
 BencherRwi >> callGraphInstrumentator [
 
-	^ RwiCallGraphInstrumentator onProfiler: profiler
+	^ RwiMethodCallGraphInstrumentator onProfiler: profiler
 ]
 
 { #category : 'default' }

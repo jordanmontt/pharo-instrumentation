@@ -1,5 +1,5 @@
 Class {
-	#name : 'RwiCallGraphInstrumentator',
+	#name : 'RwiMethodCallGraphInstrumentator',
 	#superclass : 'RwiInstrumentator',
 	#category : 'InstrumentationProfilers-RWI',
 	#package : 'InstrumentationProfilers',
@@ -7,7 +7,7 @@ Class {
 }
 
 { #category : 'accessing' }
-RwiCallGraphInstrumentator >> newHandler: aMethod [
+RwiMethodCallGraphInstrumentator >> newHandler: aMethod [
 
-	^ RwiCallGraphHandler onMethod: aMethod nameForProfiler profiler: profiler
+	^ RwiMethodCallGraphHandler onMethod: aMethod profiler: profiler
 ]

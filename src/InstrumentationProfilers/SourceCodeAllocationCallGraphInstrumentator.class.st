@@ -1,5 +1,5 @@
 Class {
-	#name : 'SourceCodeMethodCoverageInstrumentator',
+	#name : 'SourceCodeAllocationCallGraphInstrumentator',
 	#superclass : 'SourceCodeInstrumentator',
 	#category : 'InstrumentationProfilers-Source code instrumentation',
 	#package : 'InstrumentationProfilers',
@@ -7,9 +7,9 @@ Class {
 }
 
 { #category : 'initialization' }
-SourceCodeMethodCoverageInstrumentator >> initialize [
+SourceCodeAllocationCallGraphInstrumentator >> initialize [
 
 	super initialize.
-	self beforeAction: [ :instrumentedMethod | MethodCoverageProfiler defaultInstance callingMethod: instrumentedMethod ].
+	self beforeAction: [ :instrumentedMethod | MyAllocationCallGraphProfilerInstance callingMethod: instrumentedMethod ].
 	self afterAction: [ "do nothing" ]
 ]

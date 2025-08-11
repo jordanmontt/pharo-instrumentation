@@ -1,21 +1,57 @@
 Class {
 	#name : 'BencherSourceCode',
 	#superclass : 'Bencher',
+	#classVars : [
+		'MyAllocationCallGraphProfiler',
+		'MyAllocationRateProfiler',
+		'MyMethodCallGraphProfiler',
+		'MyNoActionProfiler'
+	],
 	#category : 'InstrumentationProfilers-Bench-New-Benchmarks',
 	#package : 'InstrumentationProfilers-Bench',
 	#tag : 'New-Benchmarks'
 }
 
+{ #category : 'as yet unclassified' }
+BencherSourceCode class >> allocationCallGraphProfilerInstance [
+
+	^ MyAllocationCallGraphProfiler ifNil: [
+		  MyAllocationCallGraphProfiler := IllAllocationCallGraphProfiler new ]
+]
+
+{ #category : 'as yet unclassified' }
+BencherSourceCode class >> allocationRateProfilerInstance [
+
+	^ MyAllocationRateProfiler ifNil: [
+		  MyAllocationRateProfiler := IllAllocationRateProfiler new ]
+]
+
+{ #category : 'as yet unclassified' }
+BencherSourceCode class >> methodCallGraphProfilerInstance [
+
+	^ MyMethodCallGraphProfiler ifNil: [
+		  MyMethodCallGraphProfiler := MethodCallGraphProfiler new ]
+]
+
+{ #category : 'as yet unclassified' }
+BencherSourceCode class >> noActionProfilerInstance [
+
+	^ MyNoActionProfiler ifNil: [
+		MyNoActionProfiler := MethodCallGraphProfiler new
+				instrumentator: MCGMpInstrumentatorNoAction new;
+				yourself ]
+]
+
 { #category : 'default' }
 BencherSourceCode >> callGraphInstrumentator [
 
-	^ SourceCodeCallGraphInstrumentator new
+	^ SourceCodeMethodCallGraphInstrumentator new
 ]
 
 { #category : 'default' }
 BencherSourceCode >> methodCoverageInstrumentator [
 
-	^ SourceCodeMethodCoverageInstrumentator new
+	^ SourceCodeAllocationCallGraphInstrumentator new
 ]
 
 { #category : 'default' }
@@ -27,29 +63,16 @@ BencherSourceCode >> noActionInstrumentator [
 { #category : 'api - profiler' }
 BencherSourceCode >> useCallGraphProfiler [
 
-	CallGraphProfiler reset.
-	profiler := CallGraphProfiler defaultInstance
-		instrumentator: self callGraphInstrumentator;
-		methods: methodsToInstrument;
-		yourself
-]
-
-{ #category : 'api - profiler' }
-BencherSourceCode >> useMethodCoverageProfiler [
-
-	MethodCoverageProfiler reset.
-	profiler := MethodCoverageProfiler defaultInstance.
-	profiler
-		instrumentator: self methodCoverageInstrumentator;
-		methods: methodsToInstrument
+	MyMethodCallGraphProfiler := nil.
+	profiler := self class methodCallGraphProfilerInstance
 ]
 
 { #category : 'api - profiler' }
 BencherSourceCode >> useNoActionProfiler [
 
-	AbstractProfiler reset.
+	"AbstractProfiler reset.
 	profiler := AbstractProfiler defaultInstance
 		instrumentator: self noActionInstrumentator;
 		methods: methodsToInstrument;
-		yourself
+		yourself"
 ]

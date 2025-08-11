@@ -14,7 +14,7 @@ Class {
 { #category : 'evaluating' }
 RWIHandler >> aboutToReturnWithReceiver: receiver arguments: arguments [
 
-	self afterMethod
+	self afterExecutionWithReceiver: receiver arguments: arguments returnValue: nil
 ]
 
 { #category : 'evaluating' }
@@ -24,18 +24,9 @@ RWIHandler >> afterExecutionWithReceiver: anObject arguments: anArrayOfObjects r
 ]
 
 { #category : 'evaluating' }
-RWIHandler >> afterMethod [
-	"Perform action after execution."
-]
-
-{ #category : 'evaluating' }
 RWIHandler >> beforeExecutionWithReceiver: anObject arguments: anArrayOfObjects [
 
-	self beforeMethod
-]
-
-{ #category : 'evaluating' }
-RWIHandler >> beforeMethod [
+	
 ]
 
 { #category : 'evaluating' }

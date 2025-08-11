@@ -4,7 +4,6 @@ Class {
 	#instVars : [
 		'profiler',
 		'methodsToInstrument',
-		'testSuites',
 		'blockToProfile'
 	],
 	#category : 'InstrumentationProfilers-Bench-New-Benchmarks',
@@ -17,7 +16,7 @@ Bencher >> benchExecuteProfiler [
 	"Returns the time that it takes to instrument, execute, and uninstrument. The three things together"
 
 	| timeToRun |
-	timeToRun := [ profiler profile: blockToProfile ] timeToRun.
+	timeToRun := [ profiler profileOn: blockToProfile ] timeToRun.
 	^ self formatTime: timeToRun
 ]
 
@@ -54,11 +53,6 @@ Bencher >> benchUninstrument [
 ]
 
 { #category : 'default' }
-Bencher >> callGraphInstrumentator [
-	^ self subclassResponsibility
-]
-
-{ #category : 'default' }
 Bencher >> formatTime: timeToRun [
 
 	^ timeToRun wholeMilliseconds
@@ -68,12 +62,7 @@ Bencher >> formatTime: timeToRun [
 Bencher >> initialize [
 
 	super initialize.
-	blockToProfile := [ testSuites do: #run ]
-]
-
-{ #category : 'default' }
-Bencher >> methodCoverageInstrumentator [
-	^ self subclassResponsibility
+	blockToProfile := [ ]
 ]
 
 { #category : 'api' }
@@ -82,90 +71,48 @@ Bencher >> methodsToInstrument: methods [
 	methodsToInstrument := methods asSet
 ]
 
-{ #category : 'default' }
-Bencher >> noActionInstrumentator [
-	^ self subclassResponsibility
-]
-
 { #category : 'api' }
 Bencher >> packagesToInstrument: aCollectionOrSetOfPackages [
 
 	methodsToInstrument := aCollectionOrSetOfPackages flatCollect: #methods as: Set.
 ]
 
-{ #category : 'api' }
-Bencher >> testPackages: testPackages [
+{ #category : 'api - profiler' }
+Bencher >> useAllocationCallGraphProfiler [
 
-	| testClasses |
-	testClasses := (testPackages flatCollect: #definedClasses as: Set)
-		select: [ :e | e isTestCase ].
-	testSuites := testClasses collect: #suite
-]
-
-{ #category : 'api - benchmarks' }
-Bencher >> useASTBench [
-
-	self testPackages: { 'AST-Core-Tests' asPackage }.
-	self packagesToInstrument: { 'AST-Core' asPackage }
+	self subclassResponsibility
 ]
 
 { #category : 'api - profiler' }
-Bencher >> useCallGraphProfiler [
+Bencher >> useAllocationRateProfiler [
 
-	profiler := CallGraphProfiler new
-		instrumentator: self callGraphInstrumentator;
-		methods: methodsToInstrument;
-		yourself
+	self subclassResponsibility
 ]
 
 { #category : 'api - benchmarks' }
-Bencher >> useCompressionBench [
+Bencher >> useDataFrameBench [
 
-	self testPackages: { 'Compression-Tests' asPackage }.
-	self packagesToInstrument: { 'Compression' asPackage }
-]
-
-{ #category : 'api - benchmarks' }
-Bencher >> useFileSystemBench [
-
-	self testPackages:{
-		  #'FileSystem-Memory-Tests' asPackage.
-		  #'FileSystem-Core-Tests' asPackage.
-		  #'FileSystem-Disk-Tests' asPackage.
-		  #'FileSystem-Tests-Attributes' asPackage.
-		  'Files-Tests' asPackage }.
-	self packagesToInstrument: {
-		  #'FileSystem-Core' asPackage.
-		  #'FileSystem-Zip' asPackage.
-		  #'FileSystem-Memory' asPackage.
-		  #'FileSystem-Path' asPackage.
-		  #'FileSystem-Disk' asPackage.
-		  'Files' asPackage }
+	self packagesToInstrument: VeritasDataFrame applicationPackages.
+	blockToProfile := [ VeritasDataFrame new run ]
 ]
 
 { #category : 'api - profiler' }
-Bencher >> useMethodCoverageProfiler [
+Bencher >> useMethodCallGraphProfiler [
 
-	profiler := MethodCoverageProfiler new.
-	profiler
-		instrumentator: self methodCoverageInstrumentator;
-		methods: methodsToInstrument
+	self subclassResponsibility
 ]
 
 { #category : 'api - benchmarks' }
 Bencher >> useMicrodownBench [
 
-	self testPackages: { 'Microdown-Tests' asPackage }.
+	"self testPackages: { 'Microdown-Tests' asPackage }.
 	self packagesToInstrument: {
 			'Microdown' asPackage.
-			'Microdown-RichTextComposer' asPackage }
+			'Microdown-RichTextComposer' asPackage }"
 ]
 
 { #category : 'api - profiler' }
 Bencher >> useNoActionProfiler [
 
-	profiler := AbstractProfiler new
-		instrumentator: self noActionInstrumentator;
-		methods: methodsToInstrument;
-		yourself
+	self subclassResponsibility
 ]

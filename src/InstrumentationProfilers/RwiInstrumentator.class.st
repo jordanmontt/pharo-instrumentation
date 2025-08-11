@@ -44,7 +44,7 @@ RwiInstrumentator >> methodProxies [
 ]
 
 { #category : 'accessing' }
-RwiInstrumentator >> methods: aSetOfMethods [
+RwiInstrumentator >> methodsToInstrument: aSetOfMethods [
 
 	(aSetOfMethods collect: [ :method | method unproxifiedMethod ])
 		do: [ :method |
@@ -53,7 +53,7 @@ RwiInstrumentator >> methods: aSetOfMethods [
 				put: (self newMethodProxy: method) ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 RwiInstrumentator >> newHandler: aMethod [ 
 	^ self subclassResponsibility
 ]
