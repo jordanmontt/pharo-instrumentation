@@ -12,6 +12,7 @@ BaselineOfInstrumentationProfilers >> baseline: spec [
 	spec for: #common do: [
 		spec
 			package: 'MethodProxiesRunWithIn';
+			package: 'MethodProxiesRunWithIn-Tests' with: [ spec requires:  'MethodProxiesRunWithIn' ];
 			
 			package: 'InstrumentationProfilers-Bench';
 			package: 'InstrumentationProfilers' with: [ 
@@ -32,5 +33,5 @@ BaselineOfInstrumentationProfilers >> baseline: spec [
 		spec
 			group: 'default' with: #( 'core' 'tests' );
 			group: 'core' with: #( 'InstrumentationProfilers' 'InstrumentationProfilers-Bench' );
-			group: 'tests' with: #( 'InstrumentationProfilers-Tests' ) ]
+			group: 'tests' with: #( 'InstrumentationProfilers-Tests' 'MethodProxiesRunWithIn-Tests' ) ]
 ]
