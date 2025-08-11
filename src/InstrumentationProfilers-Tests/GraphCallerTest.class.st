@@ -16,6 +16,8 @@ Class {
 GraphCallerTest >> assertProfilersReturnSameResults [
 
 	| mpRootNode rwiRootNode |
+	self assert: mpProfiler instrumentator methodProxies size equals: rwiProfiler instrumentator methodProxies size.
+	
 	self assert: mpProfiler nodes size equals: rwiProfiler nodes size.
 
 	self assert: mpProfiler instrumentator methodProxies size equals: packageMethods size.
@@ -73,8 +75,9 @@ GraphCallerTest >> setUp [
 
 	super setUp.
 	mpProfiler := MethodCallGraphProfiler new.
+
 	rwiProfiler := MethodCallGraphProfiler new.
-	rwiProfiler instrumentator: (RwiMethodCallGraphInstrumentator onProfiler: self)
+	rwiProfiler instrumentator: (RwiMethodCallGraphInstrumentator onProfiler: rwiProfiler)
 ]
 
 { #category : 'tests' }

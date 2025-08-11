@@ -2,14 +2,11 @@ Extension { #name : 'BlockClosure' }
 
 { #category : '*MethodProxiesRunWithIn' }
 BlockClosure >> methodProxyEnsure: aBlock [
-	"Evaluate a termination block after evaluating the receiver, regardless of
-	 whether the receiver's evaluation completes.  N.B.  This method is *not*
-	 implemented as a primitive.  Primitive 198 always fails.  The VM uses prim
-	 198 in a context's method as the mark for an ensure:/ifCurtailed: activation."
 
 	| handler complete returnValue |
 	<primitive: 198>
 	<methodProxyCannotWrap>
+	"The handler should be in the first temporary to find it easily and support more complex unwind methods"
 	handler := aBlock.
 	returnValue := self valueNoContextSwitch.
 	complete ifNil:[

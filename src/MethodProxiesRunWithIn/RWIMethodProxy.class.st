@@ -300,6 +300,7 @@ RWIMethodProxy >> valueWithReceiver: receiver arguments: arguments [
 	"Hooking into user methods to define before actions.
 	Before actions are not instrumented."
 	thisProcess runInMetaLevel: [
+		'before' traceCr.
 		handler beforeExecutionWithReceiver: receiver arguments: arguments ].
 
 	"Purposely do not use a non-local return.
