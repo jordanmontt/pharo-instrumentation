@@ -231,14 +231,8 @@ RWIMethodProxy >> run: aSelector with: anArrayOfObjects in: aReceiver [
 	process := Processor activeProcess.
 
 	(isDisabled or: [ process isMeta ]) ifTrue: [
-		^ self
-			  receiver: aReceiver
-			  withArgs: anArrayOfObjects
-			  executeMethod: proxifiedMethod ].
+		^ self receiver: aReceiver withArgs: anArrayOfObjects executeMethod: proxifiedMethod ].
 
-	"Purposely do not use a non-local return.
-	Otherwise the non-local return logic would be instrumented once the ensure block is executed.
-	However, since a lot of code executes between the ensure block and the real method return, this could end in infinite loops"
 	^ self valueWithReceiver: aReceiver arguments: anArrayOfObjects
 ]
 
@@ -299,29 +293,17 @@ RWIMethodProxy >> unproxifiedMethod: aCompiledMethod [
 RWIMethodProxy >> valueWithReceiver: receiver arguments: arguments [
 
 	<methodProxyCannotWrap>
-	| result |
-	"Hooking into user methods to define before actions.
-	Before actions are not instrumented."
-	thisProcess runInMetaLevel: [
-		'before' traceCr.
+	| result process |
+	process := Processor activeProcess.
+	process runInMetaLevel: [
 		handler beforeExecutionWithReceiver: receiver arguments: arguments ].
 
-	"Purposely do not use a non-local return.
-	Otherwise the non-local return logic would be instrumented and this could end in infinite loops"
-	[
-	result := self
-		          receiver: receiver
-		          withArgs: arguments
-		          executeMethod: proxifiedMethod ] methodProxyEnsure:
-		(RWIInstrumentationUnwinder
-			 newWithHandler: handler
-			 receiver: receiver
-			 arguments: arguments).
+	[ result := self receiver: receiver withArgs: arguments executeMethod: proxifiedMethod ]
+		methodProxiesIfCurtailed: 
+			(RWIInstrumentationUnwinder newWithHandler: handler receiver: receiver arguments: arguments).
 
-	thisProcess runInMetaLevel: [^ handler
-		  afterExecutionWithReceiver: receiver
-		  arguments: arguments
-		  returnValue: result]
+	process runInMetaLevel: [
+		^ handler afterExecutionWithReceiver: receiver arguments: arguments returnValue: result]
 ]
 
 { #category : 'accessing' }
