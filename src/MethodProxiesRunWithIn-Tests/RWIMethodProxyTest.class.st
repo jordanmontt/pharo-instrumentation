@@ -216,7 +216,7 @@ RWIMethodProxyTest >> testCannotWrapCriticalProxyMethods3 [
 RWIMethodProxyTest >> testCannotWrapCriticalProxyMethods4 [
 
 	| mp handler |
-	mp := RWIMethodProxy onMethod: BlockClosure >> #methodProxyEnsure: handler: (handler := RWICountingHandler new).
+	mp := RWIMethodProxy onMethod: BlockClosure >> #methodProxiesIfCurtailed: handler: (handler := RWICountingHandler new).
 	
 	self assertCannotInstall: mp
 ]
