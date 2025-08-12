@@ -11,10 +11,8 @@ BaselineOfInstrumentationProfilers >> baseline: spec [
 	<baseline>
 	spec for: #common do: [
 		spec
-			package: 'MethodProxiesRunWithIn';
 			package: 'InstrumentationProfilers' with: [ spec requires: #('MethodProxiesRunWithIn') ];
 			package: 'InstrumentationProfilers-Bench' with: [ spec requires: #('InstrumentationProfilers') ];
-			package: 'MethodProxiesRunWithIn-Tests' with: [ spec requires:  'MethodProxiesRunWithIn' ];
 			package: 'InstrumentationProfilers-Tests' with: [ spec requires: #( 'InstrumentationProfilers' ) ].
 
 		spec
@@ -27,10 +25,10 @@ BaselineOfInstrumentationProfilers >> baseline: spec [
 			baseline: 'IllimaniProfiler'
 			with: [ spec repository: 'github://jordanmontt/illimani-memory-profiler:dev' ].
 		spec baseline: 'VeritasBenchSuite' with: [ spec repository: 'github://jordanmontt/PharoVeritasBenchSuite:main' ].
-		spec baseline: 'MessageGateKeeper' with: [ spec repository: 'github://jordanmontt/MessageGateKeeper:main' ].
+		spec baseline: 'MessageGatekeeper' with: [ spec repository: 'github://jordanmontt/MessageGatekeeper:main' ].
 		spec
 			package: 'InstrumentationProfilers' with: [ 
-				spec requires: #( 'IllimaniProfiler' 'MethodProxies' 'MethodCallGraph' 'MethodProxiesRunWithIn' 'VeritasBenchSuite' 'MessageGateKeeper') ].
+				spec requires: #( 'IllimaniProfiler' 'MethodProxies' 'MethodCallGraph' 'MethodProxiesRunWithIn' 'VeritasBenchSuite' 'MessageGatekeeper') ].
 
 		spec
 			group: 'default' with: #( 'core' 'tests' );
