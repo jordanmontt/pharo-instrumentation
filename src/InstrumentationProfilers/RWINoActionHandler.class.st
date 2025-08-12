@@ -1,6 +1,6 @@
 Class {
 	#name : 'RWINoActionHandler',
-	#superclass : 'RWIHandler',
+	#superclass : 'MgkHandler',
 	#category : 'InstrumentationProfilers-RWI',
 	#package : 'InstrumentationProfilers',
 	#tag : 'RWI'

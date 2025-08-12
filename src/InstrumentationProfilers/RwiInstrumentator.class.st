@@ -61,7 +61,7 @@ RwiInstrumentator >> newHandler: aMethod [
 { #category : 'accessing' }
 RwiInstrumentator >> newMethodProxy: aMethod [
 
-	^ RWIMethodProxy onMethod: aMethod handler: (self newHandler: aMethod)
+	^ MgkMethodWrapper onMethod: aMethod handler: (self newHandler: aMethod)
 ]
 
 { #category : 'accessing' }

@@ -1,6 +1,6 @@
 Class {
 	#name : 'RwiMethodCallGraphHandler',
-	#superclass : 'RWIHandler',
+	#superclass : 'MgkHandler',
 	#instVars : [
 		'profiler',
 		'method'
