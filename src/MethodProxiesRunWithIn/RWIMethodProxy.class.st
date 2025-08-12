@@ -225,12 +225,28 @@ RWIMethodProxy >> receiver: aReceiver withArgs: argArray executeMethod: compiled
 { #category : 'evaluating' }
 RWIMethodProxy >> run: aSelector with: arguments in: receiver [
 
+	<primitive: 198>
 	<methodProxyCannotWrap>
+	| unwinder complete result process |
+	"Put the unwinder as the first temp in case a non-local return or exception happens"
+	unwinder := RWIInstrumentationUnwinder newWithHandler: handler receiver: receiver arguments: arguments.
+	process := Processor activeProcess.
+	
 	"If we are in meta state do not execute the handlers"
-	(isDisabled or: [ Processor activeProcess isMeta ])
+	(isDisabled or: [ process isMeta ])
 		ifTrue: [ ^ self receiver: receiver withArgs: arguments executeMethod: proxifiedMethod ].
 	
-	^ self valueWithReceiver: receiver arguments: arguments
+	"Execute the before"
+	process runInMetaLevel: [ handler beforeExecutionWithReceiver: receiver arguments: arguments ].
+
+	"Execute the proxified original method"
+	result := self receiver: receiver withArgs: arguments executeMethod: proxifiedMethod.
+
+	"Execute the after method"
+	process runInMetaLevel: [ 
+		result := handler afterExecutionWithReceiver: receiver arguments: arguments returnValue: result.
+		complete := true.
+		^ result ]
 ]
 
 { #category : 'accessing' }
@@ -284,29 +300,6 @@ RWIMethodProxy >> unproxifiedMethod [
 RWIMethodProxy >> unproxifiedMethod: aCompiledMethod [
 
 	proxifiedMethod := aCompiledMethod
-]
-
-{ #category : 'evaluating' }
-RWIMethodProxy >> valueWithReceiver: receiver arguments: arguments [
-
-	<primitive: 198>
-	<methodProxyCannotWrap>
-	| unwinder complete result process |
-	"Put the unwinder as the first temp in case a non-local return or exception happens"
-	unwinder:= RWIInstrumentationUnwinder newWithHandler: handler receiver: receiver arguments: arguments.
-	process := Processor activeProcess.
-
-	"Execute the before"
-	process runInMetaLevel: [ handler beforeExecutionWithReceiver: receiver arguments: arguments ].
-
-	"Execute the proxified original method"
-	result := self receiver: receiver withArgs: arguments executeMethod: proxifiedMethod.
-
-	"Execute the after method"
-	process runInMetaLevel: [ 
-		result := handler afterExecutionWithReceiver: receiver arguments: arguments returnValue: result.
-		complete := true.
-		^ result ]
 ]
 
 { #category : 'accessing' }

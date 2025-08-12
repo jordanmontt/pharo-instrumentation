@@ -189,7 +189,7 @@ RWIMethodProxyTest >> testCannotProxyUnexistentMethod [
 RWIMethodProxyTest >> testCannotWrapCriticalProxyMethods [
 
 	| mp handler |
-	mp := RWIMethodProxy onMethod: RWIMethodProxy >> #valueWithReceiver:arguments: handler: (handler := RWICountingHandler new).
+	mp := RWIMethodProxy onMethod: RWIMethodProxy >> #run:with:in: handler: (handler := RWICountingHandler new).
 	
 	self assertCannotInstall: mp
 ]
