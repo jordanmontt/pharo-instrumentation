@@ -6,20 +6,31 @@ Class {
 	#tag : 'New-Benchmarks'
 }
 
-{ #category : 'default' }
-BencherRwi >> callGraphInstrumentator [
+{ #category : 'api - profiler' }
+BencherRwi >> useAllocationCallGraphProfiler [
 
-	^ RwiMethodCallGraphInstrumentator onProfiler: profiler
+	profiler := IllAllocationCallGraphProfiler new.
+	profiler instrumentator: (RwiIllProfilerInstrumentator onProfiler: self)
 ]
 
-{ #category : 'default' }
-BencherRwi >> methodCoverageInstrumentator [
+{ #category : 'api - profiler' }
+BencherRwi >> useAllocationRateProfiler [
 
-	^ RwiMethodCoverageInstrumentator onProfiler: profiler
+	profiler := IllAllocationRateProfiler new.
+	profiler instrumentator: (RwiIllProfilerInstrumentator onProfiler: profiler)
 ]
 
-{ #category : 'default' }
-BencherRwi >> noActionInstrumentator [
+{ #category : 'api - profiler' }
+BencherRwi >> useMethodCallGraphProfiler [
 
-	^ RwiNoActionInstrumentator onProfiler: profiler
+	profiler := MethodCallGraphProfiler new.
+	profiler instrumentator: (RwiMethodCallGraphInstrumentator onProfiler: profiler)
+]
+
+{ #category : 'api - profiler' }
+BencherRwi >> useNoActionProfiler [
+
+	profiler := MethodCallGraphProfiler new
+			instrumentator: RwiNoActionInstrumentator new;
+		   	yourself
 ]
