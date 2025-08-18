@@ -22,7 +22,7 @@ BaselineOfInstrumentationProfilers >> baseline: spec [
 		spec baseline: 'MessageGatekeeper' with: [ spec repository: 'github://jordanmontt/MessageGatekeeper:main' ].
 		spec
 			package: 'InstrumentationProfilers' with: [ 
-				spec requires: #( 'IllimaniProfiler' 'MethodProxies' 'MethodCallGraph' 'MethodProxiesRunWithIn' 'VeritasBenchSuite' 'MessageGatekeeper') ].
+				spec requires: #( 'IllimaniProfiler' 'MethodProxies' 'MethodCallGraph' 'VeritasBenchSuite' 'MessageGatekeeper') ].
 
 		spec
 			group: 'default' with: #( 'core' 'tests' );
