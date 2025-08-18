@@ -29,8 +29,7 @@ BencherMp >> useMethodCallGraphProfiler [
 { #category : 'api - profiler' }
 BencherMp >> useNoActionProfiler [
 
-	profiler := MethodCallGraphProfiler new
-			instrumentator: MCGMpInstrumentatorNoAction new;
-			methodsToInstrument: methodsToInstrument;
-		   	yourself
+	profiler := MethodCallGraphProfiler new.
+	profiler instrumentator: (MCGMpInstrumentatorNoAction onProfiler: profiler).
+	profiler methodsToInstrument: methodsToInstrument
 ]

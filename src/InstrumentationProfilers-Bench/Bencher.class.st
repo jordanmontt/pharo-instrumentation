@@ -43,6 +43,15 @@ Bencher >> benchInstrument [
 ]
 
 { #category : 'api - execution' }
+Bencher >> benchNoInstrumentation [
+	"Returns the time that it takes to only uninstrument the method."
+
+	| timeToRun |
+	timeToRun := [ blockToProfile value ] timeToRun.
+	^ self formatTime: timeToRun
+]
+
+{ #category : 'api - execution' }
 Bencher >> benchUninstrument [
 	"Returns the time that it takes to only uninstrument the method."
 
