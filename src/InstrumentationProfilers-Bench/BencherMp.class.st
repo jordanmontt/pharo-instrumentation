@@ -22,6 +22,8 @@ BencherMp >> useAllocationRateProfiler [
 BencherMp >> useMethodCallGraphProfiler [
 
 	profiler := MethodCallGraphProfiler new
+		methodsToInstrument: methodsToInstrument;
+		yourself
 ]
 
 { #category : 'api - profiler' }
@@ -29,5 +31,6 @@ BencherMp >> useNoActionProfiler [
 
 	profiler := MethodCallGraphProfiler new
 			instrumentator: MCGMpInstrumentatorNoAction new;
+			methodsToInstrument: methodsToInstrument;
 		   	yourself
 ]

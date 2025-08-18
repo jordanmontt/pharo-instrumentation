@@ -65,18 +65,6 @@ Bencher >> initialize [
 	blockToProfile := [ ]
 ]
 
-{ #category : 'api' }
-Bencher >> methodsToInstrument: methods [
-
-	methodsToInstrument := methods asSet
-]
-
-{ #category : 'api' }
-Bencher >> packagesToInstrument: aCollectionOrSetOfPackages [
-
-	methodsToInstrument := aCollectionOrSetOfPackages flatCollect: #methods as: Set.
-]
-
 { #category : 'api - profiler' }
 Bencher >> useAllocationCallGraphProfiler [
 
@@ -90,10 +78,24 @@ Bencher >> useAllocationRateProfiler [
 ]
 
 { #category : 'api - benchmarks' }
+Bencher >> useCormasBench [
+
+	methodsToInstrument := VeritasCormas applicationMethods.
+	blockToProfile := [ VeritasCormas new run ]
+]
+
+{ #category : 'api - benchmarks' }
 Bencher >> useDataFrameBench [
 
-	self packagesToInstrument: VeritasDataFrame applicationPackages.
+	methodsToInstrument := VeritasDataFrame applicationMethods.
 	blockToProfile := [ VeritasDataFrame new run ]
+]
+
+{ #category : 'api - benchmarks' }
+Bencher >> useHoneyGingerBench [
+
+	methodsToInstrument := VeritasHoneyGinger applicationMethods.
+	blockToProfile := [ VeritasHoneyGinger new run ]
 ]
 
 { #category : 'api - profiler' }
@@ -105,10 +107,8 @@ Bencher >> useMethodCallGraphProfiler [
 { #category : 'api - benchmarks' }
 Bencher >> useMicrodownBench [
 
-	"self testPackages: { 'Microdown-Tests' asPackage }.
-	self packagesToInstrument: {
-			'Microdown' asPackage.
-			'Microdown-RichTextComposer' asPackage }"
+	methodsToInstrument := VeritasMicrodown applicationMethods.
+	blockToProfile := [ VeritasMicrodown new run ]
 ]
 
 { #category : 'api - profiler' }

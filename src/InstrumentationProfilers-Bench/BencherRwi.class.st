@@ -24,7 +24,9 @@ BencherRwi >> useAllocationRateProfiler [
 BencherRwi >> useMethodCallGraphProfiler [
 
 	profiler := MethodCallGraphProfiler new.
-	profiler instrumentator: (RwiMethodCallGraphInstrumentator onProfiler: profiler)
+	profiler
+		instrumentator: (RwiMethodCallGraphInstrumentator onProfiler: profiler);
+		methodsToInstrument: methodsToInstrument
 ]
 
 { #category : 'api - profiler' }
@@ -32,5 +34,6 @@ BencherRwi >> useNoActionProfiler [
 
 	profiler := MethodCallGraphProfiler new
 			instrumentator: RwiNoActionInstrumentator new;
+			methodsToInstrument: methodsToInstrument;
 		   	yourself
 ]
