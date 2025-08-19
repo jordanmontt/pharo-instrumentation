@@ -20,8 +20,8 @@ RwiInstrumentator class >> new [
 RwiInstrumentator class >> onProfiler: aProfiler [
 
 	^ self basicNew
-		initialize;
 		profiler: aProfiler;
+		initialize;
 		yourself
 ]
 

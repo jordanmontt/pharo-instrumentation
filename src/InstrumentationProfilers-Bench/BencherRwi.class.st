@@ -10,7 +10,7 @@ Class {
 BencherRwi >> useAllocationCallGraphProfiler [
 
 	profiler := IllAllocationCallGraphProfiler new.
-	profiler instrumentator: (RwiIllProfilerInstrumentator onProfiler: self)
+	profiler instrumentator: (RwiIllProfilerInstrumentator onProfiler: profiler)
 ]
 
 { #category : 'api - profiler' }
