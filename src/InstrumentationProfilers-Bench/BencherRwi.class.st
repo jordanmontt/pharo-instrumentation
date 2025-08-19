@@ -32,8 +32,8 @@ BencherRwi >> useMethodCallGraphProfiler [
 { #category : 'api - profiler' }
 BencherRwi >> useNoActionProfiler [
 
-	profiler := MethodCallGraphProfiler new
-			instrumentator: RwiNoActionInstrumentator new;
-			methodsToInstrument: methodsToInstrument;
-		   	yourself
+	profiler := MethodCallGraphProfiler new.
+	profiler
+		instrumentator:( RwiNoActionInstrumentator onProfiler: profiler);
+		methodsToInstrument: methodsToInstrument
 ]
