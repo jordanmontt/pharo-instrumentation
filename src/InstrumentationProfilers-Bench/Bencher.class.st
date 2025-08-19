@@ -63,9 +63,9 @@ Bencher >> benchUninstrument [
 
 { #category : 'default' }
 Bencher >> formatTime: timeToRun [
-    "Return milliseconds"
+    "Return seconds"
 
-    ^ timeToRun totalMilliseconds
+    ^ timeToRun "totalMilliseconds" totalSeconds asFloat
 ]
 
 { #category : 'initialization' }
