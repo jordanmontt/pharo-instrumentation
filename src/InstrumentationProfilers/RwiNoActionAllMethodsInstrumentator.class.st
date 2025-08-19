@@ -1,5 +1,5 @@
 Class {
-	#name : 'RwiNoActionInstrumentator',
+	#name : 'RwiNoActionAllMethodsInstrumentator',
 	#superclass : 'RwiInstrumentator',
 	#category : 'InstrumentationProfilers-RWI',
 	#package : 'InstrumentationProfilers',
@@ -7,7 +7,7 @@ Class {
 }
 
 { #category : 'accessing' }
-RwiNoActionInstrumentator >> newHandler: aMethod [
+RwiNoActionAllMethodsInstrumentator >> newHandler: aMethod [
 
 	^ MgkHandler new
 ]

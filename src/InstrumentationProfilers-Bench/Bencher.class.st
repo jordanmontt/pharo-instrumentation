@@ -122,7 +122,13 @@ Bencher >> useMicrodownBench [
 ]
 
 { #category : 'api - profiler' }
-Bencher >> useNoActionProfiler [
+Bencher >> useNoActionAllMethodsProfiler [
+
+	self subclassResponsibility
+]
+
+{ #category : 'api - profiler' }
+Bencher >> useNoActionAllocatorMethodsProfiler [
 
 	self subclassResponsibility
 ]

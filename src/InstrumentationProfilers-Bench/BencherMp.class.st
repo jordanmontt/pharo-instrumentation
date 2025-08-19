@@ -27,9 +27,15 @@ BencherMp >> useMethodCallGraphProfiler [
 ]
 
 { #category : 'api - profiler' }
-BencherMp >> useNoActionProfiler [
+BencherMp >> useNoActionAllMethodsProfiler [
 
 	profiler := MethodCallGraphProfiler new.
 	profiler instrumentator: (MCGMpInstrumentatorNoAction onProfiler: profiler).
 	profiler methodsToInstrument: methodsToInstrument
+]
+
+{ #category : 'api - profiler' }
+BencherMp >> useNoActionAllocatorMethodsProfiler [
+
+	profiler := IllNoActionProfiler new
 ]
