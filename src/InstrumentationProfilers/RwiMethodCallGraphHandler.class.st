@@ -3,7 +3,9 @@ Class {
 	#superclass : 'MgkHandler',
 	#instVars : [
 		'profiler',
-		'method'
+		'method',
+		'samplingRate',
+		'samplingCounter'
 	],
 	#category : 'InstrumentationProfilers-RWI',
 	#package : 'InstrumentationProfilers',
@@ -27,16 +29,53 @@ RwiMethodCallGraphHandler class >> onMethod: aMethod profiler: aProfiler [
 ]
 
 { #category : 'evaluating' }
-RwiMethodCallGraphHandler >> afterExecutionWithReceiver: anObject arguments: anArrayOfObjects returnValue: aReturnValue [
+RwiMethodCallGraphHandler >> afterExecutionWithReceiver: anObject arguments: anArrayOfObjects returnValue: returnValue [
 
-	profiler exitingMethod.
-	^ aReturnValue
+	samplingRate = 1 ifTrue: [
+		"Sampling 100% capture all"
+		self afterMethod: returnValue.
+		^ returnValue ].
+
+	samplingCounter := samplingCounter + 1.
+	samplingCounter > samplingRate denominator ifTrue: [ samplingCounter := 1 ].
+
+	samplingCounter <= samplingRate numerator
+		ifTrue: [ ^ self afterMethod: returnValue ]
+		ifFalse: [ ^ returnValue ]
 ]
 
 { #category : 'evaluating' }
-RwiMethodCallGraphHandler >> beforeExecutionWithReceiver: aReceiverr arguments: arguments [
+RwiMethodCallGraphHandler >> afterMethod: returnValue [
 
-	profiler enteringMethod: method
+    profiler exitingMethod.
+    ^ returnValue
+]
+
+{ #category : 'evaluating' }
+RwiMethodCallGraphHandler >> beforeExecutionWithReceiver: anObject arguments: args [
+
+	samplingRate = 1 ifTrue: [
+		"Sampling 100% capture all"
+		self beforeMethod.
+		^ self ].
+
+	samplingCounter <= samplingRate numerator
+		ifTrue: [ self beforeMethod ]
+		ifFalse: [ ^ self ]
+]
+
+{ #category : 'evaluating' }
+RwiMethodCallGraphHandler >> beforeMethod [
+
+    profiler enteringMethod: method
+]
+
+{ #category : 'initialization' }
+RwiMethodCallGraphHandler >> initialize [
+
+    super initialize.
+    samplingCounter := 0.
+    samplingRate := 1 / 100
 ]
 
 { #category : 'evaluating' }
