@@ -121,6 +121,13 @@ Bencher >> useMicrodownBench [
 	blockToProfile := [ VeritasMicrodown new run ]
 ]
 
+{ #category : 'api - benchmarks' }
+Bencher >> useMooseBench [
+
+	methodsToInstrument := VeritasMoose applicationMethods.
+	blockToProfile := [ VeritasMoose new run ]
+]
+
 { #category : 'api - profiler' }
 Bencher >> useNoActionAllMethodsProfiler [
 
